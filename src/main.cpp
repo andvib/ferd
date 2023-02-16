@@ -5,7 +5,7 @@
 
 #include "windowHandler.hpp"
 #include "gameShader.hpp"
-
+#include "gameProgram.hpp"
 
 int main(void)
 {
@@ -40,6 +40,9 @@ int main(void)
 	FragmentShader fragShader;
 	fragShader.loadShader(fragment_file_path);
 	fragShader.compileShader();
+
+	GameProgram program;
+	program.attachShaders(verShader, fragShader);
 
 	verShader.deleteShader();
 	fragShader.deleteShader();

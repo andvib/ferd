@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(hello_opengl)
 add_executable(hello_opengl WIN32 src/main.cpp)
 
-target_sources(hello_opengl PRIVATE src/windowHandler.cpp src/gameShader.cpp)
+target_sources(hello_opengl PRIVATE src/windowHandler.cpp src/gameShader.cpp src/gameProgram.cpp)
 
 # Add GLFW to build
 set(GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only")
