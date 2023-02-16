@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "windowHandler.hpp"
+#include "gameShader.hpp"
 
 
 int main(void)
@@ -11,8 +12,11 @@ int main(void)
     int err;
 
     /* Initialize the library */
-    if (!glfwInit())
+    glewExperimental = GL_TRUE;
+    if( !glfwInit() ) {
+        std::cout << "Failed to initialize GLFW" << std::endl;
         return -1;
+    }
 
     WindowHandler window;
     err = window.activate();
@@ -20,6 +24,25 @@ int main(void)
         std::cout << "Failed to open window!\n";
         return -1;
     }
+
+    if (glewInit() != GLEW_OK) {
+        std::cout << "Failed to initialize glew\n";
+        return -1;
+    }
+
+    const char *vertex_file_path = "C:/git/civ-andreas/src/shader/SimpleVertexShader.vertexshader";
+    const char *fragment_file_path = "C:/git/civ-andreas/src/shader/SimpleFragmentShader.fragmentshader";
+
+    VertexShader verShader;
+	verShader.loadShader(vertex_file_path);
+	verShader.compileShader();
+
+	FragmentShader fragShader;
+	fragShader.loadShader(fragment_file_path);
+	fragShader.compileShader();
+
+	verShader.deleteShader();
+	fragShader.deleteShader();
 
     /* Loop until the user closes the window */
     while (window.isWindowRunning())
