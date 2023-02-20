@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "windowHandler.hpp"
+#include "framework/windowHandler.hpp"
 
 WindowHandler::WindowHandler()
 {

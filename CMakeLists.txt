@@ -4,10 +4,11 @@ project(hello_opengl)
 add_executable(hello_opengl WIN32 src/main.cpp)
 
 target_sources(hello_opengl PRIVATE
-                src/windowHandler.cpp
-                src/gameShader.cpp
-                src/gameProgram.cpp
-                src/gameTriangle.cpp)
+               lib/framework/windowHandler.cpp
+               lib/framework/gameShader.cpp
+               lib/framework/gameProgram.cpp
+               lib/gameTriangle.cpp)
+include_directories(hello_opengl include)
 
 # Add GLFW to build
 set(GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only")

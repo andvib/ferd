@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-#include "windowHandler.hpp"
-#include "gameShader.hpp"
-#include "gameProgram.hpp"
+#include "framework/windowHandler.hpp"
+#include "framework/gameShader.hpp"
+#include "framework/gameProgram.hpp"
 #include "gameTriangle.hpp"
 
 int main(void)

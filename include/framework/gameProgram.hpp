@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-#include "gameShader.hpp"
+#include "framework/gameShader.hpp"
 
 class GameProgram {
 
