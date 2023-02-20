@@ -1,5 +1,5 @@
 #include <vector>
-#include "gameProgram.hpp"
+#include "framework/gameProgram.hpp"
 
 GameProgram::GameProgram()
 {
