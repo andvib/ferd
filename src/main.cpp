@@ -6,6 +6,7 @@
 #include "windowHandler.hpp"
 #include "gameShader.hpp"
 #include "gameProgram.hpp"
+#include "gameTriangle.hpp"
 
 int main(void)
 {
@@ -47,19 +48,30 @@ int main(void)
 	verShader.deleteShader();
 	fragShader.deleteShader();
 
+    struct triangle_points t1 = {0, 0, 0, -1, -1, 0};
+    GameTriangle triangle1(t1);
+
+    struct triangle_points t2 = {0, 0, 0, 1, 1, 0};
+    GameTriangle triangle2(t2);
+
     /* Loop until the user closes the window */
     while (window.isWindowRunning())
     {
         /* Render here */
-        glClearColor(1.0, 0.0, 0.0, 1.0);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.0, 1.0, 0.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /* Swap front and back buffers */
-        err = window.swapBuffers();
-        if (err != 0) {
-            std::cout << "Failed to swap buffers!\n";
-            return -1;
-        }
+        glUseProgram(program.getProgramID());
+
+        triangle1.drawObject();
+        triangle2.drawObject();
+
+		/* Swap front and back buffers */
+		err = window.swapBuffers();
+		if (err != 0) {
+			std::cout << "Failed to swap buffers!\n";
+			return -1;
+		}
     }
 
     glfwTerminate();
