@@ -49,16 +49,18 @@ int main(void)
 	fragShader.deleteShader();
 
     struct triangle_points t1 = {0, 0, 0, -1, -1, 0};
-    GameTriangle triangle1(t1);
+    struct triangle_color c1 = {1, 0, 0};
+    GameTriangle triangle1(t1, c1);
 
     struct triangle_points t2 = {0, 0, 0, 1, 1, 0};
-    GameTriangle triangle2(t2);
+    struct triangle_color c2 = {0, 0, 1};
+    GameTriangle triangle2(t2, c2);
 
     /* Loop until the user closes the window */
     while (window.isWindowRunning())
     {
         /* Render here */
-        glClearColor(0.0, 1.0, 0.0, 1.0);
+        glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(program.getProgramID());

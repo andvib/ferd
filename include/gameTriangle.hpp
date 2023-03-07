@@ -9,13 +9,19 @@ struct triangle_points {
     GLfloat x2, y2;
 };
 
+struct triangle_color {
+    GLfloat r, g, b;
+};
+
 class GameTriangle {
 
     private:
         struct triangle_points points;
+        struct triangle_color color;
         GLuint VertexArrayID;
         GLuint vertexbuffer;
         GLfloat *vertex_buffer_data;
+        GLuint colorbuffer;
 
     public:
         /**
@@ -33,7 +39,7 @@ class GameTriangle {
          *
          * @param triangle_p Triangle struct with points for each triangle vertex
          */
-        GameTriangle(struct triangle_points triangle_p);
+        GameTriangle(struct triangle_points triangle_p, struct triangle_color);
 
         /**
          * @brief Draws the object
