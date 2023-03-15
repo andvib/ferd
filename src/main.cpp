@@ -9,26 +9,30 @@
 #include "gameTriangle.hpp"
 #include "train/rectangle.hpp"
 
+#include "spdlog/spdlog.h"
+
 int main(void)
 {
     int err;
 
+    spdlog::info("Hello World!");
+
     /* Initialize the library */
     glewExperimental = GL_TRUE;
     if( !glfwInit() ) {
-        std::cout << "Failed to initialize GLFW" << std::endl;
+        spdlog::critical("Failed to initalize GLFW");
         return -1;
     }
 
     WindowHandler window;
     err = window.activate();
     if (err != 0) {
-        std::cout << "Failed to open window!\n";
+        spdlog::critical("Failed to open window!");
         return -1;
     }
 
     if (glewInit() != GLEW_OK) {
-        std::cout << "Failed to initialize glew\n";
+        spdlog::critical("Failed to initialize glew");
         return -1;
     }
 
@@ -73,6 +77,8 @@ int main(void)
     struct rectangle_color rc4 = {0, 0.8, 0.75};
     Rectangle rectangle4(r4, rc4);
 
+    spdlog::info("Starting render loop");
+
     /* Loop until the user closes the window */
     while (window.isWindowRunning())
     {
@@ -92,11 +98,12 @@ int main(void)
 		/* Swap front and back buffers */
 		err = window.swapBuffers();
 		if (err != 0) {
-			std::cout << "Failed to swap buffers!\n";
+            spdlog::critical("Failed to swap buffers!");
 			return -1;
 		}
     }
 
+    spdlog::info("Terminating");
     glfwTerminate();
 
     return 0;

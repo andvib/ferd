@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 
 #include "framework/gameShader.hpp"
+#include "spdlog/spdlog.h"
 
 GameShader::GameShader()
 {
@@ -28,7 +29,7 @@ int GameShader::loadShader(const char *file_path)
         shaderCode = sstr.str();
         ShaderStream.close();
     } else {
-        std::cout << "Could not open file!\n";
+        spdlog::critical("Could not open file!");
         return -1;
     }
 
@@ -48,7 +49,7 @@ int GameShader::compileShader()
     if(InfoLogLength > 0) {
         std::vector<char> VertexShaderErrorMessage(InfoLogLength+1);
         glGetShaderInfoLog(shaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-        printf("%s\n", &VertexShaderErrorMessage[0]);
+        spdlog::critical("%s", &VertexShaderErrorMessage[0]);
         return -1;
     }
 
