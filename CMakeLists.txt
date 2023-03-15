@@ -7,7 +7,8 @@ target_sources(hello_opengl PRIVATE
                lib/framework/windowHandler.cpp
                lib/framework/gameShader.cpp
                lib/framework/gameProgram.cpp
-               lib/gameTriangle.cpp)
+               lib/gameTriangle.cpp
+               lib/train/rectangle.cpp)
 include_directories(hello_opengl include)
 
 # Add GLFW to build
