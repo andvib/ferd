@@ -1,5 +1,7 @@
-#include "gameTriangle.hpp"
 #include <cstdio>
+
+#include "gameTriangle.hpp"
+#include "spdlog/spdlog.h"
 
 GameTriangle::GameTriangle()
 {
@@ -12,11 +14,6 @@ GameTriangle::GameTriangle(struct triangle_points triangle_p, struct triangle_co
     glBindVertexArray(VertexArrayID);
 
     points = triangle_p;
-
-    printf("(%f, %f), (%f, %f), (%f, %f)\n",
-            points.x0, points.y0,
-            points.x1, points.y1,
-            points.x2, points.y2);
 
     GLfloat vertex_buffer_data[] {
         points.x0, points.y0, 0.0f,
@@ -36,8 +33,6 @@ GameTriangle::GameTriangle(struct triangle_points triangle_p, struct triangle_co
         color.r, color.g, color.b,
         color.r, color.g, color.b
     };
-
-    printf("colors: (%f, %f, %f)\n", color_buffer_data[0], color_buffer_data[1], color_buffer_data[2]);
 
     glGenBuffers(1, &colorbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);

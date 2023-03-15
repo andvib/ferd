@@ -1,5 +1,7 @@
 #include <vector>
+
 #include "framework/gameProgram.hpp"
+#include "spdlog/spdlog.h"
 
 GameProgram::GameProgram()
 {
@@ -19,7 +21,7 @@ void GameProgram::attachShaders(VertexShader vertex_shader, FragmentShader fragm
     if ( InfoLogLength > 0 ){
 		std::vector<char> ProgramErrorMessage(InfoLogLength+1);
 		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		printf("%s\n", &ProgramErrorMessage[0]);
+        spdlog::critical("%s", &ProgramErrorMessage[0]);
 	}
 
     glDetachShader(ProgramID, vertex_shader.getShaderID());

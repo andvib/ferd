@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.10)
 project(hello_opengl)
 add_executable(hello_opengl WIN32 src/main.cpp)
 
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/spdlog/build")
+find_package(spdlog REQUIRED)
+target_link_libraries(hello_opengl spdlog::spdlog)
+
 target_sources(hello_opengl PRIVATE
                lib/framework/windowHandler.cpp
                lib/framework/gameShader.cpp
