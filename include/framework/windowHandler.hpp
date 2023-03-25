@@ -46,6 +46,8 @@ class WindowHandler {
          * @return false Window has been closed by user
          */
         bool isWindowRunning();
+
+        GLFWwindow* getWindow(){return window;};
 };
 
 #endif /* WINDOW_HANDLER_HPP__ */
