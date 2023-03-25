@@ -8,6 +8,7 @@
 #include "framework/gameProgram.hpp"
 #include "gameTriangle.hpp"
 #include "train/rectangle.hpp"
+#include "game/camera.hpp"
 
 #include "spdlog/spdlog.h"
 
@@ -79,6 +80,9 @@ int main(void)
 
     spdlog::info("Starting render loop");
 
+    Camera GameCamera;
+    GLuint MatrixID = glGetUniformLocation(program.getProgramID(), "MVP");
+
     /* Loop until the user closes the window */
     while (window.isWindowRunning())
     {
@@ -88,12 +92,31 @@ int main(void)
 
         glUseProgram(program.getProgramID());
 
+        glm::mat4 mvp = GameCamera.transform(glm::mat4(1.0f));
+        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+
         //triangle1.drawObject();
         //triangle2.drawObject();
         rectangle1.drawObject();
         rectangle2.drawObject();
         rectangle3.drawObject();
         rectangle4.drawObject();
+
+        if(glfwGetKey(window.getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+            GameCamera.moveUp();
+        }
+
+        if(glfwGetKey(window.getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+            GameCamera.moveDown();
+        }
+
+        if(glfwGetKey(window.getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
+            GameCamera.moveLeft();
+        }
+
+        if(glfwGetKey(window.getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
+            GameCamera.moveRight();
+        }
 
 		/* Swap front and back buffers */
 		err = window.swapBuffers();
