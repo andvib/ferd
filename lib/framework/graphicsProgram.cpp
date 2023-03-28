@@ -1,14 +1,13 @@
 #include <vector>
 
-#include "framework/gameProgram.hpp"
+#include "framework/graphicsProgram.hpp"
 #include "spdlog/spdlog.h"
 
-GameProgram::GameProgram()
+GraphicsProgram::GraphicsProgram()
 {
-    ProgramID = glCreateProgram();
 }
 
-void GameProgram::attachShaders(VertexShader vertex_shader, FragmentShader fragment_shader)
+void GraphicsProgram::attachShaders(VertexShader vertex_shader, FragmentShader fragment_shader)
 {
     glAttachShader(ProgramID, vertex_shader.getShaderID());
     glAttachShader(ProgramID, fragment_shader.getShaderID());
@@ -28,7 +27,7 @@ void GameProgram::attachShaders(VertexShader vertex_shader, FragmentShader fragm
 	glDetachShader(ProgramID, fragment_shader.getShaderID());
 }
 
-GLuint GameProgram::getProgramID()
+GLuint GraphicsProgram::getProgramID()
 {
     return ProgramID;
 }

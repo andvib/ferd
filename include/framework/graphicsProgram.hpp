@@ -5,16 +5,18 @@
 
 #include "framework/gameShader.hpp"
 
-class GameProgram {
+class GraphicsProgram {
 
     private:
         GLuint ProgramID;
 
     public:
         /**
-         * @brief Construct a new Game Program object
+         * @brief Construct a new Graphics Program object
          */
-        GameProgram();
+        GraphicsProgram();
+
+        void activate() {ProgramID = glCreateProgram();};
 
         /**
          * @brief Attach shaders to program
