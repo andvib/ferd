@@ -14,7 +14,8 @@ target_link_libraries(hello_opengl glm::glm)
 target_sources(hello_opengl PRIVATE
                lib/framework/windowHandler.cpp
                lib/framework/gameShader.cpp
-               lib/framework/gameProgram.cpp
+               lib/framework/graphicsProgram.cpp
+               lib/framework/graphicsFramework.cpp
                lib/gameTriangle.cpp
                lib/train/rectangle.cpp
                lib/game/camera.cpp)
