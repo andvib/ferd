@@ -1,17 +1,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-
 #include "framework/graphicsFramework.hpp"
-#include "framework/windowHandler.hpp"
-#include "framework/gameShader.hpp"
-#include "framework/graphicsProgram.hpp"
-#include "gameTriangle.hpp"
 #include "train/rectangle.hpp"
 #include "game/camera.hpp"
 
-#include "spdlog/spdlog.h"
+#include <chrono>
+#include <ctime>
+#include <iostream>
+#include <spdlog/spdlog.h>
+#include <thread>
 
 int main(void)
 {
@@ -46,47 +44,25 @@ int main(void)
     spdlog::info("Starting render loop");
 
     Camera GameCamera;
-    GLuint MatrixID = glGetUniformLocation(Framework.Program.getProgramID(), "MVP");
+    Framework.addCamera(&GameCamera);
 
     /* Loop until the user closes the window */
     while (Framework.isRunning())
     {
-        /* Render here */
-        glClearColor((245.0/255), (245.0/255), (220.0/255), 1.0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glUseProgram(Framework.Program.getProgramID());
-
-        glm::mat4 mvp = GameCamera.transform(glm::mat4(1.0f));
-        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+        clock_t curr_frame = clock();
+        Framework.update();
 
         rectangle1.drawObject();
         rectangle2.drawObject();
         rectangle3.drawObject();
         rectangle4.drawObject();
 
-        if(glfwGetKey(Framework.Window.getWindow(), GLFW_KEY_W) == GLFW_PRESS) {
-            GameCamera.moveUp();
-        }
-
-        if(glfwGetKey(Framework.Window.getWindow(), GLFW_KEY_S) == GLFW_PRESS) {
-            GameCamera.moveDown();
-        }
-
-        if(glfwGetKey(Framework.Window.getWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-            GameCamera.moveLeft();
-        }
-
-        if(glfwGetKey(Framework.Window.getWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-            GameCamera.moveRight();
-        }
-
 		/* Swap front and back buffers */
-		err = Framework.Window.swapBuffers();
-		if (err != 0) {
-            spdlog::critical("Failed to swap buffers!");
-			return -1;
-		}
+		Framework.swapBuffers();
+
+        clock_t sleep_time = 16 - (clock() - curr_frame);
+        spdlog::debug("Sleeping for {} ms", sleep_time / (CLOCKS_PER_SEC/1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time / (CLOCKS_PER_SEC/1000)));
     }
 
     spdlog::info("Terminating");

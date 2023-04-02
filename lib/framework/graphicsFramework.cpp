@@ -5,6 +5,19 @@
 
 #include "spdlog/spdlog.h"
 
+GraphicsFramework::GraphicsFramework()
+{
+    m_Window = new WindowHandler();
+    m_Program = new GraphicsProgram();
+    m_Screen = new GraphicsScreen();
+}
+
+GraphicsFramework::~GraphicsFramework()
+{
+    delete m_Window;
+    delete m_Program;
+    delete m_Screen;
+}
 
 int GraphicsFramework::activate()
 {
@@ -15,15 +28,15 @@ int GraphicsFramework::activate()
     }
     spdlog::info("GLFW initialized");
 
-    Window.activate();
+    m_Window->activate();
 
     if (glewInit() != GLEW_OK) {
         spdlog::critical("Failed to initialize glew");
     }
     spdlog::info("GLEW initialized");
 
-    Program.activate();
-    
+    m_Program->activate();
+
     return 0;
 }
 
@@ -37,7 +50,7 @@ void GraphicsFramework::addShaders(const char *vertex_file_path, const char *fra
     fragShader.loadShader(fragment_file_path);
     fragShader.compileShader();
 
-    Program.attachShaders(verShader, fragShader);
+    m_Program->attachShaders(verShader, fragShader);
 
     verShader.deleteShader();
     fragShader.deleteShader();
@@ -45,10 +58,23 @@ void GraphicsFramework::addShaders(const char *vertex_file_path, const char *fra
 
 bool GraphicsFramework::isRunning()
 {
-    return Window.isWindowRunning();
+    return m_Window->isWindowRunning();
 }
 
 void GraphicsFramework::terminate()
 {
     glfwTerminate();
+}
+
+void GraphicsFramework::update()
+{
+    m_Screen->Update(m_Program->getProgramID());
+    m_Window->updateCamera(p_Camera);
+    glm::mat4 mvp = p_Camera->transform(glm::mat4(1.0f));
+    glUniformMatrix4fv(m_Program->getMVPLoc(), 1, GL_FALSE, &mvp[0][0]);
+}
+
+void GraphicsFramework::swapBuffers()
+{
+    m_Window->swapBuffers();
 }

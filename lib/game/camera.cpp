@@ -5,7 +5,7 @@ Camera::Camera()
 {
     Position = {0,0};
     Dimensions = {-5.0f, 5.0f, -5.0f, 5.0f};
-    Speed = 0.01;
+    Speed = 0.1;
 }
 
 glm::mat4 Camera::transform(glm::mat4 model_matrix)

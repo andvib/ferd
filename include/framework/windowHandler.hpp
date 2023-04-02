@@ -3,6 +3,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include "game/camera.hpp"
+
 class WindowHandler {
 
     private:
@@ -47,7 +49,14 @@ class WindowHandler {
          */
         bool isWindowRunning();
 
-        GLFWwindow* getWindow(){return window;};
+        /**
+         * @brief Updates camera movement base on user input
+         *
+         * @details Calls the camera move functions based on the user keyboard input.
+         *
+         * @param gameCamera
+         */
+        void updateCamera(Camera *gameCamera);
 };
 
 #endif /* WINDOW_HANDLER_HPP__ */

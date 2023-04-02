@@ -8,15 +8,18 @@
 class GraphicsProgram {
 
     private:
-        GLuint ProgramID;
+        GLuint m_ProgramID;
 
     public:
         /**
          * @brief Construct a new Graphics Program object
          */
-        GraphicsProgram();
+        GraphicsProgram() {};
 
-        void activate() {ProgramID = glCreateProgram();};
+        /**
+         * @brief Activate an OpenGL program
+         */
+        void activate() {m_ProgramID = glCreateProgram();};
 
         /**
          * @brief Attach shaders to program
@@ -34,7 +37,14 @@ class GraphicsProgram {
          * 
          * @return GLuint Program ID
          */
-        GLuint getProgramID();
+        GLuint getProgramID() {return m_ProgramID;};
+
+        /**
+         * @brief Get the location of the MVP uniform
+         *
+         * @return GLuint Location ID for the MVP uniform
+         */
+        GLuint getMVPLoc() {return glGetUniformLocation(m_ProgramID, "MVP");};
 
 };
 
