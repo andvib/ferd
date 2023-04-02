@@ -16,6 +16,7 @@ target_sources(hello_opengl PRIVATE
                lib/framework/gameShader.cpp
                lib/framework/graphicsProgram.cpp
                lib/framework/graphicsFramework.cpp
+               lib/framework/graphicsScreen.cpp
                lib/gameTriangle.cpp
                lib/train/rectangle.cpp
                lib/game/camera.cpp)

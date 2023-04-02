@@ -55,3 +55,22 @@ bool WindowHandler::isWindowRunning()
 
     return true;
 }
+
+void WindowHandler::updateCamera(Camera *gameCamera)
+{
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        gameCamera->moveUp();
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        gameCamera->moveDown();
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        gameCamera->moveLeft();
+    }
+
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        gameCamera->moveRight();
+    }
+}

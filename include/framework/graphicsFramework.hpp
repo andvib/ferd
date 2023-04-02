@@ -3,18 +3,14 @@
 
 #include "graphicsProgram.hpp"
 #include "windowHandler.hpp"
-
+#include "graphicsScreen.hpp"
+#include "game/camera.hpp"
 
 class GraphicsFramework {
 
     public:
-        WindowHandler Window;
-        GraphicsProgram Program;
-
-        /**
-         * @brief Construct a new Graphics Framework object
-         */
-        GraphicsFramework() {};
+        GraphicsFramework();
+        ~GraphicsFramework();
         
         /**
          * @brief Activate the framework
@@ -51,6 +47,31 @@ class GraphicsFramework {
          * @brief Terminate the Framework session
          */
         void terminate();
+
+        /**
+         * @brief Update screen buffer for new frame
+         *
+         * @details Prepares the camera for a new frame
+         */
+        void update();
+
+        /**
+         * @brief Swap to the staged frame buffer
+         */
+        void swapBuffers();
+
+        /**
+         * @brief Select the current camera in use
+         *
+         * @param camera Pointer to Camera object in use
+         */
+        void addCamera(Camera *camera) {p_Camera = camera;};
+
+    private:
+        GraphicsProgram *m_Program;
+        WindowHandler *m_Window;
+        GraphicsScreen *m_Screen;
+        Camera *p_Camera;
 };
 
 #endif /* FRAMEWORK_HPP__ */
