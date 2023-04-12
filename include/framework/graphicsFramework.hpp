@@ -5,6 +5,9 @@
 #include "windowHandler.hpp"
 #include "graphicsScreen.hpp"
 #include "game/camera.hpp"
+#include "game/rectangleObject.hpp"
+
+#include <vector>
 
 class GraphicsFramework {
 
@@ -56,6 +59,11 @@ class GraphicsFramework {
         void update();
 
         /**
+         * @brief Render objects to the frame buffer
+         */
+        void render();
+
+        /**
          * @brief Swap to the staged frame buffer
          */
         void swapBuffers();
@@ -67,11 +75,19 @@ class GraphicsFramework {
          */
         void addCamera(Camera *camera) {p_Camera = camera;};
 
+        /**
+         * @brief Add a render object to the framework
+         *
+         * @param object
+         */
+        void addRenderObject(RectangleObject *object) { v_objects.push_back(object); };
+
     private:
         GraphicsProgram *m_Program;
         WindowHandler *m_Window;
         GraphicsScreen *m_Screen;
         Camera *p_Camera;
+        std::vector<RectangleObject*> v_objects;
 };
 
 #endif /* FRAMEWORK_HPP__ */

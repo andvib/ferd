@@ -70,8 +70,20 @@ void GraphicsFramework::update()
 {
     m_Screen->Update(m_Program->getProgramID());
     m_Window->updateCamera(p_Camera);
-    glm::mat4 mvp = p_Camera->transform(glm::mat4(1.0f));
-    glUniformMatrix4fv(m_Program->getMVPLoc(), 1, GL_FALSE, &mvp[0][0]);
+
+    for (auto objPtr : v_objects) {
+        objPtr->Update();
+    }
+}
+
+void GraphicsFramework::render()
+{
+    for (auto objPtr : v_objects) {
+        glm::mat4 mvp = p_Camera->transform(objPtr->GetModelMatrix());
+        glUniformMatrix4fv(m_Program->getMVPLoc(), 1, GL_FALSE, &mvp[0][0]);
+
+        objPtr->Render();
+    }
 }
 
 void GraphicsFramework::swapBuffers()
