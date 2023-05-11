@@ -43,39 +43,7 @@ RectangleObject::RectangleObject(struct rectangle_points rectangle_p, struct rec
     glGenBuffers(1, &m_colorBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(color_buffer_data), color_buffer_data, GL_STATIC_DRAW);
-}
-
-void RectangleObject::Update()
-{
-    glm::mat4 myTranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(m_move_x, m_move_y, 0.0f));
-    glm::mat4 myScalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.75f, 0.75f, 0.75f));
-    glm::mat4 myRotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-
-    m_ModelMatrix = myTranslationMatrix * myRotationMatrix * myScalingMatrix;
-
-    if (m_move_x >= 3.0f) {
-        m_dir_x = 1;
-    }
-    if (m_move_x <= -3.0f) {
-        m_dir_x = 0;
-    }
-    if (m_dir_x == 1) {
-        m_move_x -= 0.07;
-    } else {
-        m_move_x += 0.07;
-    }
-
-    if (m_move_y >= 3.0f) {
-        m_dir_y = 1;
-    }
-    if (m_move_y <= -3.0f) {
-        m_dir_y = 0;
-    }
-    if (m_dir_y == 1) {
-        m_move_y -= 0.065;
-    } else {
-        m_move_y += 0.065;
-    }
+    spdlog::info("Object created!");
 }
 
 void RectangleObject::Render(void)
