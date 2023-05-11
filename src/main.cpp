@@ -4,6 +4,7 @@
 #include "framework/graphicsFramework.hpp"
 #include "game/camera.hpp"
 #include "game/rectangleObject.hpp"
+#include "game/train.hpp"
 
 #include <chrono>
 #include <ctime>
@@ -25,26 +26,41 @@ int main(void)
 
     Framework.addShaders(vertex_file_path, fragment_file_path);
 
-    struct rectangle_points r1 = {-0.75, -0.75, -0.75, 0, 0, 0, 0, -0.75};
-    struct rectangle_color rc1 = {0, 0.25, 1};
-    RectangleObject rectangle1(r1, rc1);
-
-    struct rectangle_points r2 = {0.75, 0.75, 0.75, 0, 0, 0, 0, 0.75};
+    struct rectangle_color rc1 = {0, 0.25, 0.75};
     struct rectangle_color rc2 = {0, 0.75, 1};
-    RectangleObject rectangle2(r2, rc2);
-
-    struct rectangle_points r3 = {0, 0, 0, 0.75, -0.75, 0.75, -0.75, 0};
     struct rectangle_color rc3 = {0, 0.75, 0.5};
-    RectangleObject rectangle3(r3, rc3);
-
-    struct rectangle_points r4 = {0, 0, 0, -0.75, 0.75, -0.75, 0.75, 0};
     struct rectangle_color rc4 = {0, 0.8, 0.75};
-    RectangleObject rectangle4(r4, rc4);
+    struct rectangle_color rc5 = {0, 0.5, 0.9};
 
-    Framework.addRenderObject(&rectangle1);
-    Framework.addRenderObject(&rectangle2);
-    Framework.addRenderObject(&rectangle3);
-    Framework.addRenderObject(&rectangle4);
+    Train trainObject(0, 3, 0.002, rc1);
+    Framework.addRenderObject(&trainObject);
+
+    Train trainObject2(1,2, 0.001, rc2);
+    Framework.addRenderObject(&trainObject2);
+
+    Train trainObject3(3,-2, 0.003, rc3);
+    Framework.addRenderObject(&trainObject3);
+
+    Train trainObject4(-2,2, 0.0007, rc4);
+    Framework.addRenderObject(&trainObject4);
+
+    Train trainObject5(-2,-2, 0.0015, rc5);
+    Framework.addRenderObject(&trainObject5);
+
+    Train trainObject6(-1,-2, 0.002, rc1);
+    Framework.addRenderObject(&trainObject6);
+
+    Train trainObject7(0.5,2, 0.0007, rc2);
+    Framework.addRenderObject(&trainObject7);
+
+    Train trainObject8(2.8,-2, 0.0022, rc3);
+    Framework.addRenderObject(&trainObject8);
+
+    Train trainObject9(-2,2, 0.0016, rc4);
+    Framework.addRenderObject(&trainObject9);
+
+    Train trainObject10(1.52,-2, 0.0017, rc5);
+    Framework.addRenderObject(&trainObject10);
 
     spdlog::info("Starting render loop");
 
@@ -52,17 +68,19 @@ int main(void)
     Framework.addCamera(&GameCamera);
 
     /* Loop until the user closes the window */
+    clock_t lastFrame;
     while (Framework.isRunning())
     {
         clock_t curr_frame = clock();
-        Framework.update();
+        Framework.update((curr_frame - lastFrame) / (CLOCKS_PER_SEC/1000));
 
         Framework.render();
 
         /* Swap front and back buffers */
         Framework.swapBuffers();
+        lastFrame = clock();
 
-        clock_t sleep_time = 16 - (clock() - curr_frame);
+        clock_t sleep_time = 9 - (clock() - curr_frame);
         spdlog::debug("Sleeping for {} ms", sleep_time / (CLOCKS_PER_SEC/1000));
         std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time / (CLOCKS_PER_SEC/1000)));
     }

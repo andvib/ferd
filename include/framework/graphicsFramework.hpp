@@ -55,8 +55,10 @@ class GraphicsFramework {
          * @brief Update screen buffer for new frame
          *
          * @details Prepares the camera for a new frame
+         *
+         * @param delta_time_ms Time since previous frame, in milliseconds
          */
-        void update();
+        void update(clock_t delta_time_ms);
 
         /**
          * @brief Render objects to the frame buffer

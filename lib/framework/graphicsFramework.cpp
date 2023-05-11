@@ -66,20 +66,20 @@ void GraphicsFramework::terminate()
     glfwTerminate();
 }
 
-void GraphicsFramework::update()
+void GraphicsFramework::update(clock_t delta_time_ms)
 {
     m_Screen->Update(m_Program->getProgramID());
     m_Window->updateCamera(p_Camera);
 
     for (auto objPtr : v_objects) {
-        objPtr->Update();
+        objPtr->Update(delta_time_ms);
     }
 }
 
 void GraphicsFramework::render()
 {
     for (auto objPtr : v_objects) {
-        glm::mat4 mvp = p_Camera->transform(objPtr->GetModelMatrix());
+        glm::mat4 mvp = p_Camera->transform(objPtr->CalculateModelMatrix());
         glUniformMatrix4fv(m_Program->getMVPLoc(), 1, GL_FALSE, &mvp[0][0]);
 
         objPtr->Render();

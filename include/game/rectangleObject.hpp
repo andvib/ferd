@@ -6,6 +6,8 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 
+#include <chrono>
+
 struct rectangle_points {
     GLfloat x0, y0;
     GLfloat x1, y1;
@@ -29,7 +31,7 @@ class RectangleObject
          *
          * @details Updates the position and calculates the model matrix
          */
-        void Update(void);
+        virtual void Update(clock_t delta_time) = 0;
 
         /**
          * @brief Render the rectangle object
@@ -37,11 +39,11 @@ class RectangleObject
         void Render(void);
 
         /**
-         * @brief Get the Model Matrix object
+         * @brief Calculate the Model Matrix object
          * 
-         * @return glm::mat4 
+         * @return glm::mat4 Model Matrix
          */
-        glm::mat4 GetModelMatrix() { return m_ModelMatrix; };
+        virtual glm::mat4 CalculateModelMatrix() = 0;
 
     private:
         struct rectangle_points m_points;
@@ -51,11 +53,6 @@ class RectangleObject
         GLfloat *m_vertex_buffer_data;
         GLuint m_colorBuffer;
         GLuint m_elementBuffer;
-        float m_move_x = 0;
-        float m_move_y = 0;
-        int m_dir_x = 0;
-        int m_dir_y = 0;
-        glm::mat4 m_ModelMatrix;
 };
 
 #endif /* RECTANGLE_OBJECT_HPP__ */
