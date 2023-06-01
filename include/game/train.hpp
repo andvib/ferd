@@ -2,11 +2,16 @@
 #define TRAIN_HPP__
 
 #include "rectangleObject.hpp"
+#include "trainNavigator.hpp"
+#include "trainPhysics.hpp"
+
+#include <chrono>
 
 class Train : public RectangleObject
 {
     public:
         Train();
+        ~Train();
 
         /**
          * @brief Construct a new Train object
@@ -22,13 +27,13 @@ class Train : public RectangleObject
          * 
          * @param x Start x-position
          * @param y Start y-position
-         * @param speed Speed of the train
+         * @param acceleration Acceleration of the train
          * @param color Color struct for color of the train
          */
-        Train(float x, float y, float speed, const struct rectangle_color color);
+        Train(float x, float y, float acceleration, const struct rectangle_color color);
 
         /**
-         * @brief Update the attributes of the train instance
+         * @brief Update the physics model of the train, and navigate the route
          * 
          * @param delta_time_ms Time since previous update, in milliseconds
          */
@@ -42,12 +47,8 @@ class Train : public RectangleObject
         glm::mat4 CalculateModelMatrix() override;
 
     private:
-        float m_speed = 0.002;
-        float m_move_x = 0;
-        float m_move_y = 0;
-        int m_dir_x = 0;
-        int m_dir_y = 0;
-
+        TrainNavigator* p_Route;
+        TrainPhysics* p_Physics;
 };
 
 #endif /* TRAIN_HPP__ */
