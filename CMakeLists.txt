@@ -19,7 +19,9 @@ target_sources(hello_opengl PRIVATE
                lib/framework/graphicsScreen.cpp
                lib/game/rectangleObject.cpp
                lib/game/camera.cpp
-               lib/game/train.cpp)
+               lib/game/train.cpp
+               lib/game/trainNavigator.cpp
+               lib/game/trainPhysics.cpp)
 include_directories(hello_opengl include)
 
 # Add GLFW to build
