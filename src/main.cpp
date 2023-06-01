@@ -18,13 +18,13 @@ int main(void)
 {
     int err;
 
-    spdlog::info("Hello World!");
+    spdlog::info("Ferd.");
 
     GraphicsFramework Framework;
     Framework.activate();
 
-    const char *vertex_file_path = "C:/git/civ-andreas/src/shader/SimpleVertexShader.vertexshader";
-    const char *fragment_file_path = "C:/git/civ-andreas/src/shader/SimpleFragmentShader.fragmentshader";
+    const char *vertex_file_path = "C:/git/ferd/src/shader/SimpleVertexShader.vertexshader";
+    const char *fragment_file_path = "C:/git/ferd/src/shader/SimpleFragmentShader.fragmentshader";
 
     Framework.addShaders(vertex_file_path, fragment_file_path);
 

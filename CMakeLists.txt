@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(hello_opengl)
-add_executable(hello_opengl WIN32 src/main.cpp)
+project(ferd)
+add_executable(ferd WIN32 src/main.cpp)
 
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/spdlog/build")
 find_package(spdlog REQUIRED)
-target_link_libraries(hello_opengl spdlog::spdlog)
+target_link_libraries(ferd spdlog::spdlog)
 
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/glm/cmake")
 find_package(glm REQUIRED)
-target_link_libraries(hello_opengl glm::glm)
+target_link_libraries(ferd glm::glm)
 
-target_sources(hello_opengl PRIVATE
+target_sources(ferd PRIVATE
                lib/framework/windowHandler.cpp
                lib/framework/gameShader.cpp
                lib/framework/graphicsProgram.cpp
@@ -22,25 +22,25 @@ target_sources(hello_opengl PRIVATE
                lib/game/train.cpp
                lib/game/trainNavigator.cpp
                lib/game/trainPhysics.cpp)
-include_directories(hello_opengl include)
+include_directories(ferd include)
 
 # Add GLFW to build
 set(GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only")
 set(GLFW_INSTALL OFF CACHE BOOL  "GLFW lib only")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only")
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ext/glfw)
-target_link_libraries(hello_opengl glfw)
+target_link_libraries(ferd glfw)
 
 # Add GLEW to build
 add_definitions(-DGLEW_STATIC)
 set(GLEW_USE_STATIC_LIBS TRUE)
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/glew")
 find_package(GLEW REQUIRED)
-include_directories(hello_opengl ${GLEW_INCLUDE_DIRS})
-target_link_libraries(hello_opengl ${GLEW_LIBRARIES})
-target_link_libraries(hello_opengl ${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/glew32.lib)
+include_directories(ferd ${GLEW_INCLUDE_DIRS})
+target_link_libraries(ferd ${GLEW_LIBRARIES})
+target_link_libraries(ferd ${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/glew32.lib)
 
 # Add OpenGL to build
 find_package(OpenGL REQUIRED)
-include_directories(hello_opengl ${OPENGL_INCLUDE_DIRS})
-target_link_libraries(hello_opengl ${OPENGL_LIBRARIES})
+include_directories(ferd ${OPENGL_INCLUDE_DIRS})
+target_link_libraries(ferd ${OPENGL_LIBRARIES})
