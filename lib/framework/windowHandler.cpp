@@ -15,7 +15,7 @@ WindowHandler::WindowHandler()
 
 int WindowHandler::activate()
 {
-    window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Ferd.", NULL, NULL);
     if(window == NULL) {
         spdlog::critical("Failed to open GLFW window");
         glfwTerminate();
