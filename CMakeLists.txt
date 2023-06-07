@@ -44,3 +44,12 @@ target_link_libraries(ferd ${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/
 find_package(OpenGL REQUIRED)
 include_directories(ferd ${OPENGL_INCLUDE_DIRS})
 target_link_libraries(ferd ${OPENGL_LIBRARIES})
+
+# Add ImGui to build
+file(GLOB IMGUI_SRC_FILES "ext/imgui/*.cpp")
+target_sources(ferd PRIVATE
+               ${IMGUI_SRC_FILES}
+               ext/imgui/backends/imgui_impl_glfw.cpp
+               ext/imgui/backends/imgui_impl_opengl3.cpp)
+include_directories(ferd "ext/imgui")
+include_directories(ferd "ext/imgui/backends")

@@ -57,6 +57,18 @@ class WindowHandler {
          * @param gameCamera
          */
         void updateCamera(Camera *gameCamera);
+
+        /**
+         * @brief Update the window attributes
+         *
+         * @details Fetches IO events and updates the GUI
+         */
+        void update();
+
+        /**
+         * @brief Render the GUI objects
+         */
+        void render();
 };
 
 #endif /* WINDOW_HANDLER_HPP__ */

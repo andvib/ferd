@@ -3,6 +3,10 @@
 #include "framework/windowHandler.hpp"
 #include "spdlog/spdlog.h"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 WindowHandler::WindowHandler()
 {
     window = NULL;
@@ -24,6 +28,20 @@ int WindowHandler::activate()
 
     glfwMakeContextCurrent(window);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+    const char* glsl_version = "#version 130";
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsLight();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
 
     return 0;
 }
@@ -73,4 +91,32 @@ void WindowHandler::updateCamera(Camera *gameCamera)
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         gameCamera->moveRight();
     }
+}
+
+void debugWindow()
+{
+    ImGui::Begin("Ferd Debug Window", (bool*)true, ImGuiWindowFlags_MenuBar);
+    ImGui::Text("This will be used to display debug information");
+    ImGui::End();
+}
+
+void WindowHandler::update()
+{
+    glfwPollEvents();
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    debugWindow();
+}
+
+void WindowHandler::render()
+{
+    // Rendering
+    ImGui::Render();
+    int display_w, display_h;
+    glfwGetFramebufferSize(window, &display_w, &display_h);
+    glViewport(0, 0, display_w, display_h);
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
