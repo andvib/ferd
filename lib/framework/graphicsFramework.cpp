@@ -70,6 +70,7 @@ void GraphicsFramework::update(clock_t delta_time_ms)
 {
     m_Screen->Update(m_Program->getProgramID());
     m_Window->updateCamera(p_Camera);
+    m_Window->update();
 
     for (auto objPtr : v_objects) {
         objPtr->Update(delta_time_ms);
@@ -84,6 +85,7 @@ void GraphicsFramework::render()
 
         objPtr->Render();
     }
+    m_Window->render();
 }
 
 void GraphicsFramework::swapBuffers()
