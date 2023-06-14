@@ -40,11 +40,18 @@ class GraphicsProgram {
         GLuint getProgramID() {return m_ProgramID;};
 
         /**
-         * @brief Get the location of the MVP uniform
+         * @brief Get the location of the view-projection (VP) uniform
          *
-         * @return GLuint Location ID for the MVP uniform
+         * @return GLuint Location ID for the VP uniform
          */
-        GLuint getMVPLoc() {return glGetUniformLocation(m_ProgramID, "MVP");};
+        GLuint getViewProjLoc() {return glGetUniformLocation(m_ProgramID, "View_Proj");};
+
+        /**
+         * @brief Get the location of the model uniform
+         *
+         * @return GLuint Location ID for the model uniform
+         */
+        GLuint getModelLoc() {return glGetUniformLocation(m_ProgramID, "Model");};
 
 };
 

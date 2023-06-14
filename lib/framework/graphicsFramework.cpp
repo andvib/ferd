@@ -79,9 +79,12 @@ void GraphicsFramework::update(clock_t delta_time_ms)
 
 void GraphicsFramework::render()
 {
+    glm::mat4 vp = p_Camera->calculateViewProjMatrix();
+    glUniformMatrix4fv(m_Program->getViewProjLoc(), 1, GL_FALSE, &vp[0][0]);
+
     for (auto objPtr : v_objects) {
-        glm::mat4 mvp = p_Camera->transform(objPtr->CalculateModelMatrix());
-        glUniformMatrix4fv(m_Program->getMVPLoc(), 1, GL_FALSE, &mvp[0][0]);
+        glm::mat4 model = objPtr->CalculateModelMatrix();
+        glUniformMatrix4fv(m_Program->getModelLoc(), 1, GL_FALSE, &model[0][0]);
 
         objPtr->Render();
     }

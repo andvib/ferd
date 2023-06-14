@@ -58,15 +58,13 @@ class Camera {
         void setSpeed(float speed) {Speed = speed;};
 
         /**
-         * @brief Return the MVP matrix
+         * @brief Return the VP matrix
          *
-         * @details Calculates the MVP matrix associated with the camera. The model matrix must be
-         *          given as output, and the MVP matrix can be fed directly to the shader uniform.
+         * @details Calculates the view-projection (VP) matrix associated with the camera.
          *
-         * @param model_matrix The current model matrix
-         * @return glm::mat4 The MVP matrix
+         * @return glm::mat4 The VP matrix
          */
-        glm::mat4 transform(glm::mat4 model_matrix);
+        glm::mat4 calculateViewProjMatrix();
 
         /**
          * @brief Move the camera
