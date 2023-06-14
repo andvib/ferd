@@ -8,7 +8,7 @@ Camera::Camera()
     Speed = 0.1;
 }
 
-glm::mat4 Camera::transform(glm::mat4 model_matrix)
+glm::mat4 Camera::calculateViewProjMatrix()
 {
     glm::mat4 View = glm::lookAt(
         glm::vec3(Position.x, Position.y, 5), // Position of camera
@@ -20,5 +20,5 @@ glm::mat4 Camera::transform(glm::mat4 model_matrix)
                                       Dimensions.bottom, Dimensions.top,
                                       0.0f, 100.0f);
 
-    return Projection * View * model_matrix;
+    return Projection * View;
 }
