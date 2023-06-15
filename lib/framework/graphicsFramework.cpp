@@ -29,6 +29,7 @@ int GraphicsFramework::activate()
     spdlog::info("GLFW initialized");
 
     m_Window->activate();
+    glfwSwapInterval(1);
 
     if (glewInit() != GLEW_OK) {
         spdlog::critical("Failed to initialize glew");
