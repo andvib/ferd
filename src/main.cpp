@@ -14,6 +14,8 @@
 
 #include "game/train_util.hpp"
 
+#define CLOCKS_PER_MSEC (CLOCKS_PER_SEC/1000)
+
 int main(void)
 {
     int err;
@@ -52,21 +54,18 @@ int main(void)
     Framework.addCamera(&GameCamera);
 
     /* Loop until the user closes the window */
-    clock_t lastFrame;
+    clock_t lastFrame = clock();
     while (Framework.isRunning())
     {
         clock_t curr_frame = clock();
-        Framework.update((curr_frame - lastFrame) / (CLOCKS_PER_SEC/1000));
-
+        float delta_time_ms = (curr_frame - lastFrame) / CLOCKS_PER_MSEC;
+        Framework.update(delta_time_ms);
+        spdlog::debug("Time since last frame: {0} ms ({1:.2f} FPS)", delta_time_ms, (1/delta_time_ms)*1000);
         Framework.render();
 
         /* Swap front and back buffers */
         Framework.swapBuffers();
-        lastFrame = clock();
-
-        clock_t sleep_time = 20 - (clock() - curr_frame);
-        spdlog::debug("Sleeping for {} ms", sleep_time / (CLOCKS_PER_SEC/1000));
-        std::this_thread::sleep_for(std::chrono::milliseconds(sleep_time / (CLOCKS_PER_SEC/1000)));
+        lastFrame = curr_frame;
     }
 
     spdlog::info("Terminating");
