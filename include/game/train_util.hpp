@@ -7,4 +7,16 @@ struct position_t
     float y;
 };
 
+struct speed_t
+{
+    float x;
+    float y;
+};
+
+struct vector_t
+{
+    float x;
+    float y;
+};
+
 #endif /* TRAIN_UTIL_HPP__ */
