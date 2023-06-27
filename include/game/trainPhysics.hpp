@@ -33,20 +33,29 @@ class TrainPhysics
         position_t getPosition() {return m_pos;};
 
         /**
-         * @brief Change the direction of the train
+         * @brief Get the rotation object
+         *
+         * @return vector_t Unit vector for train rotation
          */
-        void changeDirection();
+        vector_t getRotation() {return m_vector;};
 
         /**
          * @brief Stop the train (sets speed to 0)
          */
         void stop();
 
+        /**
+         * @brief Rotate the train according to the given unit vector
+         *
+         * @param vector Unit vector train rotation should follow
+         */
+        void rotateTrain(vector_t vector) {m_vector = vector;};
+
     private:
-        int m_direction;
-        float m_speed;
+        speed_t m_speed;
         float m_acceleration;
         position_t m_pos;
+        vector_t m_vector;
 };
 
 

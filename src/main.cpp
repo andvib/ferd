@@ -36,16 +36,16 @@ int main(void)
     struct rectangle_color rc4 = {0, 0.8, 0.75};
     struct rectangle_color rc5 = {0, 0.5, 0.9};
 
-    Train trainObject(4, 0, 0.000001, rc1);
+    Train trainObject({4, 0}, {-4, -4}, 0.000001, rc1);
     Framework.addRenderObject(&trainObject);
 
-    Train trainObject2(4, 1, 0.0000008, rc2);
+    Train trainObject2({4, -4}, {0, 1}, 0.0000008, rc2);
     Framework.addRenderObject(&trainObject2);
 
-    Train trainObject3(4, 2, 0.0000005, rc3);
+    Train trainObject3({0, 2}, {-4, 2}, 0.0000005, rc3);
     Framework.addRenderObject(&trainObject3);
 
-    Train trainObject4(4, 3, 0.0000003, rc4);
+    Train trainObject4({4, 3}, {-4, 3}, 0.0000003, rc4);
     Framework.addRenderObject(&trainObject4);
 
     spdlog::info("Starting render loop");

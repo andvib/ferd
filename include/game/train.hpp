@@ -16,21 +16,21 @@ class Train : public RectangleObject
         /**
          * @brief Construct a new Train object
          * 
-         * @param x Start x-position
-         * @param y Start y-position
+         * @param x Start position
+         * @param y End position
          * @param color Color struct for color of the train
          */
-        Train(float x, float y, const struct rectangle_color color);
+        Train(position_t start, position_t end, const struct rectangle_color color);
 
         /**
          * @brief Construct a new Train object
          * 
-         * @param x Start x-position
-         * @param y Start y-position
+         * @param x Start position
+         * @param y End position
          * @param acceleration Acceleration of the train
          * @param color Color struct for color of the train
          */
-        Train(float x, float y, float acceleration, const struct rectangle_color color);
+        Train(position_t start, position_t end, float acceleration, const struct rectangle_color color);
 
         /**
          * @brief Update the physics model of the train, and navigate the route

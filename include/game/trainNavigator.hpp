@@ -26,6 +26,15 @@ class TrainNavigator
          */
         bool atStation(position_t current_position);
 
+        /**
+         * @brief Get the vector to next station
+         *
+         * @details Calculates the unit vector from the previous to the next station
+         *
+         * @return vector_t Unit vector from the previous to the next station
+         */
+        vector_t vectorToNextStation();
+
     private:
         position_t m_start_station;
         position_t m_end_station;
