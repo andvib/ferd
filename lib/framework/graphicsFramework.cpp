@@ -10,6 +10,8 @@ GraphicsFramework::GraphicsFramework()
     m_Window = new WindowHandler();
     m_Program = new GraphicsProgram();
     m_Screen = new GraphicsScreen();
+
+    srand(static_cast <unsigned> (time(0)));
 }
 
 GraphicsFramework::~GraphicsFramework()
