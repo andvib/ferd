@@ -16,9 +16,9 @@ TrainNavigator::TrainNavigator(position_t start_station, position_t end_station)
 
 bool TrainNavigator::atStation(position_t current_position)
 {
-    float distance_to_station = current_position.x - m_next_station.x;
+    float distance_to_station = sqrt(pow((current_position.x - m_next_station.x), 2) + pow((current_position.y - m_next_station.y), 2));
 
-    if (abs(distance_to_station) < 0.1) {
+    if (distance_to_station < 0.05) {
         spdlog::debug("Train reached station ({},{})", current_position.x, current_position.y);
         if (m_next_station.x == m_start_station.x) {
             m_next_station = m_end_station;

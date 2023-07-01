@@ -26,9 +26,9 @@ void TrainPhysics::Update(clock_t delta_time_ms)
     m_speed.y = (m_acceleration * m_vector.y * delta_time_ms) + m_speed.y;
 
     m_pos.x = m_pos.x + (m_speed.x * delta_time_ms)
-              - (0.5 * m_acceleration * delta_time_ms * delta_time_ms);
+              - (0.5 * m_acceleration * m_vector.x * delta_time_ms * delta_time_ms);
     m_pos.y = m_pos.y + (m_speed.y * delta_time_ms)
-              - (0.5 * m_acceleration * delta_time_ms * delta_time_ms);
+              - (0.5 * m_acceleration * m_vector.y * delta_time_ms * delta_time_ms);
 }
 
 void TrainPhysics::stop() {
