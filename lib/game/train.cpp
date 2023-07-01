@@ -1,7 +1,12 @@
 #include "game/train.hpp"
 #include "game/trainPhysics.hpp"
 
+#include <chrono>
 #include <spdlog/spdlog.h>
+#include <cstdlib>
+#include <ctime>
+
+#define CLOCKS_PER_MSEC (CLOCKS_PER_SEC/1000)
 
 static const struct rectangle_points c_train_points = {-0.25, 0.185, -0.25, -0.185, 0.25, -0.185, 0.25, 0.185};
 static const struct rectangle_color c_default_color = {0, 0.25, 1};
@@ -24,19 +29,39 @@ Train::Train(position_t start, position_t end, float acceleration, const struct 
     p_Route = new TrainNavigator(start, end);
 
     p_Physics->rotateTrain(p_Route->vectorToNextStation());
+    m_State = STOPPED_AT_STATION;
 }
 
 void Train::Update(clock_t delta_time_ms)
 {
-    p_Physics->Update(delta_time_ms);
+    switch (m_State) {
+    case STOPPED_AT_STATION:
 
-    if (p_Route->atStation(p_Physics->getPosition())) {
-        p_Physics->stop();
+        if (m_duration_at_station == 0) {
+            vector_t vector_next = p_Route->vectorToNextStation();
+            spdlog::debug("Vector: {} , {}", vector_next.x, vector_next.y);
+            p_Physics->rotateTrain(vector_next);
 
-        vector_t vector_next = p_Route->vectorToNextStation();
-        spdlog::debug("Vector: {} , {}", vector_next.x, vector_next.y);
-        p_Physics->rotateTrain(vector_next);
+            m_duration_at_station = clock();
+            m_wait_time = rand() / (RAND_MAX/3000);
+        }
+
+        if (((clock() - m_duration_at_station) / CLOCKS_PER_MSEC) > m_wait_time) {
+            m_State = ENROUTE;
+            m_duration_at_station = 0;
+        }
+        break;
+
+    case ENROUTE:
+        p_Physics->Update(delta_time_ms);
+
+        if (p_Route->atStation(p_Physics->getPosition())) {
+            p_Physics->stop();
+            m_State = STOPPED_AT_STATION;
+        }
+        break;
     }
+
 }
 
 glm::mat4 Train::CalculateModelMatrix()

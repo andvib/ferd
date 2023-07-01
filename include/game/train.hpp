@@ -7,6 +7,11 @@
 
 #include <chrono>
 
+enum train_state {
+    STOPPED_AT_STATION,
+    ENROUTE
+};
+
 class Train : public RectangleObject
 {
     public:
@@ -33,7 +38,7 @@ class Train : public RectangleObject
         Train(position_t start, position_t end, float acceleration, const struct rectangle_color color);
 
         /**
-         * @brief Update the physics model of the train, and navigate the route
+         * @brief Update the state machine and physics model of the train, and navigate the route
          * 
          * @param delta_time_ms Time since previous update, in milliseconds
          */
@@ -49,6 +54,9 @@ class Train : public RectangleObject
     private:
         TrainNavigator* p_Route;
         TrainPhysics* p_Physics;
+        train_state m_State;
+        clock_t m_duration_at_station = 0;
+        int m_wait_time = 0;
 };
 
 #endif /* TRAIN_HPP__ */
