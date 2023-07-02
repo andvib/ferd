@@ -48,6 +48,7 @@ void Train::Update(clock_t delta_time_ms)
 
         if (((clock() - m_duration_at_station) / CLOCKS_PER_MSEC) > m_wait_time) {
             m_State = ENROUTE;
+            p_Physics->accelerate();
             m_duration_at_station = 0;
         }
         break;

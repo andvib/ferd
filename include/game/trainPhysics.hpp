@@ -45,6 +45,16 @@ class TrainPhysics
         void stop();
 
         /**
+         * @brief Accelerate the train
+         */
+        void accelerate() {m_acc_direction = 1;};
+
+        /**
+         * @brief Deaccelerate the train
+         */
+        void deaccelerate() {m_acc_direction = -1;};
+
+        /**
          * @brief Rotate the train according to the given unit vector
          *
          * @param vector Unit vector train rotation should follow
@@ -53,7 +63,9 @@ class TrainPhysics
 
     private:
         speed_t m_speed;
+        float m_max_speed;
         float m_acceleration;
+        int m_acc_direction;
         position_t m_pos;
         vector_t m_vector;
 };
