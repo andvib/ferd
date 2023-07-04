@@ -1,74 +1,74 @@
-#ifndef WINDOW_HANDLER_HPP__
-#define WINDOW_HANDLER_HPP__
+#ifndef INCLUDE_FRAMEWORK_WINDOWHANDLER_HPP_
+#define INCLUDE_FRAMEWORK_WINDOWHANDLER_HPP_
 
 #include <GLFW/glfw3.h>
 
 #include "game/camera.hpp"
 
 class WindowHandler {
+ private:
+  /* Variable holding the GLFW ID of the window */
+  GLFWwindow* window;
 
-    private:
-        /* Variable holding the GLFW ID of the window */
-        GLFWwindow* window;
+ public:
+  /**
+   * @brief Construct a new Window Handler:: Window Handler object
+   *
+   * @details Sets window hints for GLFW
+   */
+  WindowHandler();
 
-    public:
-        /**
-         * @brief Construct a new Window Handler:: Window Handler object
-         *
-         * @details Sets window hints for GLFW
-         */
-        WindowHandler();
+  /**
+   * @brief Activate the window
+   *
+   * @details Creates a window from GLFW, and makes it the current context. Also
+   * sets the input mode for the window.
+   *
+   * @return int 0 if success, negative value otherwise
+   */
+  int activate();
 
-        /**
-         * @brief Activate the window
-         *
-         * @details Creates a window from GLFW, and makes it the current context. Also sets the input mode
-         *          for the window.
-         *
-         * @return int 0 if success, negative value otherwise
-         */
-        int activate();
+  /**
+   * @brief Swap the OpenGL Buffers for the window
+   *
+   * @details activate() must have been called for the window before calling
+   * swapBuffers(). Also instructs GLFW to process events.
+   *
+   * @return int 0 if success, negative if window has not been activated
+   */
+  int swapBuffers();
 
-        /**
-         * @brief Swap the OpenGL Buffers for the window
-         *
-         * @details activate() must have been called for the window before calling swapBuffers().
-         *          Also instructs GLFW to process events.
-         *
-         * @return int 0 if success, negative if window has not been activated
-         */
-        int swapBuffers();
+  /**
+   * @brief Checks if user has closed window
+   *
+   * @details Checks if the user has pressed either escape button, or crossed
+   * out the window.
+   *
+   * @return true Window has not been closed by user and is running
+   * @return false Window has been closed by user
+   */
+  bool isWindowRunning();
 
-        /**
-         * @brief Checks if user has closed window
-         *
-         * @details Checks if the user has pressed either escape button, or crossed out the window.
-         *
-         * @return true Window has not been closed by user and is running
-         * @return false Window has been closed by user
-         */
-        bool isWindowRunning();
+  /**
+   * @brief Updates camera movement base on user input
+   *
+   * @details Calls the camera move functions based on the user keyboard input.
+   *
+   * @param gameCamera
+   */
+  void updateCamera(Camera* gameCamera);
 
-        /**
-         * @brief Updates camera movement base on user input
-         *
-         * @details Calls the camera move functions based on the user keyboard input.
-         *
-         * @param gameCamera
-         */
-        void updateCamera(Camera *gameCamera);
+  /**
+   * @brief Update the window attributes
+   *
+   * @details Fetches IO events and updates the GUI
+   */
+  void update();
 
-        /**
-         * @brief Update the window attributes
-         *
-         * @details Fetches IO events and updates the GUI
-         */
-        void update();
-
-        /**
-         * @brief Render the GUI objects
-         */
-        void render();
+  /**
+   * @brief Render the GUI objects
+   */
+  void render();
 };
 
-#endif /* WINDOW_HANDLER_HPP__ */
+#endif /* INCLUDE_FRAMEWORK_WINDOWHANDLER_HPP_ */

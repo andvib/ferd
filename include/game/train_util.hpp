@@ -1,22 +1,19 @@
-#ifndef TRAIN_UTIL_HPP__
-#define TRAIN_UTIL_HPP__
+#ifndef INCLUDE_GAME_TRAIN_UTIL_HPP_
+#define INCLUDE_GAME_TRAIN_UTIL_HPP_
 
-struct position_t
-{
-    float x;
-    float y;
+struct position_t {
+  float x;
+  float y;
 };
 
-struct speed_t
-{
-    float x;
-    float y;
+struct speed_t {
+  float x;
+  float y;
 };
 
-struct vector_t
-{
-    float x;
-    float y;
+struct vector_t {
+  float x;
+  float y;
 };
 
-#endif /* TRAIN_UTIL_HPP__ */
+#endif /* INCLUDE_GAME_TRAIN_UTIL_HPP_ */
