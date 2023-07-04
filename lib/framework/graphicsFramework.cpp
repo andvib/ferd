@@ -5,96 +5,82 @@
 
 #include "spdlog/spdlog.h"
 
-GraphicsFramework::GraphicsFramework()
-{
-    m_Window = new WindowHandler();
-    m_Program = new GraphicsProgram();
-    m_Screen = new GraphicsScreen();
+GraphicsFramework::GraphicsFramework() {
+  m_Window = new WindowHandler();
+  m_Program = new GraphicsProgram();
+  m_Screen = new GraphicsScreen();
 
-    srand(static_cast <unsigned> (time(0)));
+  srand(static_cast<unsigned>(time(0)));
 }
 
-GraphicsFramework::~GraphicsFramework()
-{
-    delete m_Window;
-    delete m_Program;
-    delete m_Screen;
+GraphicsFramework::~GraphicsFramework() {
+  delete m_Window;
+  delete m_Program;
+  delete m_Screen;
 }
 
-int GraphicsFramework::activate()
-{
-    /* Initialize the library */
-    glewExperimental = GL_TRUE;
-    if( !glfwInit() ) {
-        spdlog::critical("Failed to initalize GLFW");
-    }
-    spdlog::info("GLFW initialized");
+int GraphicsFramework::activate() {
+  /* Initialize the library */
+  glewExperimental = GL_TRUE;
+  if (!glfwInit()) {
+    spdlog::critical("Failed to initalize GLFW");
+  }
+  spdlog::info("GLFW initialized");
 
-    m_Window->activate();
-    glfwSwapInterval(1);
+  m_Window->activate();
+  glfwSwapInterval(1);
 
-    if (glewInit() != GLEW_OK) {
-        spdlog::critical("Failed to initialize glew");
-    }
-    spdlog::info("GLEW initialized");
+  if (glewInit() != GLEW_OK) {
+    spdlog::critical("Failed to initialize glew");
+  }
+  spdlog::info("GLEW initialized");
 
-    m_Program->activate();
+  m_Program->activate();
 
-    return 0;
+  return 0;
 }
 
-void GraphicsFramework::addShaders(const char *vertex_file_path, const char *fragment_file_path)
-{
-    VertexShader verShader;
-    verShader.loadShader(vertex_file_path);
-    verShader.compileShader();
+void GraphicsFramework::addShaders(const char *vertex_file_path,
+                                   const char *fragment_file_path) {
+  VertexShader verShader;
+  verShader.loadShader(vertex_file_path);
+  verShader.compileShader();
 
-    FragmentShader fragShader;
-    fragShader.loadShader(fragment_file_path);
-    fragShader.compileShader();
+  FragmentShader fragShader;
+  fragShader.loadShader(fragment_file_path);
+  fragShader.compileShader();
 
-    m_Program->attachShaders(verShader, fragShader);
+  m_Program->attachShaders(verShader, fragShader);
 
-    verShader.deleteShader();
-    fragShader.deleteShader();
+  verShader.deleteShader();
+  fragShader.deleteShader();
 }
 
-bool GraphicsFramework::isRunning()
-{
-    return m_Window->isWindowRunning();
+bool GraphicsFramework::isRunning() { return m_Window->isWindowRunning(); }
+
+void GraphicsFramework::terminate() { glfwTerminate(); }
+
+void GraphicsFramework::update(clock_t delta_time_ms) {
+  m_Screen->Update(m_Program->getProgramID());
+  m_Window->updateCamera(p_Camera);
+  m_Window->update();
+
+  for (auto objPtr : v_objects) {
+    objPtr->Update(delta_time_ms);
+  }
 }
 
-void GraphicsFramework::terminate()
-{
-    glfwTerminate();
+void GraphicsFramework::render() {
+  glm::mat4 vp = p_Camera->calculateViewProjMatrix();
+  glUniformMatrix4fv(m_Program->getViewProjLoc(), 1, GL_FALSE, &vp[0][0]);
+
+  for (auto objPtr : v_objects) {
+    glm::mat4 model = objPtr->CalculateModelMatrix();
+    glUniformMatrix4fv(m_Program->getModelLoc(), 1, GL_FALSE, &model[0][0]);
+
+    objPtr->Render();
+  }
+  m_Window->render();
 }
 
-void GraphicsFramework::update(clock_t delta_time_ms)
-{
-    m_Screen->Update(m_Program->getProgramID());
-    m_Window->updateCamera(p_Camera);
-    m_Window->update();
-
-    for (auto objPtr : v_objects) {
-        objPtr->Update(delta_time_ms);
-    }
-}
-
-void GraphicsFramework::render()
-{
-    glm::mat4 vp = p_Camera->calculateViewProjMatrix();
-    glUniformMatrix4fv(m_Program->getViewProjLoc(), 1, GL_FALSE, &vp[0][0]);
-
-    for (auto objPtr : v_objects) {
-        glm::mat4 model = objPtr->CalculateModelMatrix();
-        glUniformMatrix4fv(m_Program->getModelLoc(), 1, GL_FALSE, &model[0][0]);
-
-        objPtr->Render();
-    }
-    m_Window->render();
-}
-
-void GraphicsFramework::swapBuffers()
-{
-    m_Window->swapBuffers();
-}
+void GraphicsFramework::swapBuffers() { m_Window->swapBuffers(); }

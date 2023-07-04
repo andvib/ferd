@@ -22,7 +22,7 @@ target_sources(ferd PRIVATE
                lib/game/train.cpp
                lib/game/trainNavigator.cpp
                lib/game/trainPhysics.cpp)
-include_directories(ferd include)
+include_directories(ferd include ext)
 
 # Add GLFW to build
 set(GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only")
