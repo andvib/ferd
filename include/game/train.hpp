@@ -9,7 +9,8 @@
 
 enum train_state {
     STOPPED_AT_STATION,
-    ENROUTE
+    ENROUTE,
+    APPROACH
 };
 
 class Train : public RectangleObject

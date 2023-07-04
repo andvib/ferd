@@ -50,9 +50,9 @@ class TrainPhysics
         void accelerate() {m_acc_direction = 1;};
 
         /**
-         * @brief Deaccelerate the train
+         * @brief Decelerate the train
          */
-        void deaccelerate() {m_acc_direction = -1;};
+        void decelerate() {m_acc_direction = -1;};
 
         /**
          * @brief Rotate the train according to the given unit vector
@@ -61,14 +61,23 @@ class TrainPhysics
          */
         void rotateTrain(vector_t vector) {m_vector = vector;};
 
+        /**
+         * @brief Get the breaking distance of the train
+         *
+         * @return float Breaking distance of the train
+         */
+        float getBreakingDistance() { return m_breaking_distance; };
+
     private:
         speed_t m_speed;
         float m_max_speed;
         float m_acceleration;
+        float m_breaking_distance;
         int m_acc_direction;
         position_t m_pos;
         vector_t m_vector;
 };
 
+float calculateBreakingDistance(float acceleration, float max_speed);
 
 #endif /* TRAIN_PHYSICS_HPP__ */
