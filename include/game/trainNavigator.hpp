@@ -35,6 +35,14 @@ class TrainNavigator
          */
         vector_t vectorToNextStation();
 
+        /**
+         * @brief Get the distance to the next station based on the current position
+         *
+         * @param current_position Current position of the train
+         * @return float Distance to station from the current position
+         */
+        float distanceToStation(position_t current_position);
+
     private:
         position_t m_start_station;
         position_t m_end_station;

@@ -56,13 +56,22 @@ void Train::Update(clock_t delta_time_ms)
     case ENROUTE:
         p_Physics->Update(delta_time_ms);
 
+        if (p_Route->distanceToStation(p_Physics->getPosition()) < p_Physics->getBreakingDistance()) {
+            spdlog::info("Approaching station!");
+            p_Physics->decelerate();
+            m_State = APPROACH;
+        }
+        break;
+
+    case APPROACH:
+        p_Physics->Update(delta_time_ms);
+
         if (p_Route->atStation(p_Physics->getPosition())) {
             p_Physics->stop();
             m_State = STOPPED_AT_STATION;
         }
         break;
     }
-
 }
 
 glm::mat4 Train::CalculateModelMatrix()
