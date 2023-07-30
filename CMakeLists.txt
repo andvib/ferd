@@ -21,7 +21,8 @@ target_sources(ferd PRIVATE
                lib/game/camera.cpp
                lib/game/train.cpp
                lib/game/trainNavigator.cpp
-               lib/game/trainPhysics.cpp)
+               lib/game/trainPhysics.cpp
+               lib/game/line.cpp)
 include_directories(ferd include ext)
 
 # Add GLFW to build
