@@ -3,6 +3,7 @@
 
 #include <chrono>
 
+#include "game/line.hpp"
 #include "game/rectangleObject.hpp"
 #include "game/trainNavigator.hpp"
 #include "game/trainPhysics.hpp"
@@ -17,21 +18,12 @@ class Train : public RectangleObject {
   /**
    * @brief Construct a new Train object
    *
-   * @param x Start position
-   * @param y End position
-   * @param color Color struct for color of the train
-   */
-  Train(position_t start, position_t end, const struct rectangle_color color);
-
-  /**
-   * @brief Construct a new Train object
-   *
-   * @param x Start position
-   * @param y End position
+   * @param line Line object the train will be traveling along
+   * @param start_position Start position of the train
    * @param acceleration Acceleration of the train
-   * @param color Color struct for color of the train
+   * @param color Color struct for the color of the train
    */
-  Train(position_t start, position_t end, float acceleration,
+  Train(Line* line, position_t start_position, float acceleration,
         const struct rectangle_color color);
 
   /**

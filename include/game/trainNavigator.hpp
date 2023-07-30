@@ -2,6 +2,7 @@
 #define INCLUDE_GAME_TRAINNAVIGATOR_HPP_
 #include <vector>
 
+#include "game/line.hpp"
 #include "game/train_util.hpp"
 
 class TrainNavigator {
@@ -11,10 +12,9 @@ class TrainNavigator {
   /**
    * @brief Construct a new Train Navigator object
    *
-   * @param start_station Position of start station
-   * @param end_station Position of end station
+   * @param line Line that the train will be traveling
    */
-  TrainNavigator(position_t start_station, position_t end_station);
+  explicit TrainNavigator(Line *line);
 
   /**
    * @brief Check if train is currently at a station
@@ -32,7 +32,7 @@ class TrainNavigator {
    *
    * @return vector_t Unit vector from the previous to the next station
    */
-  vector_t vectorToNextStation();
+  vector_t vectorToNextStation(position_t current_position);
 
   /**
    * @brief Get the distance to the next station based on the current position
@@ -43,9 +43,9 @@ class TrainNavigator {
   float distanceToStation(position_t current_position);
 
  private:
-  position_t m_start_station;
-  position_t m_end_station;
-  position_t m_next_station;
+  Line *p_line;
+  int m_waypoint_index;
+  LineDirection m_direction;
 };
 
 #endif /* INCLUDE_GAME_TRAINNAVIGATOR_HPP_ */

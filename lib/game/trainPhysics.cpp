@@ -6,7 +6,7 @@
 
 TrainPhysics::TrainPhysics() {
   m_speed = {0, 0};
-  m_max_speed = 0.002;
+  m_max_speed = 0.001;
   m_acceleration = 0.00001;
   m_acc_direction = 1;
   m_pos = {0, 4};
@@ -16,7 +16,7 @@ TrainPhysics::TrainPhysics() {
 
 TrainPhysics::TrainPhysics(position_t start_position, float acceleration) {
   m_speed = {0, 0};
-  m_max_speed = 0.002;
+  m_max_speed = 0.001;
   m_acceleration = acceleration;
   m_acc_direction = 1;
   m_pos = start_position;

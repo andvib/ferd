@@ -24,31 +24,30 @@ Train::~Train() {
   delete p_Physics;
 }
 
-Train::Train(position_t start, position_t end, float acceleration,
+Train::Train(Line* line, position_t start_position, float acceleration,
              const struct rectangle_color color)
     : RectangleObject(c_train_points, color) {
-  p_Physics = new TrainPhysics(start, acceleration);
-  p_Route = new TrainNavigator(start, end);
+  p_Physics = new TrainPhysics(start_position, acceleration);
+  p_Route = new TrainNavigator(line);
 
-  p_Physics->rotateTrain(p_Route->vectorToNextStation());
+  p_Physics->rotateTrain(
+      p_Route->vectorToNextStation(p_Physics->getPosition()));
   m_State = STOPPED_AT_STATION;
 }
 
 void Train::Update(clock_t delta_time_ms) {
   switch (m_State) {
     case STOPPED_AT_STATION:
-
       if (m_duration_at_station == 0) {
-        vector_t vector_next = p_Route->vectorToNextStation();
-        spdlog::debug("Vector: {} , {}", vector_next.x, vector_next.y);
-        p_Physics->rotateTrain(vector_next);
-
         m_duration_at_station = clock();
         m_wait_time = rand() / (RAND_MAX / 3000);
       }
 
       if (((clock() - m_duration_at_station) / CLOCKS_PER_MSEC) > m_wait_time) {
         m_State = ENROUTE;
+        vector_t vector_next =
+            p_Route->vectorToNextStation(p_Physics->getPosition());
+        p_Physics->rotateTrain({vector_next});
         p_Physics->accelerate();
         m_duration_at_station = 0;
       }
