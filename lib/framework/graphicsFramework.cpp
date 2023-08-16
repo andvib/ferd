@@ -19,7 +19,7 @@ GraphicsFramework::~GraphicsFramework() {
   delete m_Screen;
 }
 
-int GraphicsFramework::activate() {
+int GraphicsFramework::Activate() {
   /* Initialize the library */
   glewExperimental = GL_TRUE;
   if (!glfwInit()) {
@@ -60,26 +60,20 @@ bool GraphicsFramework::isRunning() { return m_Window->isWindowRunning(); }
 
 void GraphicsFramework::terminate() { glfwTerminate(); }
 
-void GraphicsFramework::update(clock_t delta_time_ms) {
+void GraphicsFramework::Update(clock_t delta_time_ms) {
   m_Screen->Update(m_Program->getProgramID());
   m_Window->updateCamera(p_Camera);
   m_Window->update();
 
-  for (auto objPtr : v_objects) {
-    objPtr->Update(delta_time_ms);
-  }
+  p_World->Update(delta_time_ms);
 }
 
-void GraphicsFramework::render() {
+void GraphicsFramework::Render() {
   glm::mat4 vp = p_Camera->calculateViewProjMatrix();
   glUniformMatrix4fv(m_Program->getViewProjLoc(), 1, GL_FALSE, &vp[0][0]);
 
-  for (auto objPtr : v_objects) {
-    glm::mat4 model = objPtr->CalculateModelMatrix();
-    glUniformMatrix4fv(m_Program->getModelLoc(), 1, GL_FALSE, &model[0][0]);
+  p_World->RenderTrains(m_Program->getModelLoc());
 
-    objPtr->Render();
-  }
   m_Window->render();
 }
 
