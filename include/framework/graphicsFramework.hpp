@@ -8,6 +8,7 @@
 #include "framework/windowHandler.hpp"
 #include "game/camera.hpp"
 #include "game/rectangleObject.hpp"
+#include "game/world.hpp"
 
 class GraphicsFramework {
  public:
@@ -22,7 +23,7 @@ class GraphicsFramework {
    *
    * @return int 0 on success
    */
-  int activate();
+  int Activate();
 
   /**
    * @brief Add shaders to the framework
@@ -34,6 +35,8 @@ class GraphicsFramework {
    * @param fragment_filepath Filepath to the fragment shader
    */
   void addShaders(const char *vertex_filepath, const char *fragment_filepath);
+
+  void AddWorld(World *world) { p_World = world; }
 
   /**
    * @brief Checks if the Framework has been closed
@@ -57,12 +60,12 @@ class GraphicsFramework {
    *
    * @param delta_time_ms Time since previous frame, in milliseconds
    */
-  void update(clock_t delta_time_ms);
+  void Update(clock_t delta_time_ms);
 
   /**
    * @brief Render objects to the frame buffer
    */
-  void render();
+  void Render();
 
   /**
    * @brief Swap to the staged frame buffer
@@ -87,6 +90,7 @@ class GraphicsFramework {
   GraphicsProgram *m_Program;
   WindowHandler *m_Window;
   GraphicsScreen *m_Screen;
+  World *p_World;
   Camera *p_Camera;
   std::vector<RectangleObject *> v_objects;
 };
