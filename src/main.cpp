@@ -30,7 +30,7 @@ int main(void) {
   const char *fragment_file_path =
       "C:/git/ferd/src/shader/SimpleFragmentShader.fragmentshader";
 
-  Framework.addShaders(vertex_file_path, fragment_file_path);
+  Framework.AddTrainShader(vertex_file_path, fragment_file_path);
 
   World GameWorld;
   Framework.AddWorld(&GameWorld);

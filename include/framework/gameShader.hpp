@@ -47,7 +47,7 @@ class GameShader {
    *
    * @return GLuint Shader ID
    */
-  GLuint getShaderID();
+  GLuint get_shader_id();
 
   /**
    * @brief Deletes the shader from GL context

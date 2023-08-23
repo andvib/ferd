@@ -4,23 +4,23 @@
 
 #include "spdlog/spdlog.h"
 
-void GraphicsProgram::attachShaders(VertexShader vertex_shader,
+void GraphicsProgram::AttachShaders(VertexShader vertex_shader,
                                     FragmentShader fragment_shader) {
-  glAttachShader(m_ProgramID, vertex_shader.getShaderID());
-  glAttachShader(m_ProgramID, fragment_shader.getShaderID());
-  glLinkProgram(m_ProgramID);
+  glAttachShader(m_program_id, vertex_shader.get_shader_id());
+  glAttachShader(m_program_id, fragment_shader.get_shader_id());
+  glLinkProgram(m_program_id);
 
   GLint Result = GL_FALSE;
   int InfoLogLength;
-  glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &Result);
-  glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+  glGetProgramiv(m_program_id, GL_LINK_STATUS, &Result);
+  glGetProgramiv(m_program_id, GL_INFO_LOG_LENGTH, &InfoLogLength);
   if (InfoLogLength > 0) {
     std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
-    glGetProgramInfoLog(m_ProgramID, InfoLogLength, NULL,
+    glGetProgramInfoLog(m_program_id, InfoLogLength, NULL,
                         &ProgramErrorMessage[0]);
     spdlog::critical("%s", &ProgramErrorMessage[0]);
   }
 
-  glDetachShader(m_ProgramID, vertex_shader.getShaderID());
-  glDetachShader(m_ProgramID, fragment_shader.getShaderID());
+  glDetachShader(m_program_id, vertex_shader.get_shader_id());
+  glDetachShader(m_program_id, fragment_shader.get_shader_id());
 }

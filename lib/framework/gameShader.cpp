@@ -50,6 +50,6 @@ int GameShader::compileShader() {
   return 0;
 }
 
-GLuint GameShader::getShaderID() { return shaderID; }
+GLuint GameShader::get_shader_id() { return shaderID; }
 
 void GameShader::deleteShader() { glDeleteShader(shaderID); }
