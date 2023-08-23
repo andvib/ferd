@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "framework/graphicsProgram.hpp"
-#include "framework/graphicsScreen.hpp"
 #include "framework/windowHandler.hpp"
 #include "game/camera.hpp"
 #include "game/rectangleObject.hpp"
@@ -26,15 +25,15 @@ class GraphicsFramework {
   int Activate();
 
   /**
-   * @brief Add shaders to the framework
+   * @brief Add shaders to use to render trains
    *
-   * @details Compiles and attaches the shaders to the framework. Only one pair
-   * of shaders can be used in the current program.
+   * @details Compiles and attaches the shaders to the train program
    *
    * @param vertex_filepath Filepath to the vertex shader
    * @param fragment_filepath Filepath to the fragment shader
    */
-  void addShaders(const char *vertex_filepath, const char *fragment_filepath);
+  void AddTrainShader(const char *vertex_filepath,
+                      const char *fragment_filepath);
 
   void AddWorld(World *world) { p_World = world; }
 
@@ -79,20 +78,11 @@ class GraphicsFramework {
    */
   void addCamera(Camera *camera) { p_Camera = camera; }
 
-  /**
-   * @brief Add a render object to the framework
-   *
-   * @param object
-   */
-  void addRenderObject(RectangleObject *object) { v_objects.push_back(object); }
-
  private:
-  GraphicsProgram *m_Program;
+  GraphicsProgram *m_TrainProgram;
   WindowHandler *m_Window;
-  GraphicsScreen *m_Screen;
   World *p_World;
   Camera *p_Camera;
-  std::vector<RectangleObject *> v_objects;
 };
 
 #endif /* INCLUDE_FRAMEWORK_GRAPHICSFRAMEWORK_HPP_ */

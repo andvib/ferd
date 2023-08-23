@@ -6,9 +6,6 @@
 #include "framework/gameShader.hpp"
 
 class GraphicsProgram {
- private:
-  GLuint m_ProgramID;
-
  public:
   /**
    * @brief Construct a new Graphics Program object
@@ -18,7 +15,12 @@ class GraphicsProgram {
   /**
    * @brief Activate an OpenGL program
    */
-  void activate() { m_ProgramID = glCreateProgram(); }
+  void Create() { m_program_id = glCreateProgram(); }
+
+  /**
+   * @brief Enable the program as the current context
+   */
+  void EnableProgram() { glUseProgram(m_program_id); }
 
   /**
    * @brief Attach shaders to program
@@ -29,7 +31,7 @@ class GraphicsProgram {
    * @param vertex_shader Vertex shader object
    * @param fragment_shader Fragment shader object
    */
-  void attachShaders(VertexShader vertex_shader,
+  void AttachShaders(VertexShader vertex_shader,
                      FragmentShader fragment_shader);
 
   /**
@@ -37,23 +39,10 @@ class GraphicsProgram {
    *
    * @return GLuint Program ID
    */
-  GLuint getProgramID() { return m_ProgramID; }
+  GLuint get_program_id() { return m_program_id; }
 
-  /**
-   * @brief Get the location of the view-projection (VP) uniform
-   *
-   * @return GLuint Location ID for the VP uniform
-   */
-  GLuint getViewProjLoc() {
-    return glGetUniformLocation(m_ProgramID, "View_Proj");
-  }
-
-  /**
-   * @brief Get the location of the model uniform
-   *
-   * @return GLuint Location ID for the model uniform
-   */
-  GLuint getModelLoc() { return glGetUniformLocation(m_ProgramID, "Model"); }
+ private:
+  GLuint m_program_id;
 };
 
 #endif /* INCLUDE_FRAMEWORK_GRAPHICSPROGRAM_HPP_ */

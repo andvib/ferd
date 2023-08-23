@@ -7,16 +7,14 @@
 
 GraphicsFramework::GraphicsFramework() {
   m_Window = new WindowHandler();
-  m_Program = new GraphicsProgram();
-  m_Screen = new GraphicsScreen();
+  m_TrainProgram = new GraphicsProgram();
 
   srand(static_cast<unsigned>(time(0)));
 }
 
 GraphicsFramework::~GraphicsFramework() {
   delete m_Window;
-  delete m_Program;
-  delete m_Screen;
+  delete m_TrainProgram;
 }
 
 int GraphicsFramework::Activate() {
@@ -35,13 +33,13 @@ int GraphicsFramework::Activate() {
   }
   spdlog::info("GLEW initialized");
 
-  m_Program->activate();
+  m_TrainProgram->Create();
 
   return 0;
 }
 
-void GraphicsFramework::addShaders(const char *vertex_file_path,
-                                   const char *fragment_file_path) {
+void GraphicsFramework::AddTrainShader(const char *vertex_file_path,
+                                       const char *fragment_file_path) {
   VertexShader verShader;
   verShader.loadShader(vertex_file_path);
   verShader.compileShader();
@@ -50,7 +48,7 @@ void GraphicsFramework::addShaders(const char *vertex_file_path,
   fragShader.loadShader(fragment_file_path);
   fragShader.compileShader();
 
-  m_Program->attachShaders(verShader, fragShader);
+  m_TrainProgram->AttachShaders(verShader, fragShader);
 
   verShader.deleteShader();
   fragShader.deleteShader();
@@ -61,7 +59,8 @@ bool GraphicsFramework::isRunning() { return m_Window->isWindowRunning(); }
 void GraphicsFramework::terminate() { glfwTerminate(); }
 
 void GraphicsFramework::Update(clock_t delta_time_ms) {
-  m_Screen->Update(m_Program->getProgramID());
+  glClearColor((245.0 / 255), (245.0 / 255), (220.0 / 255), 1.0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   m_Window->updateCamera(p_Camera);
   m_Window->update();
 
@@ -70,9 +69,14 @@ void GraphicsFramework::Update(clock_t delta_time_ms) {
 
 void GraphicsFramework::Render() {
   glm::mat4 vp = p_Camera->calculateViewProjMatrix();
-  glUniformMatrix4fv(m_Program->getViewProjLoc(), 1, GL_FALSE, &vp[0][0]);
 
-  p_World->RenderTrains(m_Program->getModelLoc());
+  m_TrainProgram->EnableProgram();
+  glUniformMatrix4fv(
+      glGetUniformLocation(m_TrainProgram->get_program_id(), "View_Proj"), 1,
+      GL_FALSE, &vp[0][0]);
+
+  p_World->RenderTrains(
+      glGetUniformLocation(m_TrainProgram->get_program_id(), "Model"));
 
   m_Window->render();
 }

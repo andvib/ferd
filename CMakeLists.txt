@@ -16,7 +16,6 @@ target_sources(ferd PRIVATE
                lib/framework/gameShader.cpp
                lib/framework/graphicsProgram.cpp
                lib/framework/graphicsFramework.cpp
-               lib/framework/graphicsScreen.cpp
                lib/game/rectangleObject.cpp
                lib/game/camera.cpp
                lib/game/train.cpp
