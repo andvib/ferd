@@ -3,10 +3,10 @@
 
 #include <vector>
 
+#include "framework/geometry/rectangleObject.hpp"
 #include "framework/graphicsProgram.hpp"
 #include "framework/windowHandler.hpp"
 #include "game/camera.hpp"
-#include "game/rectangleObject.hpp"
 #include "game/world.hpp"
 
 class GraphicsFramework {
