@@ -10,7 +10,6 @@
 #include "framework/graphicsFramework.hpp"
 #include "game/camera.hpp"
 #include "game/line.hpp"
-#include "game/rectangleObject.hpp"
 #include "game/train.hpp"
 #include "game/train_util.hpp"
 #include "game/world.hpp"

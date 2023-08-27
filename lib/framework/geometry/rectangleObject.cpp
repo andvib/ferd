@@ -1,4 +1,4 @@
-#include "game/rectangleObject.hpp"
+#include "framework/geometry/rectangleObject.hpp"
 
 #include <spdlog/spdlog.h>
 

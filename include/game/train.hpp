@@ -3,8 +3,8 @@
 
 #include <chrono>
 
+#include "framework/geometry/rectangleObject.hpp"
 #include "game/line.hpp"
-#include "game/rectangleObject.hpp"
 #include "game/trainNavigator.hpp"
 #include "game/trainPhysics.hpp"
 
