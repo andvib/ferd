@@ -5,8 +5,10 @@
 
 #include <vector>
 
+#include "framework/geometry/lineObject.hpp"
 #include "game/line.hpp"
 #include "game/train.hpp"
+
 class World {
  public:
   World() {}
@@ -33,13 +35,29 @@ class World {
    */
   void AddLine(Line *line) { v_Lines.push_back(line); }
 
+  /**
+   * @brief Add a LineObject to draw in the world
+   *
+   * @param object LineObject object
+   */
+  void AddLineObject(LineObject *object) { v_line_objects.push_back(object); }
+
+  /**
+   * @brief Render the trains in the world
+   *
+   * @param modelLoc Location of the model uniform in the program
+   */
   void RenderTrains(GLuint modelLoc);
 
-  void RenderLines(GLuint modelLoc);
+  /**
+   * @brief Render the line objects in the world
+   */
+  void RenderLineObjects();
 
  private:
   std::vector<Train *> v_Trains;
   std::vector<Line *> v_Lines;
+  std::vector<LineObject *> v_line_objects;
 };
 
 #endif /* INCLUDE_GAME_WORLD_HPP_ */

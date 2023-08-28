@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "framework/geometry/lineObject.hpp"
 #include "game/train_util.hpp"
 
 enum class LineDirection { FORWARD, BACKWARD };
