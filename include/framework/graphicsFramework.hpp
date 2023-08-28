@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "framework/geometry/lineObject.hpp"
 #include "framework/geometry/rectangleObject.hpp"
 #include "framework/graphicsProgram.hpp"
 #include "framework/windowHandler.hpp"
@@ -35,6 +36,22 @@ class GraphicsFramework {
   void AddTrainShader(const char *vertex_filepath,
                       const char *fragment_filepath);
 
+  /**
+   * @brief Add shaders that will render lines
+   *
+   * @details Compiles and attaches the shaders to the train program
+   *
+   * @param vertex_filepath Filepath to the vertex shader
+   * @param fragment_filepath Filepath to the fragment shader
+   */
+  void AddLineShader(const char *vertex_filepath,
+                     const char *fragment_filepath);
+
+  /**
+   * @brief Add world object to the framework
+   *
+   * @param world World object
+   */
   void AddWorld(World *world) { p_World = world; }
 
   /**
@@ -80,6 +97,7 @@ class GraphicsFramework {
 
  private:
   GraphicsProgram *m_TrainProgram;
+  GraphicsProgram *m_LineProgram;
   WindowHandler *m_Window;
   World *p_World;
   Camera *p_Camera;

@@ -16,3 +16,9 @@ void World::RenderTrains(GLuint modelLoc) {
     trainPtr->Render();
   }
 }
+
+void World::RenderLineObjects() {
+  for (auto linePtr : v_line_objects) {
+    linePtr->Render();
+  }
+}

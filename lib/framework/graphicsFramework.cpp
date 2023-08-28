@@ -8,6 +8,7 @@
 GraphicsFramework::GraphicsFramework() {
   m_Window = new WindowHandler();
   m_TrainProgram = new GraphicsProgram();
+  m_LineProgram = new GraphicsProgram();
 
   srand(static_cast<unsigned>(time(0)));
 }
@@ -34,12 +35,13 @@ int GraphicsFramework::Activate() {
   spdlog::info("GLEW initialized");
 
   m_TrainProgram->Create();
+  m_LineProgram->Create();
 
   return 0;
 }
 
-void GraphicsFramework::AddTrainShader(const char *vertex_file_path,
-                                       const char *fragment_file_path) {
+void AttachShader(GraphicsProgram *program, const char *vertex_file_path,
+                  const char *fragment_file_path) {
   VertexShader verShader;
   verShader.loadShader(vertex_file_path);
   verShader.compileShader();
@@ -48,10 +50,20 @@ void GraphicsFramework::AddTrainShader(const char *vertex_file_path,
   fragShader.loadShader(fragment_file_path);
   fragShader.compileShader();
 
-  m_TrainProgram->AttachShaders(verShader, fragShader);
+  program->AttachShaders(verShader, fragShader);
 
   verShader.deleteShader();
   fragShader.deleteShader();
+}
+
+void GraphicsFramework::AddTrainShader(const char *vertex_file_path,
+                                       const char *fragment_file_path) {
+  AttachShader(m_TrainProgram, vertex_file_path, fragment_file_path);
+}
+
+void GraphicsFramework::AddLineShader(const char *vertex_file_path,
+                                      const char *fragment_file_path) {
+  AttachShader(m_LineProgram, vertex_file_path, fragment_file_path);
 }
 
 bool GraphicsFramework::isRunning() { return m_Window->isWindowRunning(); }
@@ -69,6 +81,12 @@ void GraphicsFramework::Update(clock_t delta_time_ms) {
 
 void GraphicsFramework::Render() {
   glm::mat4 vp = p_Camera->calculateViewProjMatrix();
+
+  m_LineProgram->EnableProgram();
+  glUniformMatrix4fv(
+      glGetUniformLocation(m_LineProgram->get_program_id(), "View_Proj"), 1,
+      GL_FALSE, &vp[0][0]);
+  p_World->RenderLineObjects();
 
   m_TrainProgram->EnableProgram();
   glUniformMatrix4fv(
