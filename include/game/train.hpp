@@ -7,6 +7,7 @@
 #include "game/line.hpp"
 #include "game/trainNavigator.hpp"
 #include "game/trainPhysics.hpp"
+#include "game/train_util.hpp"
 
 enum train_state { STOPPED_AT_STATION, ENROUTE, APPROACH };
 
@@ -47,6 +48,7 @@ class Train : public RectangleObject {
   train_state m_State;
   clock_t m_duration_at_station = 0;
   int m_wait_time = 0;
+  position_t current_station;
 };
 
 #endif /* INCLUDE_GAME_TRAIN_HPP_ */

@@ -41,6 +41,7 @@ void Train::Update(clock_t delta_time_ms) {
       if (m_duration_at_station == 0) {
         m_duration_at_station = clock();
         m_wait_time = rand() / (RAND_MAX / 3000);
+        current_station = p_Route->nextStationPos();
       }
 
       if (((clock() - m_duration_at_station) / CLOCKS_PER_MSEC) > m_wait_time) {
@@ -69,6 +70,7 @@ void Train::Update(clock_t delta_time_ms) {
 
       if (p_Route->atStation(p_Physics->getPosition())) {
         p_Physics->stop();
+        p_Physics->moveToStation(current_station);
         m_State = STOPPED_AT_STATION;
       }
       break;

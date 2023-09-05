@@ -67,6 +67,13 @@ class TrainPhysics {
    */
   float getBreakingDistance() { return m_breaking_distance; }
 
+  /**
+   * @brief Set train position to station position
+   *
+   * @param pos Position of station
+   */
+  void moveToStation(position_t pos) { m_pos = pos; }
+
  private:
   speed_t m_speed;
   float m_max_speed;
