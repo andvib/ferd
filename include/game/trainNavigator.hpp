@@ -42,6 +42,15 @@ class TrainNavigator {
    */
   float distanceToStation(position_t current_position);
 
+  /**
+   * @brief Get position of next station
+   *
+   * @return position_t Position of next station
+   */
+  position_t nextStationPos() {
+    return p_line->GetNextStation(m_waypoint_index, m_direction);
+  }
+
  private:
   Line *p_line;
   int m_waypoint_index;
