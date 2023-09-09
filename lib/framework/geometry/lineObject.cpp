@@ -24,9 +24,7 @@ LineObject::LineObject(struct line points, struct line_color color) {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
                GL_STATIC_DRAW);
 
-  GLfloat color_buffer_data[]{
-      color.red, color.green, color.blue, color.red, color.green, color.blue,
-      color.red, color.green, color.blue, color.red, color.green, color.blue};
+  GLfloat color_buffer_data[]{color.red, color.green, color.blue, color.red};
 
   glGenBuffers(1, &m_colorBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
@@ -81,6 +79,7 @@ void LineObject::Render(void) {
   glBindBuffer(GL_ARRAY_BUFFER, m_colorBuffer);
   glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0,
                         reinterpret_cast<void*>(0));
+  glVertexAttribDivisor(4, 4);
 
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   glDisableVertexAttribArray(0);
