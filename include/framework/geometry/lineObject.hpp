@@ -3,6 +3,10 @@
 
 #include <GL/glew.h>
 
+#include <vector>
+
+#include "game/line.hpp"
+#include "game/train_util.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 
@@ -19,7 +23,7 @@ struct line_color {
 class LineObject {
  public:
   LineObject();
-  LineObject(struct line points, struct line_color color);
+  LineObject(struct line_color color);
 
   /**
    * @brief Render a line object
@@ -37,6 +41,7 @@ class LineObject {
   GLuint m_pointa_buffer;
   GLuint m_pointb_buffer;
   GLuint m_width_buffer;
+  GLuint m_points_buffer;
 };
 
 #endif /* INCLUDE_FRAMEWORK_GEOMETRY_LINEOBJECT_HPP_ */

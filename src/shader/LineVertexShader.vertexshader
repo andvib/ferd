@@ -17,6 +17,8 @@ void main() {
     vec2 point = pointA + xBasis*position.x + yBasis*width*position.y;
 
     gl_Position = View_Proj * vec4(point, 0, 1);
+    //gl_Position = View_Proj * vec4(position, 0, 1);
+
 
     fragmentColor = vertexColor;
 }
