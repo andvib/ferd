@@ -5,6 +5,7 @@
 
 #include <chrono>
 
+#include "framework/ferd_color.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 
@@ -15,15 +16,10 @@ struct rectangle_points {
   GLfloat x3, y3;
 };
 
-struct rectangle_color {
-  GLfloat red, green, blue;
-};
-
 class RectangleObject {
  public:
   RectangleObject();
-  RectangleObject(struct rectangle_points rectangle_p,
-                  struct rectangle_color color);
+  RectangleObject(struct rectangle_points rectangle_p, struct ferd_color color);
 
   /**
    * @brief Update attributes of the rectangle object
@@ -46,7 +42,7 @@ class RectangleObject {
 
  private:
   struct rectangle_points m_points;
-  struct rectangle_color m_color;
+  struct ferd_color m_color;
   GLuint m_vertexArrayID;
   GLuint m_vertexBuffer;
   GLfloat *m_vertex_buffer_data;

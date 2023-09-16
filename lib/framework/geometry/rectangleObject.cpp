@@ -7,7 +7,7 @@
 RectangleObject::RectangleObject() { glGenVertexArrays(1, &m_vertexArrayID); }
 
 RectangleObject::RectangleObject(struct rectangle_points rectangle_p,
-                                 struct rectangle_color color) {
+                                 struct ferd_color color) {
   glGenVertexArrays(1, &m_vertexArrayID);
   glBindVertexArray(m_vertexArrayID);
 

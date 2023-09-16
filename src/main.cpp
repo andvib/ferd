@@ -7,6 +7,7 @@
 #include <thread>
 #include <vector>
 
+#include "framework/ferd_color.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "framework/graphicsFramework.hpp"
 #include "game/camera.hpp"
@@ -38,29 +39,18 @@ int main(void) {
   World GameWorld;
   Framework.AddWorld(&GameWorld);
 
-  struct rectangle_color rc1 = {0, 0.25, 0.75};
-  struct line_color lc1 = {0, 0.25, 0.75};
-  struct rectangle_color rc2 = {0, 0.75, 1};
-  struct line_color lc2 = {0, 0.75, 1};
-  struct rectangle_color rc3 = {0, 0.75, 0.5};
-  struct line_color lc3 = {0, 0.75, 0.5};
-  struct rectangle_color rc4 = {0, 0.8, 0.75};
-  struct line_color lc4 = {0, 0.8, 0.75};
-  struct rectangle_color rc5 = {0, 0.5, 0.9};
-  struct line_color lc5 = {0, 0.5, 0.9};
-
   LineWaypoint wp1({4, 0});
   LineWaypoint wp2({2, -3});
   LineWaypoint wp3({-2, -4});
   LineWaypoint wp4({-4, 0});
 
-  Line line1(std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}, lc1);
+  Line line1(std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
   GameWorld.AddLineObjectVector(line1.GetLineObjects());
 
-  Train trainObject(&line1, {4, 0}, 0.0000005, rc1);
+  Train trainObject(&line1, {4, 0}, 0.0000005, FERD_COLOR_1);
   GameWorld.AddTrain(&trainObject);
 
-  Train trainObject2(&line1, {4, 0}, 0.0000005, rc1);
+  Train trainObject2(&line1, {4, 0}, 0.0000005, FERD_COLOR_1);
   GameWorld.AddTrain(&trainObject2);
 
   LineWaypoint wp2_0({-4, -4});
@@ -70,13 +60,14 @@ int main(void) {
   LineWaypoint wp2_4({3, 4});
 
   Line line2(
-      std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4}, lc2);
+      std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4},
+      FERD_COLOR_2);
   GameWorld.AddLineObjectVector(line2.GetLineObjects());
 
-  Train trainObject3(&line2, {-4, -4}, 0.0000005, rc2);
+  Train trainObject3(&line2, {-4, -4}, 0.0000005, FERD_COLOR_2);
   GameWorld.AddTrain(&trainObject3);
 
-  Train trainObject4(&line2, {-4, -4}, 0.0000005, rc2);
+  Train trainObject4(&line2, {-4, -4}, 0.0000005, FERD_COLOR_2);
   GameWorld.AddTrain(&trainObject4);
 
   LineWaypoint wp3_0({4, 0});
@@ -84,13 +75,14 @@ int main(void) {
   LineWaypoint wp3_2({-1, 2});
   LineWaypoint wp3_3({-3, 4});
 
-  Line line3(std::vector<LineWaypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3}, lc3);
+  Line line3(std::vector<LineWaypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3},
+             FERD_COLOR_3);
   GameWorld.AddLineObjectVector(line3.GetLineObjects());
 
-  Train trainObject5(&line3, {4, 0}, 0.0000005, rc3);
+  Train trainObject5(&line3, {4, 0}, 0.0000005, FERD_COLOR_3);
   GameWorld.AddTrain(&trainObject5);
 
-  Train trainObject6(&line3, {4, 0}, 0.0000005, rc3);
+  Train trainObject6(&line3, {4, 0}, 0.0000005, FERD_COLOR_3);
   GameWorld.AddTrain(&trainObject6);
 
   spdlog::info("Starting render loop");
