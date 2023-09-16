@@ -4,34 +4,17 @@
 #include <vector>
 
 #include "framework/geometry/lineObject.hpp"
+#include "game/lineWaypoint.hpp"
 #include "game/train_util.hpp"
 
 enum class LineDirection { FORWARD, BACKWARD };
 
-class LineWaypoint {
- public:
-  LineWaypoint();
-  LineWaypoint(position_t coordinates, bool is_station) {
-    m_position = coordinates;
-  }
-
-  /**
-   * @brief Return the coordinates of the LineWaypoint
-   *
-   * @return position_t The position of the LineWaypoint
-   */
-  position_t PositionCoordinates() { return m_position; }
-
- private:
-  position_t m_position;
-};
-
 class Line {
  public:
-  Line() {}
-  ~Line() {}
+  Line() = default;
+  ~Line() = default;
 
-  explicit Line(std::vector<LineWaypoint *> waypoints);
+  Line(std::vector<LineWaypoint *> waypoints, struct line_color color);
 
   /**
    * @brief Get the next station on the line
@@ -50,10 +33,22 @@ class Line {
    *
    * @return int The number of stations on line
    */
-  int NumberOfStations() { return v_waypoints.size(); }
+  int NumberOfStations() const { return v_waypoints.size(); }
+
+  /**
+   * @brief Get LineObjects representing the line
+   *
+   * @details Can be passed directly to World object for rendering
+   *
+   * @return std::vector<LineObject *> A vector with pointers to the
+   * LineObjects.
+   */
+  std::vector<LineObject *> GetLineObjects() const { return v_line_objects; }
 
  private:
   std::vector<LineWaypoint *> v_waypoints;
+  std::vector<LineObject *> v_line_objects;
+  struct line_color m_color;
 };
 
 #endif /* INCLUDE_GAME_LINE_HPP_ */

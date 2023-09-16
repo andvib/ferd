@@ -42,6 +42,10 @@ class World {
    */
   void AddLineObject(LineObject *object) { v_line_objects.push_back(object); }
 
+  void AddLineObjectVector(std::vector<LineObject *> lines) {
+    v_line_objects.insert(v_line_objects.end(), lines.begin(), lines.end());
+  }
+
   /**
    * @brief Render the trains in the world
    *

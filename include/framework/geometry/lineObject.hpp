@@ -7,13 +7,17 @@
 #include "glm/gtx/transform.hpp"
 
 struct line {
-  GLfloat x0, y0;
-  GLfloat x1, y1;
+  GLfloat x0;
+  GLfloat y0;
+  GLfloat x1;
+  GLfloat y1;
   GLfloat width;
 };
 
 struct line_color {
-  GLfloat red, green, blue;
+  GLfloat red;
+  GLfloat green;
+  GLfloat blue;
 };
 
 class LineObject {
@@ -24,7 +28,7 @@ class LineObject {
   /**
    * @brief Render a line object
    */
-  void Render(void);
+  void Render(void) const;
 
  private:
   struct line m_points;
