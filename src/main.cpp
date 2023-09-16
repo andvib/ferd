@@ -49,23 +49,13 @@ int main(void) {
   struct rectangle_color rc5 = {0, 0.5, 0.9};
   struct line_color lc5 = {0, 0.5, 0.9};
 
-  float line_width = 0.12;
+  LineWaypoint wp1({4, 0});
+  LineWaypoint wp2({2, -3});
+  LineWaypoint wp3({-2, -4});
+  LineWaypoint wp4({-4, 0});
 
-  LineObject line_object({4, 0, 2, -3, line_width}, lc1);
-  GameWorld.AddLineObject(&line_object);
-
-  LineObject line_object2({2, -3, -2, -4, line_width}, lc1);
-  GameWorld.AddLineObject(&line_object2);
-
-  LineObject line_object3({-2, -4, -4, 0, line_width}, lc1);
-  GameWorld.AddLineObject(&line_object3);
-
-  LineWaypoint wp1({4, 0}, true);
-  LineWaypoint wp2({2, -3}, true);
-  LineWaypoint wp3({-2, -4}, true);
-  LineWaypoint wp4({-4, 0}, true);
-
-  Line line1({std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}});
+  Line line1(std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}, lc1);
+  GameWorld.AddLineObjectVector(line1.GetLineObjects());
 
   Train trainObject(&line1, {4, 0}, 0.0000005, rc1);
   GameWorld.AddTrain(&trainObject);
@@ -73,26 +63,15 @@ int main(void) {
   Train trainObject2(&line1, {4, 0}, 0.0000005, rc1);
   GameWorld.AddTrain(&trainObject2);
 
-  LineObject line_object4({-4, -4, -1, -3, line_width}, lc2);
-  GameWorld.AddLineObject(&line_object4);
+  LineWaypoint wp2_0({-4, -4});
+  LineWaypoint wp2_1({-1, -3});
+  LineWaypoint wp2_2({-1, 0});
+  LineWaypoint wp2_3({0, 2});
+  LineWaypoint wp2_4({3, 4});
 
-  LineObject line_object5({-1, -3, -1, 0, line_width}, lc2);
-  GameWorld.AddLineObject(&line_object5);
-
-  LineObject line_object6({-1, 0, 0, 2, line_width}, lc2);
-  GameWorld.AddLineObject(&line_object6);
-
-  LineObject line_object7({0, 2, 3, 4, line_width}, lc2);
-  GameWorld.AddLineObject(&line_object7);
-
-  LineWaypoint wp2_0({-4, -4}, true);
-  LineWaypoint wp2_1({-1, -3}, true);
-  LineWaypoint wp2_2({-1, 0}, true);
-  LineWaypoint wp2_3({0, 2}, true);
-  LineWaypoint wp2_4({3, 4}, true);
-
-  Line line2{
-      std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4}};
+  Line line2(
+      std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4}, lc2);
+  GameWorld.AddLineObjectVector(line2.GetLineObjects());
 
   Train trainObject3(&line2, {-4, -4}, 0.0000005, rc2);
   GameWorld.AddTrain(&trainObject3);
@@ -100,21 +79,13 @@ int main(void) {
   Train trainObject4(&line2, {-4, -4}, 0.0000005, rc2);
   GameWorld.AddTrain(&trainObject4);
 
-  LineObject line_object8({4, 0, 1, 0, line_width}, lc3);
-  GameWorld.AddLineObject(&line_object8);
+  LineWaypoint wp3_0({4, 0});
+  LineWaypoint wp3_1({1, 0});
+  LineWaypoint wp3_2({-1, 2});
+  LineWaypoint wp3_3({-3, 4});
 
-  LineObject line_object9({1, 0, -1, 2, line_width}, lc3);
-  GameWorld.AddLineObject(&line_object9);
-
-  LineObject line_object10({-1, 2, -3, 4, line_width}, lc3);
-  GameWorld.AddLineObject(&line_object10);
-
-  LineWaypoint wp3_0({4, 0}, true);
-  LineWaypoint wp3_1({1, 0}, true);
-  LineWaypoint wp3_2({-1, 2}, true);
-  LineWaypoint wp3_3({-3, 4}, true);
-
-  Line line3{std::vector<LineWaypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3}};
+  Line line3(std::vector<LineWaypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3}, lc3);
+  GameWorld.AddLineObjectVector(line3.GetLineObjects());
 
   Train trainObject5(&line3, {4, 0}, 0.0000005, rc3);
   GameWorld.AddTrain(&trainObject5);
