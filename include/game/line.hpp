@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "framework/ferd_color.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "game/lineWaypoint.hpp"
 #include "game/train_util.hpp"
@@ -14,7 +15,7 @@ class Line {
   Line() = default;
   ~Line() = default;
 
-  Line(std::vector<LineWaypoint *> waypoints, struct line_color color);
+  Line(std::vector<LineWaypoint *> waypoints, struct ferd_color color);
 
   /**
    * @brief Get the next station on the line
@@ -48,7 +49,7 @@ class Line {
  private:
   std::vector<LineWaypoint *> v_waypoints;
   std::vector<LineObject *> v_line_objects;
-  struct line_color m_color;
+  struct ferd_color m_color;
 };
 
 #endif /* INCLUDE_GAME_LINE_HPP_ */

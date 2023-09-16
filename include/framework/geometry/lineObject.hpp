@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 
+#include "framework/ferd_color.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 
@@ -14,16 +15,10 @@ struct line {
   GLfloat width;
 };
 
-struct line_color {
-  GLfloat red;
-  GLfloat green;
-  GLfloat blue;
-};
-
 class LineObject {
  public:
   LineObject();
-  LineObject(struct line points, struct line_color color);
+  LineObject(struct line points, struct ferd_color color);
 
   /**
    * @brief Render a line object
@@ -32,7 +27,7 @@ class LineObject {
 
  private:
   struct line m_points;
-  struct line_color m_color;
+  struct ferd_color m_color;
   GLuint m_vertexArrayID;
   GLuint m_vertexBuffer;
   GLfloat *m_vertex_buffer_data;

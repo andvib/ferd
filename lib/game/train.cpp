@@ -12,9 +12,8 @@
 
 static const struct rectangle_points c_train_points = {
     -0.25, 0.185, -0.25, -0.185, 0.25, -0.185, 0.25, 0.185};
-static const struct rectangle_color c_default_color = {0, 0.25, 1};
 
-Train::Train() : RectangleObject(c_train_points, c_default_color) {
+Train::Train() : RectangleObject(c_train_points, FERD_COLOR_1) {
   p_Route = new TrainNavigator();
   p_Physics = new TrainPhysics();
 }
@@ -25,7 +24,7 @@ Train::~Train() {
 }
 
 Train::Train(Line* line, position_t start_position, float acceleration,
-             const struct rectangle_color color)
+             const struct ferd_color color)
     : RectangleObject(c_train_points, color) {
   p_Physics = new TrainPhysics(start_position, acceleration);
   p_Route = new TrainNavigator(line);

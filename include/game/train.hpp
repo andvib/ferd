@@ -3,6 +3,7 @@
 
 #include <chrono>
 
+#include "framework/ferd_color.hpp"
 #include "framework/geometry/rectangleObject.hpp"
 #include "game/line.hpp"
 #include "game/trainNavigator.hpp"
@@ -25,7 +26,7 @@ class Train : public RectangleObject {
    * @param color Color struct for the color of the train
    */
   Train(Line* line, position_t start_position, float acceleration,
-        const struct rectangle_color color);
+        const struct ferd_color color);
 
   /**
    * @brief Update the state machine and physics model of the train, and

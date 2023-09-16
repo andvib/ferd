@@ -6,7 +6,7 @@ static const GLfloat m_VertexBufferData[]{0, 0.5, 0, -0.5, 1, -0.5, 1, 0.5};
 
 LineObject::LineObject() { glGenVertexArrays(1, &m_vertexArrayID); }
 
-LineObject::LineObject(struct line points, struct line_color color)
+LineObject::LineObject(struct line points, struct ferd_color color)
     : m_points(points) {
   glGenVertexArrays(1, &m_vertexArrayID);
   glBindVertexArray(m_vertexArrayID);
