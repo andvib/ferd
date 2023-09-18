@@ -12,6 +12,12 @@ TrainNavigator::TrainNavigator(Line *line) {
   m_direction = LineDirection::FORWARD;
 }
 
+TrainNavigator::TrainNavigator(Line *line, unsigned int start_index) {
+  p_line = line;
+  m_waypoint_index = start_index;
+  m_direction = LineDirection::FORWARD;
+}
+
 float TrainNavigator::distanceToStation(position_t current_position) {
   position_t next_station =
       p_line->GetNextStation(m_waypoint_index, m_direction);

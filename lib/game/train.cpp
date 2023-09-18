@@ -34,6 +34,17 @@ Train::Train(Line* line, position_t start_position, float acceleration,
   m_State = STOPPED_AT_STATION;
 }
 
+Train::Train(Line* line, unsigned int start_station, position_t start_position,
+             float acceleration, const struct ferd_color color)
+    : RectangleObject(c_train_points, color) {
+  p_Physics = new TrainPhysics(start_position, acceleration);
+  p_Route = new TrainNavigator(line, start_station);
+
+  p_Physics->rotateTrain(
+      p_Route->vectorToNextStation(p_Physics->getPosition()));
+  m_State = STOPPED_AT_STATION;
+}
+
 void Train::Update(clock_t delta_time_ms) {
   switch (m_State) {
     case STOPPED_AT_STATION:

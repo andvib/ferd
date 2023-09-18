@@ -1,5 +1,6 @@
 #ifndef INCLUDE_GAME_TRAINNAVIGATOR_HPP_
 #define INCLUDE_GAME_TRAINNAVIGATOR_HPP_
+
 #include <vector>
 
 #include "game/line.hpp"
@@ -15,6 +16,8 @@ class TrainNavigator {
    * @param line Line that the train will be traveling
    */
   explicit TrainNavigator(Line *line);
+
+  TrainNavigator(Line *line, unsigned int start_index);
 
   /**
    * @brief Check if train is currently at a station

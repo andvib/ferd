@@ -28,6 +28,9 @@ class Train : public RectangleObject {
   Train(Line* line, position_t start_position, float acceleration,
         const struct ferd_color color);
 
+  Train(Line* line, unsigned int start_station, position_t start_position,
+        float acceleration, const struct ferd_color color);
+
   /**
    * @brief Update the state machine and physics model of the train, and
    * navigate the route
