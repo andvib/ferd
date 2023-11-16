@@ -22,3 +22,15 @@ void World::RenderLineObjects() {
     linePtr->Render();
   }
 }
+
+void World::RenderLineWaypoints(GLuint modelLoc) const {
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  for (auto circlePtr : v_line_waypoints) {
+    glm::mat4 model = circlePtr->CalculateModelMatrix();
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
+
+    circlePtr->Render();
+  }
+  glDisable(GL_BLEND);
+}

@@ -39,13 +39,23 @@ class GraphicsFramework {
   /**
    * @brief Add shaders that will render lines
    *
-   * @details Compiles and attaches the shaders to the train program
+   * @details Compiles and attaches the shaders to the line program
    *
    * @param vertex_filepath Filepath to the vertex shader
    * @param fragment_filepath Filepath to the fragment shader
    */
   void AddLineShader(const char *vertex_filepath,
                      const char *fragment_filepath);
+
+  /**
+   * @brief Add a shader that will render waypoints as circles
+   *
+   * @details Compiles and attaches the shaders to the circle program
+   * @param vertex_filepath Filepath to the vertex shaders to render circles
+   * @param fragment_filepath Filepath to the fragment shader to render circles
+   */
+  void AddWaypointShader(const char *vertex_filepath,
+                         const char *fragment_filepath);
 
   /**
    * @brief Add world object to the framework
@@ -98,6 +108,7 @@ class GraphicsFramework {
  private:
   GraphicsProgram *m_TrainProgram;
   GraphicsProgram *m_LineProgram;
+  GraphicsProgram *m_WaypointProgram;
   WindowHandler *m_Window;
   World *p_World;
   Camera *p_Camera;

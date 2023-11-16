@@ -5,8 +5,10 @@
 
 #include <vector>
 
+#include "framework/geometry/circleObject.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "game/line.hpp"
+#include "game/lineWaypoint.hpp"
 #include "game/train.hpp"
 
 class World {
@@ -47,6 +49,13 @@ class World {
   }
 
   /**
+   * @brief Add LineWaypoint to draw in the world
+   *
+   * @param wp Waypoint to draw
+   */
+  void AddLineWaypoint(LineWaypoint *wp) { v_line_waypoints.push_back(wp); }
+
+  /**
    * @brief Render the trains in the world
    *
    * @param modelLoc Location of the model uniform in the program
@@ -58,10 +67,18 @@ class World {
    */
   void RenderLineObjects();
 
+  /**
+   * @brief Render line waypoints (circles) in the world
+   *
+   * @param modelLoc Location of the model uniform in the program
+   */
+  void RenderLineWaypoints(GLuint modelLoc) const;
+
  private:
   std::vector<Train *> v_Trains;
   std::vector<Line *> v_Lines;
   std::vector<LineObject *> v_line_objects;
+  std::vector<LineWaypoint *> v_line_waypoints;
 };
 
 #endif /* INCLUDE_GAME_WORLD_HPP_ */
