@@ -1,12 +1,15 @@
 #ifndef INCLUDE_GAME_LINEWAYPOINT_HPP_
 #define INCLUDE_GAME_LINEWAYPOINT_HPP_
 
+#include "framework/ferd_color.hpp"
+#include "framework/geometry/circleObject.hpp"
 #include "game/train_util.hpp"
 
-class LineWaypoint {
+class LineWaypoint : public CircleObject {
  public:
   LineWaypoint();
-  explicit LineWaypoint(position_t coordinates) : m_position(coordinates) {}
+  explicit LineWaypoint(position_t coordinates, const struct ferd_color color)
+      : CircleObject(coordinates, color), m_position(coordinates) {}
 
   /**
    * @brief Return the coordinates of the LineWaypoint

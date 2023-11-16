@@ -1,0 +1,16 @@
+# version 330 core
+
+layout(location = 0) in vec2 vertexPosition_modelspace;
+layout(location = 1) in vec3 vertexColor;
+
+out vec3 fragmentColor;
+out vec2 obj_coord;
+
+uniform mat4 View_Proj;
+uniform mat4 Model;
+
+void main() {
+    gl_Position = View_Proj * Model * vec4(vertexPosition_modelspace,0,1);
+    fragmentColor = vertexColor;
+    obj_coord = vertexPosition_modelspace;
+}

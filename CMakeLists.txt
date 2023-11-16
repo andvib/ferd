@@ -18,6 +18,7 @@ target_sources(ferd PRIVATE
                lib/framework/graphicsFramework.cpp
                lib/framework/geometry/rectangleObject.cpp
                lib/framework/geometry/lineObject.cpp
+               lib/framework/geometry/circleObject.cpp
                lib/game/camera.cpp
                lib/game/train.cpp
                lib/game/trainNavigator.cpp

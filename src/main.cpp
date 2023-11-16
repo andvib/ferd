@@ -32,17 +32,28 @@ int main(void) {
       "C:/git/ferd/src/shader/SimpleFragmentShader.fragmentshader";
   const char *line_vertex_shader_file_path =
       "C:/git/ferd/src/shader/LineVertexShader.vertexshader";
+  const char *circle_vertex_shader_file_path =
+      "C:/git/ferd/src/shader/CircleVertexShader.vertexshader";
+  const char *circle_fragment_file_path =
+      "C:/git/ferd/src/shader/CircleFragmentShader.fragmentshader";
 
   Framework.AddTrainShader(vertex_file_path, fragment_file_path);
   Framework.AddLineShader(line_vertex_shader_file_path, fragment_file_path);
+  Framework.AddWaypointShader(circle_vertex_shader_file_path,
+                              circle_fragment_file_path);
 
   World GameWorld;
   Framework.AddWorld(&GameWorld);
 
-  LineWaypoint wp1({4, 0});
-  LineWaypoint wp2({2, -3});
-  LineWaypoint wp3({-2, -4});
-  LineWaypoint wp4({-4, 0});
+  LineWaypoint wp1({4, 0}, FERD_COLOR_1);
+  LineWaypoint wp2({2, -3}, FERD_COLOR_1);
+  LineWaypoint wp3({-2, -4}, FERD_COLOR_1);
+  LineWaypoint wp4({-4, 0}, FERD_COLOR_1);
+
+  GameWorld.AddLineWaypoint(&wp1);
+  GameWorld.AddLineWaypoint(&wp2);
+  GameWorld.AddLineWaypoint(&wp3);
+  GameWorld.AddLineWaypoint(&wp4);
 
   Line line1(std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
   GameWorld.AddLineObjectVector(line1.GetLineObjects());
@@ -53,11 +64,17 @@ int main(void) {
   Train trainObject2(&line1, {4, 0}, 0.0000005, FERD_COLOR_1);
   GameWorld.AddTrain(&trainObject2);
 
-  LineWaypoint wp2_0({-4, -4});
-  LineWaypoint wp2_1({-1, -3});
-  LineWaypoint wp2_2({-1, 0});
-  LineWaypoint wp2_3({0, 2});
-  LineWaypoint wp2_4({3, 4});
+  LineWaypoint wp2_0({-4, -4}, FERD_COLOR_2);
+  LineWaypoint wp2_1({-1, -3}, FERD_COLOR_2);
+  LineWaypoint wp2_2({-1, 0}, FERD_COLOR_2);
+  LineWaypoint wp2_3({0, 2}, FERD_COLOR_2);
+  LineWaypoint wp2_4({3, 4}, FERD_COLOR_2);
+
+  GameWorld.AddLineWaypoint(&wp2_0);
+  GameWorld.AddLineWaypoint(&wp2_1);
+  GameWorld.AddLineWaypoint(&wp2_2);
+  GameWorld.AddLineWaypoint(&wp2_3);
+  GameWorld.AddLineWaypoint(&wp2_4);
 
   Line line2(
       std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4},
@@ -70,10 +87,15 @@ int main(void) {
   Train trainObject4(&line2, {-4, -4}, 0.0000005, FERD_COLOR_2);
   GameWorld.AddTrain(&trainObject4);
 
-  LineWaypoint wp3_0({4, 0});
-  LineWaypoint wp3_1({1, 0});
-  LineWaypoint wp3_2({-1, 2});
-  LineWaypoint wp3_3({-3, 4});
+  LineWaypoint wp3_0({4, 0}, FERD_COLOR_3);
+  LineWaypoint wp3_1({1, 0}, FERD_COLOR_3);
+  LineWaypoint wp3_2({-1, 2}, FERD_COLOR_3);
+  LineWaypoint wp3_3({-3, 4}, FERD_COLOR_3);
+
+  GameWorld.AddLineWaypoint(&wp3_0);
+  GameWorld.AddLineWaypoint(&wp3_1);
+  GameWorld.AddLineWaypoint(&wp3_2);
+  GameWorld.AddLineWaypoint(&wp3_3);
 
   Line line3(std::vector<LineWaypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3},
              FERD_COLOR_3);
