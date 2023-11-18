@@ -87,6 +87,13 @@ void WindowHandler::updateCamera(Camera* gameCamera) {
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
     gameCamera->moveRight();
   }
+
+  if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+    gameCamera->zoomIn();
+  }
+  if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+    gameCamera->zoomOut();
+  }
 }
 
 void debugWindow() {

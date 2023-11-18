@@ -15,9 +15,11 @@ struct cameraDimensions {
 
 class Camera {
  private:
-  cameraPos Position;
-  cameraDimensions Dimensions;
-  float Speed;
+  cameraPos Position = {0, 0};
+  cameraDimensions Dimensions = {-10.0f, 10.0f, -10.0f, 10.0f};
+  const float Speed = 0.2;
+  float ZoomLevel = 1.0;
+  const float ZoomSpeed = 0.03;
 
  public:
   /**
@@ -25,40 +27,7 @@ class Camera {
    *
    * @details Initializes the camera at the origin
    */
-  Camera();
-
-  /**
-   * @brief Sets the position of the camera
-   *
-   * @details Positions the camera at the (x,y) coordinates, and points the
-   * camera to look at the same position from a higher z coordinate.
-   *
-   * @param x x-coordinate
-   * @param y y-coordinate
-   */
-  void setPosition(double x, double y) { Position = {x, y}; }
-
-  /**
-   * @brief Set the dimensions of the camera
-   *
-   * @details Sets the left, right, bottom and top boundaries of the camera
-   * projection.
-   *
-   * @param left Left boundary
-   * @param right Right boundary
-   * @param bottom Bootom boundary
-   * @param top Top boundary
-   */
-  void setDimensions(float left, float right, float bottom, float top) {
-    Dimensions = {left, right, bottom, top};
-  }
-
-  /**
-   * @brief Set the Speed object
-   *
-   * @param speed
-   */
-  void setSpeed(float speed) { Speed = speed; }
+  Camera() = default;
 
   /**
    * @brief Return the VP matrix
@@ -79,6 +48,14 @@ class Camera {
   void moveDown() { Position.y -= Speed; }
   void moveLeft() { Position.x -= Speed; }
   void moveRight() { Position.x += Speed; }
+
+  /**
+   * @brief Zoom the camera
+   *
+   * @details Update the zoom level of the camera
+   */
+  void zoomIn() { ZoomLevel -= ZoomSpeed; }
+  void zoomOut() { ZoomLevel += ZoomSpeed; }
 };
 
 #endif /* INCLUDE_GAME_CAMERA_HPP_ */
