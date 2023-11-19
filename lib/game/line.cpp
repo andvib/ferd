@@ -10,7 +10,7 @@ Line::Line(std::vector<LineWaypoint *> waypoints, struct ferd_color color)
         .y0 = point0.y,
         .x1 = point1.x,
         .y1 = point1.y,
-        .width = 0.12,
+        .width = 0.7f,
     };
 
     auto temp_line = new LineObject(points, m_color);

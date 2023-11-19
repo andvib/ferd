@@ -17,9 +17,9 @@ class Camera {
  private:
   cameraPos Position = {0, 0};
   cameraDimensions Dimensions = {-10.0f, 10.0f, -10.0f, 10.0f};
-  const float Speed = 0.2;
+  const float Speed = 1.0;
   float ZoomLevel = 1.0;
-  const float ZoomSpeed = 0.03;
+  const float ZoomSpeed = 0.3;
 
  public:
   /**
