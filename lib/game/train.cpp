@@ -84,7 +84,7 @@ glm::mat4 Train::CalculateModelMatrix() {
   glm::mat4 myTranslationMatrix = glm::translate(
       glm::mat4(1.0f), glm::vec3(current_position.x, current_position.y, 0.0f));
   glm::mat4 myScalingMatrix =
-      glm::scale(glm::mat4(1.0f), glm::vec3(0.75f, 0.75f, 0.75f));
+      glm::scale(glm::mat4(1.0f), glm::vec3(4.3f, 4.3f, 4.3f));
   glm::mat4 myRotationMatrix =
       glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 0.0f, 1.0f));
 
