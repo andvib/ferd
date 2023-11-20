@@ -58,7 +58,7 @@ int main(void) {
   Line line1(std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
   GameWorld.AddLineObjectVector(line1.GetLineObjects());
 
-  Train trainObject(&line1, {0, 0}, 3, FERD_COLOR_1);
+  Train trainObject(&line1, {0, 0}, 2, FERD_COLOR_1);
   GameWorld.AddTrain(&trainObject);
 
   Train trainObject2(&line1, {0, 0}, 3, FERD_COLOR_1);
@@ -66,19 +66,21 @@ int main(void) {
 
   LineWaypoint wp2_0({100, -100}, FERD_COLOR_2);
   LineWaypoint wp2_1({100, -40}, FERD_COLOR_2);
-  LineWaypoint wp2_2({80, 35}, FERD_COLOR_2);
-  LineWaypoint wp2_3({20, 30}, FERD_COLOR_2);
-  LineWaypoint wp2_4({-30, 50}, FERD_COLOR_2);
+  LineWaypoint wp2_2({100, -5}, FERD_COLOR_2);
+  LineWaypoint wp2_3({80, 35}, FERD_COLOR_2);
+  LineWaypoint wp2_4({20, 30}, FERD_COLOR_2);
+  LineWaypoint wp2_5({-30, 50}, FERD_COLOR_2);
 
   GameWorld.AddLineWaypoint(&wp2_0);
   GameWorld.AddLineWaypoint(&wp2_1);
   GameWorld.AddLineWaypoint(&wp2_2);
   GameWorld.AddLineWaypoint(&wp2_3);
   GameWorld.AddLineWaypoint(&wp2_4);
+  GameWorld.AddLineWaypoint(&wp2_5);
 
-  Line line2(
-      std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4},
-      FERD_COLOR_2);
+  Line line2(std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4,
+                                         &wp2_5},
+             FERD_COLOR_2);
   GameWorld.AddLineObjectVector(line2.GetLineObjects());
 
   Train trainObject3(&line2, {100, -100}, 3, FERD_COLOR_2);
@@ -88,7 +90,7 @@ int main(void) {
   GameWorld.AddTrain(&trainObject4);
 
   LineWaypoint wp3_0({80, 35}, FERD_COLOR_3);
-  LineWaypoint wp3_1({30, 5}, FERD_COLOR_3);
+  LineWaypoint wp3_1({50, 5}, FERD_COLOR_3);
   LineWaypoint wp3_2({50, -30}, FERD_COLOR_3);
   LineWaypoint wp3_3({-10, -45}, FERD_COLOR_3);
 
