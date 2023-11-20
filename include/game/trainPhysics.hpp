@@ -2,6 +2,7 @@
 #define INCLUDE_GAME_TRAINPHYSICS_HPP_
 
 #include <chrono>
+#include <cmath>
 
 #include "game/train_util.hpp"
 
@@ -65,7 +66,11 @@ class TrainPhysics {
    *
    * @return float Breaking distance of the train
    */
-  float getBreakingDistance() { return m_breaking_distance; }
+  float getBreakingDistance() const {
+    return calculateBreakingDistance(
+        m_acceleration,
+        sqrt((m_speed.x * m_speed.x) + (m_speed.y * m_speed.y)));
+  }
 
   /**
    * @brief Set train position to station position
@@ -75,10 +80,18 @@ class TrainPhysics {
   void moveToStation(position_t pos) { m_pos = pos; }
 
  private:
+  /**
+   * @brief Calculate the breaking distance of the train
+   *
+   * @param acceleration Acceleration in m/s^2
+   * @param speed Speed in m/s
+   * @return float Breaking distance in metres
+   */
+  float calculateBreakingDistance(float acceleration, float speed) const;
+
   speed_t m_speed;
   float m_max_speed;
   float m_acceleration;
-  float m_breaking_distance;
   int m_acc_direction;
   position_t m_pos;
   vector_t m_vector;

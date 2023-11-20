@@ -11,7 +11,6 @@ TrainPhysics::TrainPhysics() {
   m_acc_direction = 1;
   m_pos = {0, 4};
   m_vector = {-1, 0};
-  m_breaking_distance = calculateBreakingDistance(m_acceleration, m_max_speed);
 }
 
 TrainPhysics::TrainPhysics(position_t start_position, float acceleration) {
@@ -21,7 +20,6 @@ TrainPhysics::TrainPhysics(position_t start_position, float acceleration) {
   m_acc_direction = 1;
   m_pos = start_position;
   m_vector = {-1, 0};
-  m_breaking_distance = calculateBreakingDistance(m_acceleration, m_max_speed);
 }
 
 void TrainPhysics::Update(clock_t delta_time_ms) {
@@ -47,7 +45,8 @@ void TrainPhysics::Update(clock_t delta_time_ms) {
 
 void TrainPhysics::stop() { m_speed = {0, 0}; }
 
-float calculateBreakingDistance(float acceleration, float max_speed) {
+float TrainPhysics::calculateBreakingDistance(float acceleration,
+                                              float speed) const {
   if (acceleration == 0) {
     spdlog::error("Acceleration cannot be 0!");
     return -1;
@@ -57,5 +56,5 @@ float calculateBreakingDistance(float acceleration, float max_speed) {
     acceleration = acceleration * -1;
   }
 
-  return -(max_speed * max_speed) / (2 * acceleration);
+  return -(speed * speed) / (2 * acceleration);
 }
