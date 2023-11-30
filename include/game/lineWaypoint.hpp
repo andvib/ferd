@@ -9,7 +9,15 @@ class LineWaypoint : public CircleObject {
  public:
   LineWaypoint();
   explicit LineWaypoint(position_t coordinates, const struct ferd_color color)
-      : CircleObject(coordinates, color), m_position(coordinates) {}
+      : CircleObject(coordinates, color),
+        m_position(coordinates),
+        m_is_station(false) {}
+
+  LineWaypoint(position_t coordinates, const struct ferd_color color,
+               bool is_station)
+      : CircleObject(coordinates, color),
+        m_position(coordinates),
+        m_is_station(is_station) {}
 
   /**
    * @brief Return the coordinates of the LineWaypoint
@@ -18,8 +26,17 @@ class LineWaypoint : public CircleObject {
    */
   position_t PositionCoordinates() const { return m_position; }
 
+  /**
+   * @brief Check if waypoint is a station
+   *
+   * @return  true  Waypoint is a station
+   * @return  false Waypoint is not a station
+   */
+  bool IsStation() const { return m_is_station; }
+
  private:
   position_t m_position;
+  bool m_is_station;
 };
 
 #endif /* INCLUDE_GAME_LINEWAYPOINT_HPP_ */

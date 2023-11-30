@@ -46,6 +46,14 @@ class Line {
    */
   std::vector<LineObject *> GetLineObjects() const { return v_line_objects; }
 
+  /**
+   * @brief Get the Waypoints on the line
+   *
+   * @return std::vector<LineWaypoint *>  Vector with pointers to waypoint
+   *                                      objects
+   */
+  std::vector<LineWaypoint *> GetLineWaypoints() const { return v_waypoints; }
+
  private:
   std::vector<LineWaypoint *> v_waypoints;
   std::vector<LineObject *> v_line_objects;
