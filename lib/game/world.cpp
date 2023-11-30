@@ -2,6 +2,20 @@
 
 #include <chrono>
 
+void World::AddLine(const Line *line) {
+  // Add LineObjects
+  std::vector<LineObject *> line_objects = line->GetLineObjects();
+  v_line_objects.insert(v_line_objects.end(), line_objects.begin(),
+                        line_objects.end());
+  // Add waypoints
+  std::vector<LineWaypoint *> line_waypoints = line->GetLineWaypoints();
+  for (auto waypoint : line_waypoints) {
+    if (waypoint->IsStation()) {
+      v_line_waypoints.push_back(waypoint);
+    }
+  }
+}
+
 void World::Update(clock_t delta_time_ms) {
   for (auto trainPtr : v_Trains) {
     trainPtr->Update(delta_time_ms);

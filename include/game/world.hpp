@@ -35,7 +35,7 @@ class World {
    *
    * @param line Line object to be added
    */
-  void AddLine(Line *line) { v_Lines.push_back(line); }
+  void AddLine(const Line *line);
 
   /**
    * @brief Add a LineObject to draw in the world
