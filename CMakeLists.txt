@@ -56,3 +56,6 @@ target_sources(ferd PRIVATE
                ext/imgui/backends/imgui_impl_opengl3.cpp)
 include_directories(ferd "ext/imgui")
 include_directories(ferd "ext/imgui/backends")
+
+# Add EIGEN to build
+include_directories(ferd "ext/eigen/")
