@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 
 #include "framework/ferd_color.hpp"
-#include "game/train_util.hpp"
+#include "game/physics/kinematics.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 

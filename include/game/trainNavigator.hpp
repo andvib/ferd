@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "game/line.hpp"
-#include "game/train_util.hpp"
+#include "game/physics/kinematics.hpp"
 
 class TrainNavigator {
  public:

@@ -6,9 +6,9 @@
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/rectangleObject.hpp"
 #include "game/line.hpp"
+#include "game/physics/kinematics.hpp"
 #include "game/trainNavigator.hpp"
 #include "game/trainPhysics.hpp"
-#include "game/train_util.hpp"
 
 enum train_state { STOPPED_AT_STATION, ENROUTE, APPROACH };
 

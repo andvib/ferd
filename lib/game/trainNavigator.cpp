@@ -15,16 +15,13 @@ TrainNavigator::TrainNavigator(Line *line) {
 float TrainNavigator::distanceToStation(position_t current_position) {
   position_t next_station =
       p_line->GetNextStation(m_waypoint_index, m_direction);
-  return sqrt(pow((current_position.x - next_station.x), 2) +
-              pow((current_position.y - next_station.y), 2));
+  return positionDistance(current_position, next_station);
 }
 
 bool TrainNavigator::atStation(position_t current_position) {
   position_t next_station =
       p_line->GetNextStation(m_waypoint_index, m_direction);
-  float distance_to_station =
-      sqrt(pow((current_position.x - next_station.x), 2) +
-           pow((current_position.y - next_station.y), 2));
+  float distance_to_station = positionDistance(current_position, next_station);
 
   if (distance_to_station < 0.01) {
     spdlog::debug("Train reached station ({},{})", current_position.x,

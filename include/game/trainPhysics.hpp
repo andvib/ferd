@@ -4,7 +4,7 @@
 #include <chrono>
 #include <cmath>
 
-#include "game/train_util.hpp"
+#include "game/physics/kinematics.hpp"
 
 class TrainPhysics {
  public:
@@ -30,14 +30,14 @@ class TrainPhysics {
    *
    * @return position_t Current position of the train
    */
-  position_t getPosition() { return m_pos; }
+  position_t getPosition() { return {m_pos(0), m_pos(1)}; }
 
   /**
    * @brief Get the rotation object
    *
    * @return vector_t Unit vector for train rotation
    */
-  vector_t getRotation() { return m_vector; }
+  vector_t getRotation() { return {m_vector(0), m_vector(1)}; }
 
   /**
    * @brief Stop the train (sets speed to 0)
@@ -59,7 +59,10 @@ class TrainPhysics {
    *
    * @param vector Unit vector train rotation should follow
    */
-  void rotateTrain(vector_t vector) { m_vector = vector; }
+  void rotateTrain(vector_t vector) {
+    m_vector(0) = vector.x;
+    m_vector(1) = vector.y;
+  }
 
   /**
    * @brief Get the breaking distance of the train
@@ -67,9 +70,7 @@ class TrainPhysics {
    * @return float Breaking distance of the train
    */
   float getBreakingDistance() const {
-    return calculateBreakingDistance(
-        m_acceleration,
-        sqrt((m_speed.x * m_speed.x) + (m_speed.y * m_speed.y)));
+    return calculateBreakingDistance(m_acceleration, absoluteSpeed(m_speed));
   }
 
   /**
@@ -77,7 +78,10 @@ class TrainPhysics {
    *
    * @param pos Position of station
    */
-  void moveToStation(position_t pos) { m_pos = pos; }
+  void moveToStation(position_t pos) {
+    m_pos(0) = pos.x;
+    m_pos(1) = pos.y;
+  }
 
  private:
   /**
@@ -89,14 +93,13 @@ class TrainPhysics {
    */
   float calculateBreakingDistance(float acceleration, float speed) const;
 
-  speed_t m_speed;
   float m_max_speed;
   float m_acceleration;
   int m_acc_direction;
-  position_t m_pos;
-  vector_t m_vector;
+  Vector2D m_pos;
+  Vector2D m_speed{0, 0};
+  Vector2D m_vector{1, 0};
 };
-
 float calculateBreakingDistance(float acceleration, float max_speed);
 
 #endif /* INCLUDE_GAME_TRAINPHYSICS_HPP_ */

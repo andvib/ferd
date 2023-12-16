@@ -6,7 +6,7 @@
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "game/lineWaypoint.hpp"
-#include "game/train_util.hpp"
+#include "game/physics/kinematics.hpp"
 
 enum class LineDirection { FORWARD, BACKWARD };
 

@@ -3,7 +3,7 @@
 
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/circleObject.hpp"
-#include "game/train_util.hpp"
+#include "game/physics/kinematics.hpp"
 
 class LineWaypoint : public CircleObject {
  public:
