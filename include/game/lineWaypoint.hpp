@@ -8,14 +8,13 @@
 class LineWaypoint : public CircleObject {
  public:
   LineWaypoint();
-  explicit LineWaypoint(position_t coordinates, const struct ferd_color color)
-      : CircleObject(coordinates, color),
+  explicit LineWaypoint(position_t coordinates)
+      : CircleObject(coordinates),
         m_position(coordinates),
         m_is_station(false) {}
 
-  LineWaypoint(position_t coordinates, const struct ferd_color color,
-               bool is_station)
-      : CircleObject(coordinates, color),
+  LineWaypoint(position_t coordinates, bool is_station)
+      : CircleObject(coordinates),
         m_position(coordinates),
         m_is_station(is_station) {}
 
