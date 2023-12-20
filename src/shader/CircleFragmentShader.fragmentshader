@@ -9,7 +9,6 @@ void main() {
     vec2 uv = obj_coord*2;
     float distance = length(uv);
 
-
     color.rgb = vec3(1.0 - smoothstep(0.685, 0.7, distance));
     color.a = 1 - smoothstep(0.985, 1.0, distance);
 }

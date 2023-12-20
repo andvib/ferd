@@ -3,7 +3,6 @@
 
 #include <GL/glew.h>
 
-#include "framework/ferd_color.hpp"
 #include "game/physics/kinematics.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
@@ -13,7 +12,7 @@ class CircleObject {
   CircleObject();
   ~CircleObject() = default;
 
-  CircleObject(position_t center, struct ferd_color color);
+  explicit CircleObject(position_t center);
 
   /**
    * @brief Render the circle object
@@ -32,7 +31,6 @@ class CircleObject {
   GLuint m_vertexArrayID;
   GLuint m_vertexBuffer;
   GLfloat *m_vertex_buffer_data;
-  GLuint m_colorBuffer;
   GLuint m_elementBuffer;
 };
 
