@@ -6,18 +6,7 @@
 #include "spdlog/spdlog.h"
 
 GraphicsFramework::GraphicsFramework() {
-  m_Window = new WindowHandler();
-  m_TrainProgram = new GraphicsProgram();
-  m_LineProgram = new GraphicsProgram();
-  m_WaypointProgram = new GraphicsProgram();
-
   srand(static_cast<unsigned>(time(0)));
-}
-
-GraphicsFramework::~GraphicsFramework() {
-  delete m_Window;
-  delete m_TrainProgram;
-  delete m_WaypointProgram;
 }
 
 int GraphicsFramework::Activate() {
@@ -38,7 +27,7 @@ int GraphicsFramework::Activate() {
 
   m_TrainProgram->Create();
   m_LineProgram->Create();
-  m_WaypointProgram->Create();
+  m_StationProgram->Create();
 
   return 0;
 }
@@ -60,18 +49,18 @@ void AttachShader(GraphicsProgram *program, const char *vertex_file_path,
 }
 
 void GraphicsFramework::AddTrainShader(const char *vertex_file_path,
-                                       const char *fragment_file_path) {
-  AttachShader(m_TrainProgram, vertex_file_path, fragment_file_path);
+                                       const char *fragment_file_path) const {
+  AttachShader(m_TrainProgram.get(), vertex_file_path, fragment_file_path);
 }
 
 void GraphicsFramework::AddLineShader(const char *vertex_file_path,
-                                      const char *fragment_file_path) {
-  AttachShader(m_LineProgram, vertex_file_path, fragment_file_path);
+                                      const char *fragment_file_path) const {
+  AttachShader(m_LineProgram.get(), vertex_file_path, fragment_file_path);
 }
 
-void GraphicsFramework::AddWaypointShader(const char *vertex_file_path,
-                                          const char *fragment_file_path) {
-  AttachShader(m_WaypointProgram, vertex_file_path, fragment_file_path);
+void GraphicsFramework::AddStationShader(const char *vertex_file_path,
+                                         const char *fragment_file_path) const {
+  AttachShader(m_StationProgram.get(), vertex_file_path, fragment_file_path);
 }
 
 bool GraphicsFramework::isRunning() { return m_Window->isWindowRunning(); }
@@ -96,12 +85,12 @@ void GraphicsFramework::Render() {
       GL_FALSE, &vp[0][0]);
   p_World->RenderLineObjects();
 
-  m_WaypointProgram->EnableProgram();
+  m_StationProgram->EnableProgram();
   glUniformMatrix4fv(
-      glGetUniformLocation(m_WaypointProgram->get_program_id(), "View_Proj"), 1,
+      glGetUniformLocation(m_StationProgram->get_program_id(), "View_Proj"), 1,
       GL_FALSE, &vp[0][0]);
-  p_World->RenderLineWaypoints(
-      glGetUniformLocation(m_WaypointProgram->get_program_id(), "Model"));
+  p_World->RenderStations(
+      glGetUniformLocation(m_StationProgram->get_program_id(), "Model"));
 
   m_TrainProgram->EnableProgram();
   glUniformMatrix4fv(

@@ -14,6 +14,8 @@
 #include "game/line.hpp"
 #include "game/physics/kinematics.hpp"
 #include "game/train.hpp"
+#include "game/waypoint/station.hpp"
+#include "game/waypoint/waypoint.hpp"
 #include "game/world.hpp"
 
 #define CLOCKS_PER_MSEC (CLOCKS_PER_SEC / 1000)
@@ -39,18 +41,18 @@ int main(void) {
 
   Framework.AddTrainShader(vertex_file_path, fragment_file_path);
   Framework.AddLineShader(line_vertex_shader_file_path, fragment_file_path);
-  Framework.AddWaypointShader(circle_vertex_shader_file_path,
-                              circle_fragment_file_path);
+  Framework.AddStationShader(circle_vertex_shader_file_path,
+                             circle_fragment_file_path);
 
   World GameWorld;
   Framework.AddWorld(&GameWorld);
 
-  LineWaypoint wp1({0, 0}, true);
-  LineWaypoint wp2({50, -30}, true);
-  LineWaypoint wp3({100, -40}, true);
-  LineWaypoint wp4({120, -10}, true);
+  Station wp1({0, 0});
+  Station wp2({50, -30});
+  Station wp3({100, -40});
+  Station wp4({120, -10});
 
-  Line line1(std::vector<LineWaypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
+  Line line1(std::vector<Waypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
   GameWorld.AddLine(&line1);
 
   Train trainObject(&line1, {0, 0}, 2, FERD_COLOR_1);
@@ -59,16 +61,16 @@ int main(void) {
   Train trainObject2(&line1, {0, 0}, 3, FERD_COLOR_1);
   GameWorld.AddTrain(&trainObject2);
 
-  LineWaypoint wp2_0({100, -100}, true);
-  LineWaypoint wp2_1({100, -40}, true);
-  LineWaypoint wp2_2({100, -5});
-  LineWaypoint wp2_3({80, 35}, true);
-  LineWaypoint wp2_4({20, 30});
-  LineWaypoint wp2_5({-30, 50}, true);
+  Station wp2_0({100, -100});
+  Station wp2_1({100, -40});
+  Waypoint wp2_2({100, -5});
+  Station wp2_3({80, 35});
+  Waypoint wp2_4({20, 30});
+  Station wp2_5({-30, 50});
 
-  Line line2(std::vector<LineWaypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4,
-                                         &wp2_5},
-             FERD_COLOR_2);
+  Line line2(
+      std::vector<Waypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4, &wp2_5},
+      FERD_COLOR_2);
   GameWorld.AddLine(&line2);
 
   Train trainObject3(&line2, {100, -100}, 3, FERD_COLOR_2);
@@ -77,12 +79,12 @@ int main(void) {
   Train trainObject4(&line2, {100, -100}, 3, FERD_COLOR_2);
   GameWorld.AddTrain(&trainObject4);
 
-  LineWaypoint wp3_0({80, 35}, true);
-  LineWaypoint wp3_1({50, 5});
-  LineWaypoint wp3_2({50, -30}, true);
-  LineWaypoint wp3_3({-10, -45}, true);
+  Station wp3_0({80, 35});
+  Waypoint wp3_1({50, 5});
+  Station wp3_2({50, -30});
+  Station wp3_3({-10, -45});
 
-  Line line3(std::vector<LineWaypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3},
+  Line line3(std::vector<Waypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3},
              FERD_COLOR_3);
   GameWorld.AddLine(&line3);
 

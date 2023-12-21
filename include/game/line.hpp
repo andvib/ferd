@@ -5,8 +5,8 @@
 
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/lineObject.hpp"
-#include "game/lineWaypoint.hpp"
 #include "game/physics/kinematics.hpp"
+#include "game/waypoint/waypoint.hpp"
 
 enum class LineDirection { FORWARD, BACKWARD };
 
@@ -15,7 +15,7 @@ class Line {
   Line() = default;
   ~Line() = default;
 
-  Line(std::vector<LineWaypoint *> waypoints, struct ferd_color color);
+  Line(std::vector<Waypoint *> waypoints, struct ferd_color color);
 
   /**
    * @brief Get the next station on the line
@@ -52,10 +52,10 @@ class Line {
    * @return std::vector<LineWaypoint *>  Vector with pointers to waypoint
    *                                      objects
    */
-  std::vector<LineWaypoint *> GetLineWaypoints() const { return v_waypoints; }
+  std::vector<Waypoint *> GetWaypoints() const { return v_waypoints; }
 
  private:
-  std::vector<LineWaypoint *> v_waypoints;
+  std::vector<Waypoint *> v_waypoints;
   std::vector<LineObject *> v_line_objects;
   struct ferd_color m_color;
 };

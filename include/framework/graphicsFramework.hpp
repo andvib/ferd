@@ -1,6 +1,7 @@
 #ifndef INCLUDE_FRAMEWORK_GRAPHICSFRAMEWORK_HPP_
 #define INCLUDE_FRAMEWORK_GRAPHICSFRAMEWORK_HPP_
 
+#include <memory>
 #include <vector>
 
 #include "framework/geometry/lineObject.hpp"
@@ -13,7 +14,7 @@
 class GraphicsFramework {
  public:
   GraphicsFramework();
-  ~GraphicsFramework();
+  ~GraphicsFramework() = default;
 
   /**
    * @brief Activate the framework
@@ -34,7 +35,7 @@ class GraphicsFramework {
    * @param fragment_filepath Filepath to the fragment shader
    */
   void AddTrainShader(const char *vertex_filepath,
-                      const char *fragment_filepath);
+                      const char *fragment_filepath) const;
 
   /**
    * @brief Add shaders that will render lines
@@ -45,17 +46,17 @@ class GraphicsFramework {
    * @param fragment_filepath Filepath to the fragment shader
    */
   void AddLineShader(const char *vertex_filepath,
-                     const char *fragment_filepath);
+                     const char *fragment_filepath) const;
 
   /**
-   * @brief Add a shader that will render waypoints as circles
+   * @brief Add a shader that will render station as circles
    *
    * @details Compiles and attaches the shaders to the circle program
    * @param vertex_filepath Filepath to the vertex shaders to render circles
    * @param fragment_filepath Filepath to the fragment shader to render circles
    */
-  void AddWaypointShader(const char *vertex_filepath,
-                         const char *fragment_filepath);
+  void AddStationShader(const char *vertex_filepath,
+                        const char *fragment_filepath) const;
 
   /**
    * @brief Add world object to the framework
@@ -106,10 +107,13 @@ class GraphicsFramework {
   void addCamera(Camera *camera) { p_Camera = camera; }
 
  private:
-  GraphicsProgram *m_TrainProgram;
-  GraphicsProgram *m_LineProgram;
-  GraphicsProgram *m_WaypointProgram;
-  WindowHandler *m_Window;
+  std::unique_ptr<GraphicsProgram> m_TrainProgram =
+      std::make_unique<GraphicsProgram>();
+  std::unique_ptr<GraphicsProgram> m_LineProgram =
+      std::make_unique<GraphicsProgram>();
+  std::unique_ptr<GraphicsProgram> m_StationProgram =
+      std::make_unique<GraphicsProgram>();
+  std::unique_ptr<WindowHandler> m_Window = std::make_unique<WindowHandler>();
   World *p_World;
   Camera *p_Camera;
 };

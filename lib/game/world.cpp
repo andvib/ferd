@@ -5,13 +5,14 @@
 void World::AddLine(const Line *line) {
   // Add LineObjects
   std::vector<LineObject *> line_objects = line->GetLineObjects();
-  v_line_objects.insert(v_line_objects.end(), line_objects.begin(),
-                        line_objects.end());
+  v_LineObjects.insert(v_LineObjects.end(), line_objects.begin(),
+                       line_objects.end());
+
   // Add waypoints
-  std::vector<LineWaypoint *> line_waypoints = line->GetLineWaypoints();
+  std::vector<Waypoint *> line_waypoints = line->GetWaypoints();
   for (auto waypoint : line_waypoints) {
-    if (waypoint->IsStation()) {
-      v_line_waypoints.push_back(waypoint);
+    if (auto *stationPtr = dynamic_cast<Station *>(waypoint)) {
+      v_Stations.push_back(stationPtr);
     }
   }
 }
@@ -32,15 +33,15 @@ void World::RenderTrains(GLuint modelLoc) {
 }
 
 void World::RenderLineObjects() {
-  for (auto linePtr : v_line_objects) {
+  for (auto linePtr : v_LineObjects) {
     linePtr->Render();
   }
 }
 
-void World::RenderLineWaypoints(GLuint modelLoc) const {
+void World::RenderStations(GLuint modelLoc) const {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  for (auto circlePtr : v_line_waypoints) {
+  for (auto circlePtr : v_Stations) {
     glm::mat4 model = circlePtr->CalculateModelMatrix();
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
 
