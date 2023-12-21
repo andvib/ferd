@@ -8,8 +8,8 @@
 #include "framework/geometry/circleObject.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "game/line.hpp"
-#include "game/lineWaypoint.hpp"
 #include "game/train.hpp"
+#include "game/waypoint/station.hpp"
 
 class World {
  public:
@@ -42,18 +42,18 @@ class World {
    *
    * @param object LineObject object
    */
-  void AddLineObject(LineObject *object) { v_line_objects.push_back(object); }
+  void AddLineObject(LineObject *object) { v_LineObjects.push_back(object); }
 
   void AddLineObjectVector(std::vector<LineObject *> lines) {
-    v_line_objects.insert(v_line_objects.end(), lines.begin(), lines.end());
+    v_LineObjects.insert(v_LineObjects.end(), lines.begin(), lines.end());
   }
 
   /**
-   * @brief Add LineWaypoint to draw in the world
+   * @brief Add Station to be drawn in the world
    *
-   * @param wp Waypoint to draw
+   * @param station Station to draw
    */
-  void AddLineWaypoint(LineWaypoint *wp) { v_line_waypoints.push_back(wp); }
+  void AddStation(Station *station) { v_Stations.push_back(station); }
 
   /**
    * @brief Render the trains in the world
@@ -68,17 +68,17 @@ class World {
   void RenderLineObjects();
 
   /**
-   * @brief Render line waypoints (circles) in the world
+   * @brief Render stations in the world
    *
    * @param modelLoc Location of the model uniform in the program
    */
-  void RenderLineWaypoints(GLuint modelLoc) const;
+  void RenderStations(GLuint modelLoc) const;
 
  private:
   std::vector<Train *> v_Trains;
   std::vector<Line *> v_Lines;
-  std::vector<LineObject *> v_line_objects;
-  std::vector<LineWaypoint *> v_line_waypoints;
+  std::vector<LineObject *> v_LineObjects;
+  std::vector<Station *> v_Stations;
 };
 
 #endif /* INCLUDE_GAME_WORLD_HPP_ */

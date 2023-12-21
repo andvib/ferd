@@ -1,6 +1,6 @@
 #include "game/line.hpp"
 
-Line::Line(std::vector<LineWaypoint *> waypoints, struct ferd_color color)
+Line::Line(std::vector<Waypoint *> waypoints, struct ferd_color color)
     : v_waypoints(waypoints), m_color(color) {
   for (int i = 0; i < (v_waypoints.size() - 1); i++) {
     position_t point0 = v_waypoints[i]->PositionCoordinates();
