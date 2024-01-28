@@ -13,14 +13,16 @@
 static const struct rectangle_points c_train_points = {
     -0.25, 0.185, -0.25, -0.185, 0.25, -0.185, 0.25, 0.185};
 
+static get_next_train_id() {
+  static int next_train_id = 1;
+  return next_train_id++;
+}
+
 Train::Train() : RectangleObject(c_train_points, FERD_COLOR_1) {
   p_Route = new TrainNavigator();
   p_Physics = new TrainPhysics();
-}
 
-Train::~Train() {
-  delete p_Route;
-  delete p_Physics;
+  m_train_id = get_next_train_id();
 }
 
 Train::Train(Line* line, position_t start_position, float acceleration,
@@ -32,6 +34,13 @@ Train::Train(Line* line, position_t start_position, float acceleration,
   p_Physics->rotateTrain(
       p_Route->vectorToNextStation(p_Physics->getPosition()));
   m_State = STOPPED_AT_STATION;
+
+  m_train_id = get_next_train_id();
+}
+
+Train::~Train() {
+  delete p_Route;
+  delete p_Physics;
 }
 
 void Train::Update(clock_t delta_time_ms) {
@@ -58,7 +67,7 @@ void Train::Update(clock_t delta_time_ms) {
 
       if (p_Route->distanceToStation(p_Physics->getPosition()) <
           p_Physics->getBreakingDistance()) {
-        spdlog::info("Approaching station!");
+        spdlog::info("Train {} is approaching station", m_train_id);
         p_Physics->decelerate();
         m_State = APPROACH;
       }

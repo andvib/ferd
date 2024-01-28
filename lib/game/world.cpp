@@ -1,5 +1,7 @@
 #include "game/world.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <chrono>
 
 void World::AddLine(const Line *line) {
