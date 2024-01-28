@@ -11,6 +11,16 @@ class Station : public Waypoint, public CircleObject {
   Station();
   explicit Station(position_t coordinates)
       : Waypoint(coordinates), CircleObject(coordinates) {}
+
+  int getID() const { return m_station_id; }
+
+ private:
+  static int getNextID() {
+    static int nextID = 0;
+    return nextID++;
+  }
+
+  int m_station_id = getNextID();
 };
 
 #endif /* INCLUDE_GAME_WAYPOINT_STATION_HPP_ */

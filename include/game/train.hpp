@@ -50,6 +50,7 @@ class Train : public RectangleObject {
   clock_t m_duration_at_station = 0;
   int m_wait_time = 0;
   position_t current_station;
+  int m_train_id;
 };
 
 #endif /* INCLUDE_GAME_TRAIN_HPP_ */
