@@ -10,6 +10,11 @@
 
 enum class LineDirection { FORWARD, BACKWARD };
 
+struct line_ctx {
+  int index;
+  LineDirection direction;
+};
+
 class Line {
  public:
   Line() = default;
@@ -27,7 +32,12 @@ class Line {
    * @param direction The direction on the line the train is traveling
    * @return position_t Position of the next station
    */
-  position_t GetNextStation(int index, LineDirection direction);
+  // position_t GetNextStation(int index, LineDirection direction);
+  Waypoint &GetNextStation(line_ctx context);
+
+  Waypoint &GetNextWaypoint(line_ctx context);
+
+  void UpdateContext(line_ctx context);
 
   /**
    * @brief Returns the number of stations currently in the line
