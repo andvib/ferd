@@ -1,61 +1,53 @@
 cmake_minimum_required(VERSION 3.10)
 
 project(ferd)
-add_executable(ferd WIN32 src/main.cpp)
+
+add_library(ferdprj)
 
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/spdlog/build")
 find_package(spdlog REQUIRED)
-target_link_libraries(ferd spdlog::spdlog)
+target_link_libraries(ferdprj spdlog::spdlog)
 
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/glm/cmake")
 find_package(glm REQUIRED)
-target_link_libraries(ferd glm::glm)
+target_link_libraries(ferdprj glm::glm)
 
-target_sources(ferd PRIVATE
-               lib/framework/windowHandler.cpp
-               lib/framework/gameShader.cpp
-               lib/framework/graphicsProgram.cpp
-               lib/framework/graphicsFramework.cpp
-               lib/framework/geometry/rectangleObject.cpp
-               lib/framework/geometry/lineObject.cpp
-               lib/framework/geometry/circleObject.cpp
-               lib/game/camera.cpp
-               lib/game/train.cpp
-               lib/game/trainNavigator.cpp
-               lib/game/trainPhysics.cpp
-               lib/game/line.cpp
-               lib/game/world.cpp)
-include_directories(ferd include ext)
+include_directories(ferdprj ext)
 
 # Add GLFW to build
 set(GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only")
 set(GLFW_INSTALL OFF CACHE BOOL  "GLFW lib only")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only")
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ext/glfw)
-target_link_libraries(ferd glfw)
+target_link_libraries(ferdprj glfw)
 
 # Add GLEW to build
 add_definitions(-DGLEW_STATIC)
 set(GLEW_USE_STATIC_LIBS TRUE)
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/glew")
 find_package(GLEW REQUIRED)
-include_directories(ferd ${GLEW_INCLUDE_DIRS})
-target_link_libraries(ferd ${GLEW_LIBRARIES})
-target_link_libraries(ferd ${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/glew32.lib)
+include_directories(ferdprj ${GLEW_INCLUDE_DIRS})
+target_link_libraries(ferdprj ${GLEW_LIBRARIES})
+target_link_libraries(ferdprj ${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/glew32.lib)
 
 # Add OpenGL to build
 find_package(OpenGL REQUIRED)
-include_directories(ferd ${OPENGL_INCLUDE_DIRS})
-target_link_libraries(ferd ${OPENGL_LIBRARIES})
+include_directories(ferdprj ${OPENGL_INCLUDE_DIRS})
+target_link_libraries(ferdprj ${OPENGL_LIBRARIES})
 
 # Add ImGui to build
 file(GLOB IMGUI_SRC_FILES "ext/imgui/*.cpp")
-target_sources(ferd PRIVATE
+target_sources(ferdprj PRIVATE
                ${IMGUI_SRC_FILES}
                ext/imgui/backends/imgui_impl_glfw.cpp
                ext/imgui/backends/imgui_impl_opengl3.cpp)
-include_directories(ferd "ext/imgui")
-include_directories(ferd "ext/imgui/backends")
+include_directories(ferdprj "ext/imgui")
+include_directories(ferdprj "ext/imgui/backends")
 
 # Add EIGEN to build
-include_directories(ferd "ext/eigen/")
+include_directories(ferdprj "ext/eigen/")
+
+add_subdirectory(lib)
+target_link_libraries(ferdprj ferd_lib)
+
+add_subdirectory(src)
