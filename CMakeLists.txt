@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
+option(BUILD_FERD "Build the Ferd Executable" OFF)
+option(BUILD_TESTS "Build the tests" OFF)
+
 project(ferd)
 
 add_library(ferdprj)
@@ -50,4 +53,12 @@ include_directories(ferdprj "ext/eigen/")
 add_subdirectory(lib)
 target_link_libraries(ferdprj ferd_lib)
 
-add_subdirectory(src)
+if(BUILD_FERD)
+    add_subdirectory(src)
+endif()
+
+if(BUILD_TESTS)
+    enable_testing()
+    include(GoogleTest)
+    add_subdirectory(tests)
+endif()
