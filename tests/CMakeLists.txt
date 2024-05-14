@@ -23,4 +23,4 @@ mark_as_advanced(
     gtest_disable_pthreads gtest_force_shared_crt gtest_hide_internal_symbols
 )
 
-add_subdirectory(hello_test)
+add_subdirectory(lib/game/line)
