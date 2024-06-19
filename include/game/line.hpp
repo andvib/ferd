@@ -1,8 +1,10 @@
 #ifndef INCLUDE_GAME_LINE_HPP_
 #define INCLUDE_GAME_LINE_HPP_
 
+#include <memory>
 #include <vector>
 
+#include "framework/OpenGLWrapper.hpp"
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "game/physics/kinematics.hpp"
@@ -12,10 +14,11 @@ enum class LineDirection { FORWARD, BACKWARD };
 
 class Line {
  public:
-  Line() = default;
-  ~Line() = default;
+  ~Line();
 
-  Line(std::vector<Waypoint *> waypoints, struct ferd_color color);
+  Line(std::vector<Waypoint *> waypoints, struct ferd_color color,
+       std::shared_ptr<OpenGLWrapper> opengl =
+           std::make_shared<OpenGLWrapper>());
 
   /**
    * @brief Get the next station on the line

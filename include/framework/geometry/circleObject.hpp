@@ -3,16 +3,20 @@
 
 #include <GL/glew.h>
 
+#include <memory>
+
+#include "framework/OpenGLWrapper.hpp"
 #include "game/physics/kinematics.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
 
 class CircleObject {
  public:
-  CircleObject();
-  ~CircleObject() = default;
+  explicit CircleObject(std::shared_ptr<OpenGLWrapper> opengl);
+  explicit CircleObject(position_t center,
+                        std::shared_ptr<OpenGLWrapper> opengl);
 
-  explicit CircleObject(position_t center);
+  ~CircleObject() = default;
 
   /**
    * @brief Render the circle object
@@ -32,6 +36,7 @@ class CircleObject {
   GLuint m_vertexBuffer;
   GLfloat *m_vertex_buffer_data;
   GLuint m_elementBuffer;
+  std::shared_ptr<OpenGLWrapper> opengl_;
 };
 
 #endif /* INCLUDE_FRAMEWORK_GEOMETRY_CIRCLEOBJECT_HPP_ */

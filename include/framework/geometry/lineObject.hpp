@@ -3,6 +3,9 @@
 
 #include <GL/glew.h>
 
+#include <memory>
+
+#include "framework/OpenGLWrapper.hpp"
 #include "framework/ferd_color.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/transform.hpp"
@@ -17,8 +20,10 @@ struct line {
 
 class LineObject {
  public:
-  LineObject();
-  LineObject(struct line points, struct ferd_color color);
+  explicit LineObject(std::shared_ptr<OpenGLWrapper> opengl);
+  LineObject(struct line points, struct ferd_color color,
+             std::shared_ptr<OpenGLWrapper> opengl);
+  ~LineObject() = default;
 
   /**
    * @brief Render a line object
@@ -36,6 +41,7 @@ class LineObject {
   GLuint m_pointa_buffer;
   GLuint m_pointb_buffer;
   GLuint m_width_buffer;
+  std::shared_ptr<OpenGLWrapper> opengl_;
 };
 
 #endif /* INCLUDE_FRAMEWORK_GEOMETRY_LINEOBJECT_HPP_ */

@@ -2,15 +2,18 @@
 #define INCLUDE_GAME_WAYPOINT_STATION_HPP_
 
 #include <iostream>
+#include <memory>
 
+#include "framework/OpenGLWrapper.hpp"
 #include "framework/geometry/circleObject.hpp"
 #include "game/waypoint/waypoint.hpp"
 
 class Station : public Waypoint, public CircleObject {
  public:
-  Station();
-  explicit Station(position_t coordinates)
-      : Waypoint(coordinates), CircleObject(coordinates) {}
+  explicit Station(
+      position_t coordinates,
+      std::shared_ptr<OpenGLWrapper> opengl = std::make_shared<OpenGLWrapper>())
+      : Waypoint(coordinates), CircleObject(coordinates, opengl) {}
 
   int getID() const { return m_station_id; }
 
