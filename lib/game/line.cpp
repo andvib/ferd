@@ -1,6 +1,9 @@
 #include "game/line.hpp"
 
-Line::Line(std::vector<Waypoint *> waypoints, struct ferd_color color)
+#include <spdlog/spdlog.h>
+
+Line::Line(std::vector<Waypoint *> waypoints, struct ferd_color color,
+           std::shared_ptr<OpenGLWrapper> opengl)
     : v_waypoints(waypoints), m_color(color) {
   for (int i = 0; i < (v_waypoints.size() - 1); i++) {
     position_t point0 = v_waypoints[i]->PositionCoordinates();
@@ -13,9 +16,16 @@ Line::Line(std::vector<Waypoint *> waypoints, struct ferd_color color)
         .width = 0.7f,
     };
 
-    auto temp_line = new LineObject(points, m_color);
+    auto temp_line = new LineObject(points, m_color, opengl);
     v_line_objects.push_back(temp_line);
   }
+}
+
+Line::~Line() {
+  for (auto linePtr : v_line_objects) {
+    delete linePtr;
+  }
+  v_line_objects.clear();
 }
 
 position_t Line::GetNextStation(int index, LineDirection direction) {
