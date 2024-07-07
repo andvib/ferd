@@ -8,6 +8,7 @@
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/lineObject.hpp"
 #include "game/physics/kinematics.hpp"
+#include "game/waypoint/station.hpp"
 #include "game/waypoint/waypoint.hpp"
 
 enum class LineDirection { FORWARD, BACKWARD };
@@ -26,21 +27,42 @@ class Line {
            std::make_shared<OpenGLWrapper>());
 
   /**
+   * @brief Get position of the next waypoint
+   *
+   * @param context       Line context
+   * @return position_t   Position of the next waypoing
+   */
+  int GetNextWaypoint(position_t *waypoint_pos, line_ctx ctx);
+
+  /**
+   * @brief Get the distance to the next waypoint
+   *
+   * @param context           Line context
+   * @param current_position  Current positing
+   * @return float              Distance to the next waypoint
+   */
+  float GetNextWaypointDistance(line_ctx context, position_t current_position);
+
+  /**
    * @brief Get the next station on the line
    *
-   * @details Returns the position of the next station, based on the current
-   *          station index.
+   * @details Finds the position of the next station based on the current
+   *          waypoint index.
+   * @param waypoint_pos  Pointer to variable to store location of next station
+   * @param context       Line context
    *
-   * @param index Current station index for the train
-   * @param direction The direction on the line the train is traveling
-   * @return position_t Position of the next station
+   * @return int          0 on success, negative value otherwise
    */
-  position_t GetNextStation(int index, LineDirection direction);
-  Waypoint &GetNextStation(line_ctx context);
+  int GetNextStation(position_t *waypoint_pos, line_ctx ctx);
 
-  Waypoint &GetNextWaypoint(line_ctx context);
-
-  void UpdateContext(line_ctx context);
+  /**
+   * @brief Get the distance to the next station on the line
+   *
+   * @param context           Line context
+   * @param current_position  Current position
+   * @return float              Distance to next station
+   */
+  float GetNextStationDistance(line_ctx context, position_t current_position);
 
   /**
    * @brief Returns the number of stations currently in the line
