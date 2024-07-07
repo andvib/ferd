@@ -47,14 +47,11 @@ class TrainNavigator {
    *
    * @return position_t Position of next station
    */
-  position_t nextStationPos() {
-    return p_line->GetNextStation(m_waypoint_index, m_direction);
-  }
+  position_t nextStationPos();
 
  private:
   Line *p_line;
-  int m_waypoint_index;
-  LineDirection m_direction;
+  line_ctx m_line_context;
 };
 
 #endif /* INCLUDE_GAME_TRAINNAVIGATOR_HPP_ */
