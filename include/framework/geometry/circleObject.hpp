@@ -8,6 +8,8 @@
 #include "framework/OpenGLWrapper.hpp"
 #include "game/physics/kinematics.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+
+#define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/transform.hpp"
 
 class CircleObject {
