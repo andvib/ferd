@@ -16,16 +16,9 @@ Line::Line(std::vector<Waypoint*> waypoints, struct ferd_color color,
         .width = 0.7f,
     };
 
-    auto temp_line = new LineObject(points, m_color, opengl);
+    auto temp_line = make_shared<LineObject>(points, m_color, opengl);
     v_line_objects.push_back(temp_line);
   }
-}
-
-Line::~Line() {
-  for (auto linePtr : v_line_objects) {
-    delete linePtr;
-  }
-  v_line_objects.clear();
 }
 
 int Line::GetNextWaypoint(position_t* waypoint_pos, line_ctx ctx) {
