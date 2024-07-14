@@ -6,7 +6,8 @@
 
 void World::AddLine(const Line *line) {
   // Add LineObjects
-  std::vector<LineObject *> line_objects = line->GetLineObjects();
+  std::vector<std::shared_ptr<LineObject>> line_objects =
+      line->GetLineObjects();
   v_LineObjects.insert(v_LineObjects.end(), line_objects.begin(),
                        line_objects.end());
 

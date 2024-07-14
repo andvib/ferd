@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 
+#include <memory>
 #include <vector>
 
 #include "framework/geometry/circleObject.hpp"
@@ -42,9 +43,11 @@ class World {
    *
    * @param object LineObject object
    */
-  void AddLineObject(LineObject *object) { v_LineObjects.push_back(object); }
+  void AddLineObject(std::shared_ptr<LineObject> object) {
+    v_LineObjects.push_back(object);
+  }
 
-  void AddLineObjectVector(std::vector<LineObject *> lines) {
+  void AddLineObjectVector(std::vector<std::shared_ptr<LineObject>> lines) {
     v_LineObjects.insert(v_LineObjects.end(), lines.begin(), lines.end());
   }
 
@@ -77,7 +80,7 @@ class World {
  private:
   std::vector<Train *> v_Trains;
   std::vector<Line *> v_Lines;
-  std::vector<LineObject *> v_LineObjects;
+  std::vector<std::shared_ptr<LineObject>> v_LineObjects;
   std::vector<Station *> v_Stations;
 };
 

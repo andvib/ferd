@@ -20,7 +20,7 @@ struct line_ctx {
 
 class Line {
  public:
-  ~Line();
+  ~Line() = default;
 
   Line(std::vector<Waypoint *> waypoints, struct ferd_color color,
        std::shared_ptr<OpenGLWrapper> opengl =
@@ -79,7 +79,9 @@ class Line {
    * @return std::vector<LineObject *> A vector with pointers to the
    * LineObjects.
    */
-  std::vector<LineObject *> GetLineObjects() const { return v_line_objects; }
+  std::vector<std::shared_ptr<LineObject>> GetLineObjects() const {
+    return v_line_objects;
+  }
 
   /**
    * @brief Get the Waypoints on the line
@@ -91,7 +93,7 @@ class Line {
 
  private:
   std::vector<Waypoint *> v_waypoints;
-  std::vector<LineObject *> v_line_objects;
+  std::vector<std::shared_ptr<LineObject>> v_line_objects;
   struct ferd_color m_color;
 };
 
