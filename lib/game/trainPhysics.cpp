@@ -18,6 +18,14 @@ TrainPhysics::TrainPhysics(position_t start_position, float acceleration)
   m_acc_direction = 1;
 }
 
+void TrainPhysics::rotateTrain(vector_t vector) {
+  m_vector(0) = vector.x;
+  m_vector(1) = vector.y;
+
+  float curr_abs_speed = absoluteSpeed(m_speed);
+  m_speed = curr_abs_speed * m_vector;
+}
+
 void TrainPhysics::Update(clock_t delta_time_ms) {
   float curr_abs_speed = absoluteSpeed(m_speed);
   float delta_time_s = delta_time_ms / 1000.0;

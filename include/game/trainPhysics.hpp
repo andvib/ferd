@@ -59,10 +59,7 @@ class TrainPhysics {
    *
    * @param vector Unit vector train rotation should follow
    */
-  void rotateTrain(vector_t vector) {
-    m_vector(0) = vector.x;
-    m_vector(1) = vector.y;
-  }
+  void rotateTrain(vector_t vector);
 
   /**
    * @brief Get the breaking distance of the train

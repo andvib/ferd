@@ -32,7 +32,7 @@ Train::Train(Line* line, position_t start_position, float acceleration,
   p_Route = new TrainNavigator(line);
 
   p_Physics->rotateTrain(
-      p_Route->vectorToNextStation(p_Physics->getPosition()));
+      p_Route->vectorToNextWaypoint(p_Physics->getPosition()));
   m_State = STOPPED_AT_STATION;
 
   m_train_id = get_next_train_id();
@@ -49,13 +49,13 @@ void Train::Update(clock_t delta_time_ms) {
       if (m_duration_at_station == 0) {
         m_duration_at_station = clock();
         m_wait_time = rand() / (RAND_MAX / 3000);
-        current_station = p_Route->nextStationPos();
+        current_waypoint = p_Route->nextWaypointPos();
       }
 
       if (((clock() - m_duration_at_station) / CLOCKS_PER_MSEC) > m_wait_time) {
         m_State = ENROUTE;
         vector_t vector_next =
-            p_Route->vectorToNextStation(p_Physics->getPosition());
+            p_Route->vectorToNextWaypoint(p_Physics->getPosition());
         p_Physics->rotateTrain({vector_next});
         p_Physics->accelerate();
         m_duration_at_station = 0;
@@ -64,6 +64,16 @@ void Train::Update(clock_t delta_time_ms) {
 
     case ENROUTE:
       p_Physics->Update(delta_time_ms);
+
+      if (p_Route->atWaypoint(p_Physics->getPosition())) {
+        spdlog::info("Train {} at waypoint", m_train_id);
+
+        p_Physics->moveToStation(current_waypoint);
+        vector_t vector_next =
+            p_Route->vectorToNextWaypoint(p_Physics->getPosition());
+        p_Physics->rotateTrain({vector_next});
+        current_waypoint = p_Route->nextWaypointPos();
+      }
 
       if (p_Route->distanceToStation(p_Physics->getPosition()) <
           p_Physics->getBreakingDistance()) {
@@ -78,7 +88,7 @@ void Train::Update(clock_t delta_time_ms) {
 
       if (p_Route->atStation(p_Physics->getPosition())) {
         p_Physics->stop();
-        p_Physics->moveToStation(current_station);
+        p_Physics->moveToStation(current_waypoint);
         m_State = STOPPED_AT_STATION;
       }
       break;

@@ -13,39 +13,52 @@ TrainNavigator::TrainNavigator(Line *line) {
 }
 
 float TrainNavigator::distanceToStation(position_t current_position) {
-  return p_line->GetNextWaypointDistance(m_line_context, current_position);
+  return p_line->GetNextStationDistance(m_line_context, current_position);
 }
 
-bool TrainNavigator::atStation(position_t current_position) {
-  float distance_to_station =
-      p_line->GetNextWaypointDistance(m_line_context, current_position);
+void TrainNavigator::updateLineContext() {
+  using enum LineDirection;
 
-  if (distance_to_station < 0.01) {
-    spdlog::debug("Train reached station ({},{})", current_position.x,
+  if (m_line_context.direction == FORWARD) {
+    ++m_line_context.index;
+    spdlog::debug("New index: {}", m_line_context.index);
+  } else {
+    --m_line_context.index;
+    spdlog::debug("New index: {}", m_line_context.index);
+  }
+
+  if (m_line_context.index == (p_line->NumberOfStations() - 1)) {
+    spdlog::debug("Reversing!");
+    m_line_context.direction = BACKWARD;
+  } else if (m_line_context.index == 0) {
+    spdlog::debug("Forward!");
+    m_line_context.direction = FORWARD;
+  }
+}
+
+bool TrainNavigator::atWaypoint(position_t current_position) {
+  if (p_line->GetNextWaypointDistance(m_line_context, current_position) < 0.1) {
+    spdlog::debug("Train reached waypoint ({},{})", current_position.x,
                   current_position.y);
-
-    if (m_line_context.direction == LineDirection::FORWARD) {
-      ++m_line_context.index;
-      spdlog::debug("New index: {}", m_line_context.index);
-    } else {
-      --m_line_context.index;
-      spdlog::debug("New index: {}", m_line_context.index);
-    }
-
-    if (m_line_context.index == (p_line->NumberOfStations() - 1)) {
-      spdlog::debug("Reversing!");
-      m_line_context.direction = LineDirection::BACKWARD;
-    } else if (m_line_context.index == 0) {
-      spdlog::debug("Forward!");
-      m_line_context.direction = LineDirection::FORWARD;
-    }
+    updateLineContext();
 
     return true;
   }
   return false;
 }
 
-vector_t TrainNavigator::vectorToNextStation(position_t current_position) {
+bool TrainNavigator::atStation(position_t current_position) {
+  if (p_line->GetNextStationDistance(m_line_context, current_position) < 0.05) {
+    spdlog::debug("Train reached station ({},{})", current_position.x,
+                  current_position.y);
+    updateLineContext();
+
+    return true;
+  }
+  return false;
+}
+
+vector_t TrainNavigator::vectorToNextWaypoint(position_t current_position) {
   int err;
   position_t next_waypoint;
 
@@ -64,15 +77,15 @@ vector_t TrainNavigator::vectorToNextStation(position_t current_position) {
   return {x_vector, y_vector};
 }
 
-position_t TrainNavigator::nextStationPos() {
+position_t TrainNavigator::nextWaypointPos() {
   int err;
-  position_t next_station;
+  position_t next_waypoint;
 
-  err = p_line->GetNextWaypoint(&next_station, m_line_context);
+  err = p_line->GetNextWaypoint(&next_waypoint, m_line_context);
   if (err) {
     spdlog::error("Error when getting station {}", err);
     return {0, 0};
   }
 
-  return next_station;
+  return next_waypoint;
 }

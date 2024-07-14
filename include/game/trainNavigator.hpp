@@ -17,7 +17,7 @@ class TrainNavigator {
   explicit TrainNavigator(Line *line);
 
   /**
-   * @brief Check if train is currently at a station
+   * @brief Check if train is currently at the next station on the line
    *
    * @param current_position Current position of the train
    * @return true Train is at station
@@ -26,13 +26,23 @@ class TrainNavigator {
   bool atStation(position_t current_position);
 
   /**
-   * @brief Get the vector to next station
+   * @brief Check if train is currently at the next waypoint on the line
+   *
+   * @param current_position  Current position of the train
+   *
+   * @return  true  Train is at waypoint
+   * @return  false Train is not at waypoint
+   */
+  bool atWaypoint(position_t current_position);
+
+  /**
+   * @brief Get the vector to next waypoint on the line
    *
    * @details Calculates the unit vector from the previous to the next station
    *
    * @return vector_t Unit vector from the previous to the next station
    */
-  vector_t vectorToNextStation(position_t current_position);
+  vector_t vectorToNextWaypoint(position_t current_position);
 
   /**
    * @brief Get the distance to the next station based on the current position
@@ -43,13 +53,14 @@ class TrainNavigator {
   float distanceToStation(position_t current_position);
 
   /**
-   * @brief Get position of next station
+   * @brief Get position of next waypoint on the line
    *
    * @return position_t Position of next station
    */
-  position_t nextStationPos();
+  position_t nextWaypointPos();
 
  private:
+  void updateLineContext();
   Line *p_line;
   line_ctx m_line_context;
 };
