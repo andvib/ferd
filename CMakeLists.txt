@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
+# Set the C++ standard to gnu++20
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+
 option(BUILD_FERD "Build the Ferd Executable" OFF)
 option(BUILD_TESTS "Build the tests" OFF)
 

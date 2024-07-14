@@ -49,7 +49,7 @@ class Train : public RectangleObject {
   train_state m_State;
   clock_t m_duration_at_station = 0;
   int m_wait_time = 0;
-  position_t current_station;
+  position_t current_waypoint;
   int m_train_id;
 };
 
