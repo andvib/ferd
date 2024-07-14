@@ -12,17 +12,10 @@ class WindowHandler {
 
  public:
   /**
-   * @brief Construct a new Window Handler:: Window Handler object
-   *
-   * @details Sets window hints for GLFW
-   */
-  WindowHandler();
-
-  /**
    * @brief Activate the window
    *
    * @details Creates a window from GLFW, and makes it the current context. Also
-   * sets the input mode for the window.
+   * sets the input mode for the window and window hints.
    *
    * @return int 0 if success, negative value otherwise
    */

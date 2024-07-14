@@ -19,6 +19,7 @@ int GraphicsFramework::Activate() {
 
   m_Window->activate();
   glfwSwapInterval(1);
+  glEnable(GL_MULTISAMPLE);
 
   if (glewInit() != GLEW_OK) {
     spdlog::critical("Failed to initialize glew");
