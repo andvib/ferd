@@ -7,16 +7,12 @@
 #include "imgui/imgui.h"
 #include "spdlog/spdlog.h"
 
-WindowHandler::WindowHandler() {
-  window = NULL;
-
+int WindowHandler::activate() {
   glfwWindowHint(GLFW_SAMPLES, 4);                // 4x antialiasing
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);  // Opengl 3.3
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-}
 
-int WindowHandler::activate() {
   window = glfwCreateWindow(800, 800, "Ferd.", NULL, NULL);
   if (window == NULL) {
     spdlog::critical("Failed to open GLFW window");
