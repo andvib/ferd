@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.10)
 # Set the C++ standard to gnu++20
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_SYSTEM_NAME Windows)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --static")
 
 option(BUILD_FERD "Build the Ferd Executable" OFF)
 option(BUILD_TESTS "Build the tests" OFF)
@@ -32,16 +34,13 @@ target_link_libraries(ferdprj glfw)
 # Add GLEW to build
 add_definitions(-DGLEW_STATIC)
 set(GLEW_USE_STATIC_LIBS TRUE)
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/glew")
-find_package(GLEW REQUIRED)
-include_directories(ferdprj ${GLEW_INCLUDE_DIRS})
-target_link_libraries(ferdprj ${GLEW_LIBRARIES})
-target_link_libraries(ferdprj ${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/glew32.lib)
 
-# Add OpenGL to build
-find_package(OpenGL REQUIRED)
-include_directories(ferdprj ${OPENGL_INCLUDE_DIRS})
-target_link_libraries(ferdprj ${OPENGL_LIBRARIES})
+# Manually specify the GLEW directories
+set(GLEW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/include")
+set(GLEW_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/ext/glew/lib/Release/x64/glew32s.lib")
+
+# Include the GLEW header directory
+include_directories(${GLEW_INCLUDE_DIR})
 
 # Add ImGui to build
 file(GLOB IMGUI_SRC_FILES "ext/imgui/*.cpp")
@@ -67,3 +66,6 @@ if(BUILD_TESTS)
     include(GoogleTest)
     add_subdirectory(tests)
 endif()
+
+# Link against the GLEW and OpenGL libraries
+target_link_libraries(ferdprj ${GLEW_LIBRARY} opengl32)
