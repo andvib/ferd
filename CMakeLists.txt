@@ -14,13 +14,13 @@ project(ferd)
 
 add_library(ferdprj)
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/spdlog/build")
-find_package(spdlog REQUIRED)
-target_link_libraries(ferdprj spdlog::spdlog)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ext/spdlog)
+target_link_libraries(ferdprj spdlog::spdlog $<$<BOOL:${MINGW}>:ws2_32>)
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ext/glm/cmake")
-find_package(glm REQUIRED)
-target_link_libraries(ferdprj glm::glm)
+set(GLM_BUILD_TESTS OFF CACHE BOOL "Build GLM tests")
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries")
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ext/glm)
+target_link_libraries(ferdprj glm)
 
 include_directories(ferdprj ext)
 
