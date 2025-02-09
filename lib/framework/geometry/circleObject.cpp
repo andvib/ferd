@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include <memory>
+
 CircleObject::CircleObject(std::shared_ptr<OpenGLWrapper> opengl)
     : opengl_(opengl) {
   opengl_->glGenVertexArrays(1, &m_vertexArrayID);

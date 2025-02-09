@@ -10,4 +10,10 @@ target_sources(ferd_game PRIVATE
     trainPhysics.cpp
     world.cpp)
 
+target_sources(ferd_game PRIVATE
+    rail/railConnection.cpp
+    rail/railPiece.cpp
+    rail/straightRailPiece.cpp
+    rail/railWalker.cpp)
+
 include_directories(ferd_framework ../../include)

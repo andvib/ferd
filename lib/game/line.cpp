@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include <memory>
+
 Line::Line(std::vector<Waypoint*> waypoints, struct ferd_color color,
            std::shared_ptr<OpenGLWrapper> opengl)
     : v_waypoints(waypoints), m_color(color) {

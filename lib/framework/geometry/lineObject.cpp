@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#include <memory>
+
 static const GLfloat m_VertexBufferData[]{0, 0.5, 0, -0.5, 1, -0.5, 1, 0.5};
 
 LineObject::LineObject(std::shared_ptr<OpenGLWrapper> opengl)
