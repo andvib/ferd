@@ -3,6 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include <chrono>
+#include <vector>
 
 void World::AddLine(const Line *line) {
   // Add LineObjects

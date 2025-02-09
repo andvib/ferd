@@ -18,6 +18,17 @@ struct vector_t {
   float y;
 };
 
+template <typename T>
+concept HasXY = requires(T t) {
+    { t.x } -> std::convertible_to<float>;
+    { t.y } -> std::convertible_to<float>;
+};
+
+template <HasXY T>
+inline bool operator==(const T& lhs, const T& rhs) {
+    return (lhs.x == rhs.x && lhs.y == rhs.y);
+}
+
 using Vector2D = Eigen::Matrix<float, 2, 1>;
 
 inline float absoluteSpeed(Vector2D speed_vec) {

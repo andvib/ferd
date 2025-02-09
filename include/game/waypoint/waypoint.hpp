@@ -13,6 +13,8 @@ class Waypoint {
   /* This is done as a virtual function to achieve polymorphism */
   virtual position_t PositionCoordinates() const { return m_position; }
 
+  Vector2D PositionVector() const { return Vector2D(m_position.x, m_position.y); }
+
  private:
   position_t m_position;
 };

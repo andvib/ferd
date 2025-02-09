@@ -2,6 +2,9 @@
 
 #include <gtest/gtest.h>
 
+#include <memory>
+#include <vector>
+
 #include "MockOpenGLWrapper.h"
 #include "framework/ferd_color.hpp"
 #include "game/waypoint/station.hpp"
