@@ -28,9 +28,9 @@ void World::Update(clock_t delta_time_ms) {
 }
 
 void World::RenderTrains(GLuint modelLoc) {
-  for (auto trainPtr : v_Trains) {
-    glm::mat4 model = trainPtr->CalculateModelMatrix();
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
+  for (auto trainPtr : v_Rectangles) {
+    //glm::mat4 model = trainPtr->CalculateModelMatrix();
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &trainPtr->m_model_matrix[0][0]);
 
     trainPtr->Render();
   }
@@ -45,7 +45,7 @@ void World::RenderLineObjects() {
 void World::RenderStations(GLuint modelLoc) const {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  for (auto circlePtr : v_Stations) {
+  for (auto circlePtr : v_CircleObjects) {
     glm::mat4 model = circlePtr->CalculateModelMatrix();
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
 

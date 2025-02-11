@@ -28,7 +28,7 @@ class RectangleObject {
    *
    * @details Updates the position and calculates the model matrix
    */
-  virtual void Update(clock_t delta_time) = 0;
+  //virtual void Update(clock_t delta_time) = 0;
 
   /**
    * @brief Render the rectangle object
@@ -40,7 +40,9 @@ class RectangleObject {
    *
    * @return glm::mat4 Model Matrix
    */
-  virtual glm::mat4 CalculateModelMatrix() = 0;
+  //virtual glm::mat4 CalculateModelMatrix() = 0;
+
+  glm::mat4 m_model_matrix;
 
  private:
   struct rectangle_points m_points;

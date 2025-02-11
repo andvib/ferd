@@ -18,7 +18,26 @@
 #include "game/waypoint/waypoint.hpp"
 #include "game/world.hpp"
 
+#include "game/rail/railPiece.hpp"
+#include "game/rail/straightRailPiece.hpp"
+#include "game/rail/straightRailStation.hpp"
+
 #define CLOCKS_PER_MSEC (CLOCKS_PER_SEC / 1000)
+
+#define WAYPOINT_X(wp) {(wp.PositionCoordinates()).x}
+#define WAYPOINT_Y(wp) {(wp.PositionCoordinates()).y}
+
+void create_line_object(World *world, Waypoint wp1, Waypoint wp2){
+  struct line line = {WAYPOINT_X(wp1),
+                      WAYPOINT_Y(wp1),
+                      WAYPOINT_X(wp2),
+                      WAYPOINT_Y(wp2),
+                      0.7f};
+  std::shared_ptr<LineObject> object = std::make_shared<LineObject>(line, FERD_COLOR_1,
+                                                                    std::make_shared<OpenGLWrapper>());
+  world->AddLineObject(object);
+}
+
 
 int main(void) {
   int err;
@@ -47,52 +66,55 @@ int main(void) {
   World GameWorld;
   Framework.AddWorld(&GameWorld);
 
-  Station wp1({0, 0});
-  Station wp2({50, -30});
-  Station wp3({100, -40});
-  Station wp4({120, -10});
+  Waypoint wp1({0, 0});
+  Waypoint wp2({50, -30});
+  Waypoint wp3({100, -40});
+  Waypoint wp4({120, -10});
 
-  Line line1(std::vector<Waypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
-  GameWorld.AddLine(&line1);
+  std::shared_ptr<StraightRailPiece> piece1 = std::make_shared<StraightRailPiece>();
+  piece1->name = "piece1";
+  piece1->waypointsSet(&wp1, &wp2);
+  create_line_object(&GameWorld, wp1, wp2);
 
-  Train trainObject(&line1, {0, 0}, 2, FERD_COLOR_1);
-  GameWorld.AddTrain(&trainObject);
+  std::shared_ptr<StraightRailStation> piece2 = std::make_shared<StraightRailStation>();
+  piece2->name = "piece2";
+  piece2->waypointsSet(&wp2, &wp3);
+  create_line_object(&GameWorld, wp2, wp3);
 
-  Train trainObject2(&line1, {0, 0}, 3, FERD_COLOR_1);
-  GameWorld.AddTrain(&trainObject2);
+  piece2->stopPointCalculate();
+  Vector2D stop_point = piece2->stopPointGet();
 
-  Station wp2_0({100, -100});
-  Station wp2_1({100, -40});
-  Waypoint wp2_2({100, -5});
-  Station wp2_3({80, 35});
-  Waypoint wp2_4({20, 30});
-  Station wp2_5({-30, 50});
+  spdlog::info("Stop point at {}, {}", stop_point(0), stop_point(1));
 
-  Line line2(
-      std::vector<Waypoint *>{&wp2_0, &wp2_1, &wp2_2, &wp2_3, &wp2_4, &wp2_5},
-      FERD_COLOR_2);
-  GameWorld.AddLine(&line2);
+  std::shared_ptr<CircleObject> circle1 = std::make_shared<CircleObject>((position_t){stop_point(0), stop_point(1)}, std::make_shared<OpenGLWrapper>());
+  GameWorld.AddCircle(circle1);
 
-  Train trainObject3(&line2, {100, -100}, 3, FERD_COLOR_2);
-  GameWorld.AddTrain(&trainObject3);
+  std::shared_ptr<StraightRailPiece> piece3 = std::make_shared<StraightRailPiece>();
+  piece3->name = "piece3";
+  piece3->waypointsSet(&wp3, &wp4);
+  create_line_object(&GameWorld, wp3, wp4);
 
-  Train trainObject4(&line2, {100, -100}, 3, FERD_COLOR_2);
-  GameWorld.AddTrain(&trainObject4);
+  std::shared_ptr<RailConnection> connection_1 = std::make_shared<RailConnection>(Vector2D({0, 0}));
+  std::shared_ptr<RailConnection> connection_2 = std::make_shared<RailConnection>(Vector2D({50, -30}));
+  std::shared_ptr<RailConnection> connection_3 = std::make_shared<RailConnection>(Vector2D({100, -40}));
+  std::shared_ptr<RailConnection> connection_4 = std::make_shared<RailConnection>(Vector2D({120, -10}));
 
-  Station wp3_0({80, 35});
-  Waypoint wp3_1({50, 5});
-  Station wp3_2({50, -30});
-  Station wp3_3({-10, -45});
+  connection_1->AddConnectionA(nullptr, nullptr);
+  connection_1->AddConnectionB(piece1, connection_2);
 
-  Line line3(std::vector<Waypoint *>{&wp3_0, &wp3_1, &wp3_2, &wp3_3},
-             FERD_COLOR_3);
-  GameWorld.AddLine(&line3);
+  connection_2->AddConnectionA(piece1, connection_1);
+  connection_2->AddConnectionB(piece2, connection_3);
 
-  Train trainObject5(&line3, {80, 35}, 3, FERD_COLOR_3);
-  GameWorld.AddTrain(&trainObject5);
+  connection_3->AddConnectionA(piece2, connection_2);
+  connection_3->AddConnectionB(piece3, connection_4);
 
-  Train trainObject6(&line3, {80, 35}, 3, FERD_COLOR_3);
-  GameWorld.AddTrain(&trainObject6);
+  connection_4->AddConnectionA(piece3, connection_3);
+  connection_4->AddConnectionB(nullptr, nullptr);
+
+  Train train({0,0}, FERD_COLOR_2, piece1, connection_1);
+  GameWorld.AddTrain(&train);
+  GameWorld.AddRectangle(train.trainObjectGet());
+  GameWorld.AddRectangle(train.trainSeekerGet());
 
   spdlog::info("Starting render loop");
 

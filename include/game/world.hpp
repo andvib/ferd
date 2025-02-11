@@ -30,6 +30,7 @@ class World {
    * @param train Train object to be added
    */
   void AddTrain(Train *train) { v_Trains.push_back(train); }
+  void AddRectangle(std::shared_ptr<RectangleObject> rectangle) { v_Rectangles.push_back(rectangle); }
 
   /**
    * @brief Add a train line to the world
@@ -58,6 +59,8 @@ class World {
    */
   void AddStation(Station *station) { v_Stations.push_back(station); }
 
+  void AddCircle(std::shared_ptr<CircleObject> circle) { v_CircleObjects.push_back(circle); }
+
   /**
    * @brief Render the trains in the world
    *
@@ -82,6 +85,8 @@ class World {
   std::vector<Line *> v_Lines;
   std::vector<std::shared_ptr<LineObject>> v_LineObjects;
   std::vector<Station *> v_Stations;
+  std::vector<std::shared_ptr<CircleObject>> v_CircleObjects;
+  std::vector<std::shared_ptr<RectangleObject>> v_Rectangles;
 };
 
 #endif /* INCLUDE_GAME_WORLD_HPP_ */

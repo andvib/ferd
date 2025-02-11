@@ -9,12 +9,14 @@
 #include "game/physics/kinematics.hpp"
 #include "game/trainNavigator.hpp"
 #include "game/trainPhysics.hpp"
+#include "game/rail/railWalker.hpp"
+#include "game/rail/stationSeeker.hpp"
 
 enum train_state { STOPPED_AT_STATION, ENROUTE, APPROACH };
 
-class Train : public RectangleObject {
+class Train {
  public:
-  Train();
+  //Train();
   ~Train();
 
   /**
@@ -25,8 +27,7 @@ class Train : public RectangleObject {
    * @param acceleration Acceleration of the train
    * @param color Color struct for the color of the train
    */
-  Train(Line* line, position_t start_position, float acceleration,
-        const struct ferd_color color);
+  Train(Vector2D start_position, const struct ferd_color color, std::shared_ptr<RailPiece> piece, std::shared_ptr<RailConnection> connection);
 
   /**
    * @brief Update the state machine and physics model of the train, and
@@ -34,23 +35,35 @@ class Train : public RectangleObject {
    *
    * @param delta_time_ms Time since previous update, in milliseconds
    */
-  void Update(clock_t delta_time_ms) override;
+  void Update(clock_t delta_time_ms);
 
   /**
    * @brief Calculate the model matrix for the train
    *
    * @return glm::mat4 Model matrix
    */
-  glm::mat4 CalculateModelMatrix() override;
+  glm::mat4 CalculateModelMatrix();
+
+  std::shared_ptr<RectangleObject> trainObjectGet() { return m_train_object; }
+  std::shared_ptr<RectangleObject> trainSeekerGet() { return m_seeker.objectGet(); }
+
+  void SeekerStateMachine(float distance_travelled, bool train_at_station);
 
  private:
-  TrainNavigator* p_Route;
-  TrainPhysics* p_Physics;
+  RailWalker m_walker;
+  StationSeeker m_seeker;
+  //TrainNavigator* p_Route;
+  //TrainPhysics* p_Physics;
   train_state m_State;
   clock_t m_duration_at_station = 0;
   int m_wait_time = 0;
-  position_t current_waypoint;
+  Vector2D current_waypoint;
   int m_train_id;
+  Vector2D m_position;
+  Vector2D m_vector;
+  std::shared_ptr<RectangleObject> m_train_object;
+
+  glm::mat4 m_model_matrix;
 };
 
 #endif /* INCLUDE_GAME_TRAIN_HPP_ */

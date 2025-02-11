@@ -15,6 +15,8 @@ CircleObject::CircleObject(position_t center,
   opengl_->glGenVertexArrays(1, &m_vertexArrayID);
   opengl_->glBindVertexArray(m_vertexArrayID);
 
+  spdlog::error("Center is {}, {}", center.x, center.y);
+
   std::array<GLfloat, 8> circle_square_points = {-0.5, 0.5,  -0.5, -0.5,
                                                  0.5,  -0.5, 0.5,  0.5};
 

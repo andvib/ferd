@@ -24,3 +24,5 @@ mark_as_advanced(
 )
 
 add_subdirectory(lib/game/line)
+add_subdirectory(lib/game/rail/straightRailPiece)
+add_subdirectory(lib/game/rail/railConnection)
