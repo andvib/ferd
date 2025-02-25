@@ -4,15 +4,15 @@
 
 int RailPiece::waypointsSet(Waypoint *wp_a, Waypoint *wp_b) {
     if ((wp_a == nullptr) || (wp_b == nullptr)) {
-        return -1;
+        throw std::invalid_argument("Null pointer passed for one of the waypoints");
     }
 
     if (wp_a == wp_b) {
-        return -1;
+        throw std::invalid_argument("wp_a and wp_b are the same");
     }
 
     if (wp_a->PositionCoordinates() == wp_b->PositionCoordinates()) {
-        return -1;
+        throw std::invalid_argument("wp_a and wp_b are at the same location");
     }
 
     m_wp_a = wp_a;
