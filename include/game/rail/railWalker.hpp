@@ -6,6 +6,7 @@
 #include "game/physics/kinematics.hpp"
 #include "game/rail/railPiece.hpp"
 #include "game/rail/railConnection.hpp"
+#include "game/rail/straightRailStation.hpp"
 
 class RailWalker {
  public:
@@ -18,6 +19,12 @@ class RailWalker {
   void set_current_rail(std::shared_ptr<RailPiece> piece) {current_rail = piece;}
   void set_next_connection(std::shared_ptr<RailConnection> new_connection)
                                                     { connection = new_connection; }
+
+  bool isStationPiece() { return std::dynamic_pointer_cast<StraightRailStation>(current_rail) != nullptr; }
+
+  Vector2D stationPosition();
+
+  Vector2D moveToNextRail();
 
  private:
   std::shared_ptr<RailPiece> current_rail;

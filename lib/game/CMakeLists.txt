@@ -14,6 +14,8 @@ target_sources(ferd_game PRIVATE
     rail/railConnection.cpp
     rail/railPiece.cpp
     rail/straightRailPiece.cpp
-    rail/railWalker.cpp)
+    rail/straightRailStation.cpp
+    rail/railWalker.cpp
+    rail/stationSeeker.cpp)
 
 include_directories(ferd_framework ../../include)
