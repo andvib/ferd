@@ -98,7 +98,7 @@ void GraphicsFramework::Render() {
       glGetUniformLocation(m_TrainProgram->get_program_id(), "View_Proj"), 1,
       GL_FALSE, &vp[0][0]);
 
-  p_World->RenderTrains(
+  p_World->RenderRectangles(
       glGetUniformLocation(m_TrainProgram->get_program_id(), "Model"));
 
   m_Window->render();
