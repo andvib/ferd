@@ -4,6 +4,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <thread>
 #include <vector>
 
@@ -19,6 +20,16 @@
 #include "game/world.hpp"
 
 #define CLOCKS_PER_MSEC (CLOCKS_PER_SEC / 1000)
+
+void create_train(Line* line, Vector2D start_position, float acceleration,
+                                  const struct ferd_color color, World *world) {
+  auto trainObject = std::make_shared<Train>(line, start_position, acceleration, color);
+  auto rec = std::make_shared<RectangleObject>(color);
+  trainObject->visualAssetSet(rec);
+
+  world->AddTrain(trainObject);
+  world->AddRectangle(rec);
+}
 
 int main(void) {
   int err;
@@ -55,11 +66,9 @@ int main(void) {
   Line line1(std::vector<Waypoint *>{&wp1, &wp2, &wp3, &wp4}, FERD_COLOR_1);
   GameWorld.AddLine(&line1);
 
-  Train trainObject(&line1, {0, 0}, 2, FERD_COLOR_1);
-  GameWorld.AddTrain(&trainObject);
-
-  Train trainObject2(&line1, {0, 0}, 3, FERD_COLOR_1);
-  GameWorld.AddTrain(&trainObject2);
+  create_train(&line1, {0, 0}, 1, FERD_COLOR_1, &GameWorld);
+  create_train(&line1, {0, 0}, 2, FERD_COLOR_1, &GameWorld);
+  create_train(&line1, {0, 0}, 3, FERD_COLOR_1, &GameWorld);
 
   Station wp2_0({100, -100});
   Station wp2_1({100, -40});
@@ -73,11 +82,8 @@ int main(void) {
       FERD_COLOR_2);
   GameWorld.AddLine(&line2);
 
-  Train trainObject3(&line2, {100, -100}, 3, FERD_COLOR_2);
-  GameWorld.AddTrain(&trainObject3);
-
-  Train trainObject4(&line2, {100, -100}, 3, FERD_COLOR_2);
-  GameWorld.AddTrain(&trainObject4);
+  create_train(&line2, {100, -100}, 2, FERD_COLOR_2, &GameWorld);
+  create_train(&line2, {100, -100}, 3, FERD_COLOR_2, &GameWorld);
 
   Station wp3_0({80, 35});
   Waypoint wp3_1({50, 5});
@@ -88,11 +94,8 @@ int main(void) {
              FERD_COLOR_3);
   GameWorld.AddLine(&line3);
 
-  Train trainObject5(&line3, {80, 35}, 3, FERD_COLOR_3);
-  GameWorld.AddTrain(&trainObject5);
-
-  Train trainObject6(&line3, {80, 35}, 3, FERD_COLOR_3);
-  GameWorld.AddTrain(&trainObject6);
+  create_train(&line3, {80, 35}, 2.5, FERD_COLOR_3, &GameWorld);
+  create_train(&line3, {80, 35}, 3, FERD_COLOR_3, &GameWorld);
 
   spdlog::info("Starting render loop");
 

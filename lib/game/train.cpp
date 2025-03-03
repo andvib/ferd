@@ -10,25 +10,22 @@
 
 #define CLOCKS_PER_MSEC (CLOCKS_PER_SEC / 1000)
 
-static const struct rectangle_points c_train_points = {
-    -0.25, 0.185, -0.25, -0.185, 0.25, -0.185, 0.25, 0.185};
-
 static get_next_train_id() {
   static int next_train_id = 1;
   return next_train_id++;
 }
 
-Train::Train() : RectangleObject(c_train_points, FERD_COLOR_1) {
+Train::Train() : RectangleObject(FERD_COLOR_1) {
   p_Route = new TrainNavigator();
   p_Physics = new TrainPhysics();
 
   m_train_id = get_next_train_id();
 }
 
-Train::Train(Line* line, position_t start_position, float acceleration,
+Train::Train(Line* line, Vector2D start_position, float acceleration,
              const struct ferd_color color)
-    : RectangleObject(c_train_points, color) {
-  p_Physics = new TrainPhysics(start_position, acceleration);
+    : RectangleObject(color) {
+  p_Physics = new TrainPhysics((position_t){start_position(0), start_position(1)}, acceleration);
   p_Route = new TrainNavigator(line);
 
   p_Physics->rotateTrain(
@@ -93,19 +90,10 @@ void Train::Update(clock_t delta_time_ms) {
       }
       break;
   }
-}
 
-glm::mat4 Train::CalculateModelMatrix() {
   position_t current_position = p_Physics->getPosition();
   vector_t vector_next = p_Physics->getRotation();
-  float angle = glm::atan(vector_next.y / vector_next.x);
 
-  glm::mat4 myTranslationMatrix = glm::translate(
-      glm::mat4(1.0f), glm::vec3(current_position.x, current_position.y, 0.0f));
-  glm::mat4 myScalingMatrix =
-      glm::scale(glm::mat4(1.0f), glm::vec3(4.3f, 4.3f, 4.3f));
-  glm::mat4 myRotationMatrix =
-      glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 0.0f, 1.0f));
-
-  return myTranslationMatrix * myRotationMatrix * myScalingMatrix;
+  m_visual_asset->objectLocationSet(Vector2D(current_position.x, current_position.y),
+                                    Vector2D(vector_next.x, vector_next.y));
 }

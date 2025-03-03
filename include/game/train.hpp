@@ -2,6 +2,7 @@
 #define INCLUDE_GAME_TRAIN_HPP_
 
 #include <chrono>
+#include <memory>
 
 #include "framework/ferd_color.hpp"
 #include "framework/geometry/rectangleObject.hpp"
@@ -25,7 +26,7 @@ class Train : public RectangleObject {
    * @param acceleration Acceleration of the train
    * @param color Color struct for the color of the train
    */
-  Train(Line* line, position_t start_position, float acceleration,
+  Train(Line* line, Vector2D start_position, float acceleration,
         const struct ferd_color color);
 
   /**
@@ -34,14 +35,14 @@ class Train : public RectangleObject {
    *
    * @param delta_time_ms Time since previous update, in milliseconds
    */
-  void Update(clock_t delta_time_ms) override;
+  void Update(clock_t delta_time_ms);
 
   /**
-   * @brief Calculate the model matrix for the train
+   * @brief Set the visual asset associated with the train
    *
-   * @return glm::mat4 Model matrix
+   * @param asset_ptr   Pointer to the asset object
    */
-  glm::mat4 CalculateModelMatrix() override;
+  void visualAssetSet(std::shared_ptr<RectangleObject> asset_ptr) { m_visual_asset = asset_ptr; }
 
  private:
   TrainNavigator* p_Route;
@@ -51,6 +52,7 @@ class Train : public RectangleObject {
   int m_wait_time = 0;
   position_t current_waypoint;
   int m_train_id;
+  std::shared_ptr<RectangleObject> m_visual_asset;
 };
 
 #endif /* INCLUDE_GAME_TRAIN_HPP_ */

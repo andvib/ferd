@@ -27,12 +27,11 @@ void World::Update(clock_t delta_time_ms) {
   }
 }
 
-void World::RenderTrains(GLuint modelLoc) {
-  for (auto trainPtr : v_Trains) {
-    glm::mat4 model = trainPtr->CalculateModelMatrix();
+void World::RenderRectangles(GLuint modelLoc) {
+  for (auto rectangle_ptr : v_Rectangles) {
+    glm::mat4 model = rectangle_ptr->CalculateModelMatrix();
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
-
-    trainPtr->Render();
+    rectangle_ptr->Render();
   }
 }
 

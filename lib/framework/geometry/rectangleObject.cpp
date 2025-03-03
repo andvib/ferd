@@ -4,23 +4,19 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+static const std::array<GLfloat, 8> c_train_points = {
+  -0.25, 0.185, -0.25, -0.185, 0.25, -0.185, 0.25, 0.185};
+
 RectangleObject::RectangleObject() { glGenVertexArrays(1, &m_vertexArrayID); }
 
-RectangleObject::RectangleObject(struct rectangle_points rectangle_p,
-                                 struct ferd_color color) {
+RectangleObject::RectangleObject(struct ferd_color color) {
   glGenVertexArrays(1, &m_vertexArrayID);
   glBindVertexArray(m_vertexArrayID);
 
-  m_points = rectangle_p;
-
-  GLfloat m_VertexBufferData[]{m_points.x0, m_points.y0, m_points.x1,
-                               m_points.y1, m_points.x2, m_points.y2,
-                               m_points.x3, m_points.y3};
-
   glGenBuffers(1, &m_vertexBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(m_VertexBufferData), m_VertexBufferData,
-               GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(c_train_points),
+               static_cast<const void*>(c_train_points.data()), GL_STATIC_DRAW);
 
   GLuint indices[]{0, 1, 3, 2, 3, 1};
 
@@ -56,4 +52,22 @@ void RectangleObject::Render(void) {
   glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
   glDisableVertexAttribArray(0);
   glDisableVertexAttribArray(1);
+}
+
+void RectangleObject::objectLocationSet(Vector2D position, Vector2D orientation) {
+  m_object_position = position;
+  m_object_orientation = orientation;
+}
+
+glm::mat4 RectangleObject::CalculateModelMatrix() {
+  float angle = glm::atan(m_object_orientation(1) / m_object_orientation(0));
+
+  glm::mat4 myTranslationMatrix = glm::translate(
+      glm::mat4(1.0f), glm::vec3(m_object_position(0), m_object_position(1), 0.0f));
+  glm::mat4 myScalingMatrix =
+      glm::scale(glm::mat4(1.0f), glm::vec3(4.3f, 4.3f, 4.3f));
+  glm::mat4 myRotationMatrix =
+      glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 0.0f, 1.0f));
+
+  return myTranslationMatrix * myRotationMatrix * myScalingMatrix;
 }

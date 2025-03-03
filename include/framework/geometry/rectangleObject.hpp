@@ -7,6 +7,7 @@
 
 #include "framework/ferd_color.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "game/physics/kinematics.hpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/transform.hpp"
@@ -21,14 +22,7 @@ struct rectangle_points {
 class RectangleObject {
  public:
   RectangleObject();
-  RectangleObject(struct rectangle_points rectangle_p, struct ferd_color color);
-
-  /**
-   * @brief Update attributes of the rectangle object
-   *
-   * @details Updates the position and calculates the model matrix
-   */
-  virtual void Update(clock_t delta_time) = 0;
+  explicit RectangleObject(struct ferd_color color);
 
   /**
    * @brief Render the rectangle object
@@ -36,15 +30,25 @@ class RectangleObject {
   void Render(void);
 
   /**
+   * @brief Set the position and vector of object
+   *
+   * @param position  New position of the object
+   * @param vector    New orientation of the object
+   */
+  void objectLocationSet(Vector2D position, Vector2D orientation);
+
+  /**
    * @brief Calculate the Model Matrix object
    *
    * @return glm::mat4 Model Matrix
    */
-  virtual glm::mat4 CalculateModelMatrix() = 0;
+  glm::mat4 CalculateModelMatrix();
 
  private:
   struct rectangle_points m_points;
   struct ferd_color m_color;
+  Vector2D m_object_position;
+  Vector2D m_object_orientation;
   GLuint m_vertexArrayID;
   GLuint m_vertexBuffer;
   GLfloat *m_vertex_buffer_data;

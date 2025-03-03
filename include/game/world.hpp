@@ -29,7 +29,15 @@ class World {
    *
    * @param train Train object to be added
    */
-  void AddTrain(Train *train) { v_Trains.push_back(train); }
+  void AddTrain(std::shared_ptr<Train> train) { v_Trains.push_back(train); }
+
+  /**
+   * @brief Add a rectangle to the world
+   *
+   * @param rectangle Pointer to rectangle 
+   */
+  void AddRectangle(std::shared_ptr<RectangleObject> rectangle)
+                                        { v_Rectangles.push_back(rectangle); }
 
   /**
    * @brief Add a train line to the world
@@ -59,11 +67,11 @@ class World {
   void AddStation(Station *station) { v_Stations.push_back(station); }
 
   /**
-   * @brief Render the trains in the world
+   * @brief Render the rectangles in the world
    *
    * @param modelLoc Location of the model uniform in the program
    */
-  void RenderTrains(GLuint modelLoc);
+  void RenderRectangles(GLuint modelLoc);
 
   /**
    * @brief Render the line objects in the world
@@ -78,7 +86,8 @@ class World {
   void RenderStations(GLuint modelLoc) const;
 
  private:
-  std::vector<Train *> v_Trains;
+  std::vector<std::shared_ptr<Train>> v_Trains;
+  std::vector<std::shared_ptr<RectangleObject>> v_Rectangles;
   std::vector<Line *> v_Lines;
   std::vector<std::shared_ptr<LineObject>> v_LineObjects;
   std::vector<Station *> v_Stations;
