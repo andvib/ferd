@@ -66,6 +66,8 @@ class World {
    */
   void AddStation(Station *station) { v_Stations.push_back(station); }
 
+  void AddCircle(std::shared_ptr<CircleObject> circle) { v_CircleObjects.push_back(circle); }
+
   /**
    * @brief Render the rectangles in the world
    *
@@ -91,6 +93,7 @@ class World {
   std::vector<Line *> v_Lines;
   std::vector<std::shared_ptr<LineObject>> v_LineObjects;
   std::vector<Station *> v_Stations;
+  std::vector<std::shared_ptr<CircleObject>> v_CircleObjects;
 };
 
 #endif /* INCLUDE_GAME_WORLD_HPP_ */
