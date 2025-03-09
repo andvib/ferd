@@ -21,13 +21,13 @@ void World::AddLine(const Line *line) {
   }
 }
 
-void World::Update(clock_t delta_time_ms) {
+void World::Update(clock_t delta_time_ms) const {
   for (auto trainPtr : v_Trains) {
     trainPtr->Update(delta_time_ms);
   }
 }
 
-void World::RenderRectangles(GLuint modelLoc) {
+void World::RenderRectangles(GLuint modelLoc) const {
   for (auto rectangle_ptr : v_Rectangles) {
     glm::mat4 model = rectangle_ptr->CalculateModelMatrix();
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
@@ -35,7 +35,7 @@ void World::RenderRectangles(GLuint modelLoc) {
   }
 }
 
-void World::RenderLineObjects() {
+void World::RenderLineObjects() const {
   for (auto linePtr : v_LineObjects) {
     linePtr->Render();
   }
@@ -44,7 +44,7 @@ void World::RenderLineObjects() {
 void World::RenderStations(GLuint modelLoc) const {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  for (auto circlePtr : v_CircleObjects) {
+  for (auto circlePtr : v_Stations) {
     glm::mat4 model = circlePtr->CalculateModelMatrix();
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &model[0][0]);
 
