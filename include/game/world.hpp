@@ -22,7 +22,7 @@ class World {
    *
    * @param delta_time_ms
    */
-  void Update(clock_t delta_time_ms);
+  void Update(clock_t delta_time_ms) const;
 
   /**
    * @brief Add a train to the world
@@ -34,10 +34,11 @@ class World {
   /**
    * @brief Add a rectangle to the world
    *
-   * @param rectangle Pointer to rectangle 
+   * @param rectangle Pointer to rectangle
    */
-  void AddRectangle(std::shared_ptr<RectangleObject> rectangle)
-                                        { v_Rectangles.push_back(rectangle); }
+  void AddRectangle(std::shared_ptr<RectangleObject> rectangle) {
+    v_Rectangles.push_back(rectangle);
+  }
 
   /**
    * @brief Add a train line to the world
@@ -71,12 +72,12 @@ class World {
    *
    * @param modelLoc Location of the model uniform in the program
    */
-  void RenderRectangles(GLuint modelLoc);
+  void RenderRectangles(GLuint modelLoc) const;
 
   /**
    * @brief Render the line objects in the world
    */
-  void RenderLineObjects();
+  void RenderLineObjects() const;
 
   /**
    * @brief Render stations in the world
