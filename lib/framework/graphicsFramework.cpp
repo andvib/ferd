@@ -73,6 +73,7 @@ void GraphicsFramework::Update(clock_t delta_time_ms) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   m_Window->updateCamera(p_Camera);
   m_Window->update();
+  p_World->RenderDebug(m_Window->getDebugWindow());
 
   p_World->Update(delta_time_ms);
 }

@@ -3,12 +3,17 @@
 
 #include <GLFW/glfw3.h>
 
+#include "framework/debugWindow.hpp"
 #include "game/camera.hpp"
 
 class WindowHandler {
  private:
   /* Variable holding the GLFW ID of the window */
   GLFWwindow* window;
+
+  /* Debug window entity that callers can draw their own debug content into,
+   * without WindowHandler needing to know what that content looks like */
+  DebugWindow m_DebugWindow;
 
  public:
   /**
@@ -57,6 +62,16 @@ class WindowHandler {
    * @details Fetches IO events and updates the GUI
    */
   void update();
+
+  /**
+   * @brief Get the debug window entity
+   *
+   * @details Callers can draw their own debug content into this window,
+   * between update() and render().
+   *
+   * @return DebugWindow& Reference to the debug window entity
+   */
+  DebugWindow& getDebugWindow() { return m_DebugWindow; }
 
   /**
    * @brief Render the GUI objects

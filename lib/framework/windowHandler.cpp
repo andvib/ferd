@@ -92,13 +92,6 @@ void WindowHandler::updateCamera(Camera* gameCamera) {
   }
 }
 
-void debugWindow() {
-  ImGui::Begin("Ferd Debug Window", reinterpret_cast<bool*>(true),
-               ImGuiWindowFlags_MenuBar);
-  ImGui::Text("This will be used to display debug information");
-  ImGui::End();
-}
-
 void WindowHandler::update() {
   glfwPollEvents();
 
@@ -106,10 +99,12 @@ void WindowHandler::update() {
   ImGui_ImplGlfw_NewFrame();
   ImGui::NewFrame();
 
-  debugWindow();
+  m_DebugWindow.begin("Ferd Debug Window");
 }
 
 void WindowHandler::render() {
+  m_DebugWindow.end();
+
   // Rendering
   ImGui::Render();
   int display_w, display_h;

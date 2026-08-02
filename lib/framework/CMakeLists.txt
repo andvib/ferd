@@ -3,6 +3,7 @@ add_library(ferd_framework)
 target_link_libraries(ferd_framework ferdprj)
 
 target_sources(ferd_framework PRIVATE
+    debugWindow.cpp
     gameShader.cpp
     graphicsFramework.cpp
     graphicsProgram.cpp
